@@ -15,10 +15,4 @@ const getCollectionFn = (collection) => {
 
 module.exports = {
     users: getCollectionFn('users'),
-    tickets: getCollectionFn('tickets'),
-    comments: getCollectionFn('comments'),
-    places: getCollectionFn('places'),
-    counts: getCollectionFn('counts'),
-    friends: getCollectionFn('friends'),
-    banks: getCollectionFn('banks'),
 };
