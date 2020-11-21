@@ -1,10 +1,12 @@
 {
     "name": "cs-554-project",
     "version": "1.0.0",
-    "description": "",
-    "main": "index.js",
+    "description": "Back-end",
+    "main": "app.js",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node app.js",
+        "seed": "node tasks/seed.js"
     },
     "repository": {
         "type": "git",
@@ -20,6 +22,7 @@
         "bcryptjs": "^2.4.3",
         "express": "^4.17.1",
         "mongodb": "^3.6.3",
+        "uuid": "^8.3.1",
         "xss": "^1.0.8"
     }
 }
