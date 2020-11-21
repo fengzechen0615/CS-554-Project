@@ -19,7 +19,7 @@
     },
     "homepage": "https://github.com/fengzechen0615/CS-554-Project#readme",
     "dependencies": {
-        "bcryptjs": "^2.4.3",
+        "axios": "^0.21.0",
         "express": "^4.17.1",
         "mongodb": "^3.6.3",
         "uuid": "^8.3.1",
