@@ -15,5 +15,11 @@
     "bugs": {
         "url": "https://github.com/fengzechen0615/CS-554-Project/issues"
     },
-    "homepage": "https://github.com/fengzechen0615/CS-554-Project#readme"
+    "homepage": "https://github.com/fengzechen0615/CS-554-Project#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "express": "^4.17.1",
+        "mongodb": "^3.6.3",
+        "xss": "^1.0.8"
+    }
 }
