@@ -9,9 +9,9 @@ const xss = require('xss');
 const { authenticated, admin } = require('../utility/authMiddleware');
 
 // get id from session
-router.get('/userinfo/:id', authenticated, async (req, res) => {
+router.get('/userinfo', authenticated, async (req, res) => {
     try {
-        const user = await userData.getUserById(req.params.id);
+        const user = await userData.getUserById(req.session.AuthCookie._id);
         res.status(user.status).json(user.reuslt);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
@@ -206,7 +206,7 @@ router.post('/password', authenticated, async (req, res) => {
 });
 
 // get id from session
-router.patch('/userinfo/:id', authenticated, async (req, res) => {
+router.patch('/userinfo', authenticated, async (req, res) => {
     /*
      nickname
      phoneNumber
@@ -255,7 +255,7 @@ router.patch('/userinfo/:id', authenticated, async (req, res) => {
             }
         }
 
-        const user = await userData.getUserById(req.params.id);
+        const user = await userData.getUserById(req.session.AuthCookie._id);
 
         const nickname = userInfo.nickname
             ? xss(userInfo.nickname)
@@ -271,7 +271,7 @@ router.patch('/userinfo/:id', authenticated, async (req, res) => {
             : user.reuslt.zipCode;
 
         const updatedUser = await userData.updatedUser(
-            xss(req.params.id),
+            req.session.AuthCookie._id,
             nickname,
             phoneNumber,
             address,
@@ -279,7 +279,6 @@ router.patch('/userinfo/:id', authenticated, async (req, res) => {
         );
         res.status(updatedUser.status).json(updatedUser.result);
     } catch (error) {
-        console.log(error);
         res.status(error.status).json({ error: error.errorMessage });
     }
 });
