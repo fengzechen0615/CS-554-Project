@@ -141,4 +141,51 @@ router.post('/signin', async (req, res) => {
     }
 });
 
+router.post('/password', async (req, res) => {
+    try {
+        let idToken = xss(req.body.idToken);
+        let password = xss(req.body.password);
+
+        if (!idToken) {
+            res.status(400).json({
+                error: 'No idToken provided',
+            });
+            return;
+        }
+
+        if (!password) {
+            res.status(400).json({
+                error: 'No password provided',
+            });
+            return;
+        }
+
+        // check password
+        if (!inputChecker.checkPassword(password)) {
+            res.status(400).json({
+                error:
+                    'Password must 8-16 characters. Only should contain lower case word, upper case word or number',
+            });
+            return;
+        }
+
+        const authData = {
+            idToken: idToken,
+            password: password,
+            returnSecureToken: true,
+        };
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${firebase.key}`;
+
+        const firebaseResult = await axios.post(url, authData);
+        res.status(firebaseResult.status).json({
+            idToken: firebaseResult.data.idToken,
+        });
+    } catch (error) {
+        console.log(error);
+        res.status(error.response.status).json({
+            error: error.response.data.error.message,
+        });
+    }
+});
+
 module.exports = router;
