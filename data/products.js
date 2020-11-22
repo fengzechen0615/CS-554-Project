@@ -61,6 +61,16 @@ async function getProductById(id) {
     return productGoal;
 }
 
+async function getProductsBySellerId(sellerId) {
+    if (!sellerId || typeof sellerId !== 'string')
+        throw 'You must provide an sellerId to search for his Products';
+    let productCollection = await products();
+    let productArr = await productCollection
+        .find({ sellerId: sellerId })
+        .toArray();
+    return productArr;
+}
+
 async function updatePrice(id, price) {
     if (!id || typeof id !== 'string')
         throw 'You must provide an id to uodate Product';
@@ -123,4 +133,5 @@ module.exports = {
     updatePrice,
     updateStock,
     deleteProduct,
+    getProductsBySellerId,
 };
