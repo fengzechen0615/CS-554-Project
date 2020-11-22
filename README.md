@@ -5,12 +5,19 @@
 **Mo Sun, Yuqi Wang, Zechen Feng, Donglin Chen**
 
 -   [Undefined](#undefined)
-
     -   [Description](#description)
-    -   [Core features](#core-features)
+    -   [Core Features](#core-features)
     -   [Technologies](#technologies)
-    -   [API] (#api)
-        -   [Sign in/up] (#sign-in/up)
+    -   [Database](#database)
+        -   [Users Collection](#users-collection)
+        -   [Product Collection](#product-collection)
+        -   [Quesiton Collection](#quesiton-collection)
+        -   [Order Collection](#order-collection)
+    -   [API](#api)
+        -   [Sign in/up](#sign-in-up)
+        -   [Main Page](#main-page)
+        -   [Product Page](#product-page)
+        -   [User Information Page](#user-information-page)
     -   [Other](#other)
         -   [Http Status Code](#http-status-code)
 
@@ -41,6 +48,26 @@ their products to sell and buy products from other users.
     - Purchase history
         - Users can check the items they have purchased
 
+### Technologies
+
+-   React
+    -   We will use React as our single-page web application framework.
+    -   We will create components for the elements that we include on our pages.
+-   Redis
+    -   Redis will be used to cache data and HTML to improve user experience.
+-   Redux
+    -   We will use redux to do global variables management.
+-   Sagas
+    -   We will use redux-saga to make side effects like asynchronous data fetching easier and more efficient.
+-   React Bootstrap
+    -   React Bootstrap will make our website prettier.
+-   Firebase
+    -   Firebase Authentication is a framework that allows authentication via email/password credentials or other identity providers.
+    -   We will be utilizing the Firebase authentication system to authorize users for the site. This will include email/password, Google, and Facebook login.
+-   ImageMagick
+    -   ImageMagick is a library that is used for manipulating images.
+    -   We will use ImageMagick to allow users to edit the profile photos that they upload to the site.
+
 ### Database
 
 #### Users Collection
@@ -53,21 +80,23 @@ their products to sell and buy products from other users.
     "phoneNumber": "5513008708",
     "address": "1 Castle Point Terrace, Hoboken",
     "zipCode": "07030",
-    "hashedPassword": "$2a$08$XdvNkfdNIL8F8xsuIUeSbNOFgK0M0iV5HOskfVn7.PWncShU.O",
     "avatar": "",
     "isAdmin": false,
     "state": true
 }
 ```
 
-| Name           | Type   | Description                                         |
-| :------------- | :----- | :-------------------------------------------------- |
-| \_id           | string | A globally unique identifier to represent the user. |
-| userName       | string | User name.                                          |
-| phoneNumber    | string | User phone number.                                  |
-| address        | string | User address.                                       |
-| zipCode        | string | User address zip code.                              |
-| hashedPassword | string | The password when users log in.                     |
+| Name        | Type    | Description                                         |
+| :---------- | :------ | :-------------------------------------------------- |
+| \_id        | string  | A globally unique identifier to represent the user. |
+| userName    | string  | User name.                                          |
+| email       | string  | User email address.                                 |
+| phoneNumber | string  | User phone number.                                  |
+| address     | string  | User address.                                       |
+| zipCode     | string  | User address zip code.                              |
+| avatar      | string  | User avatar.                                        |
+| isAdmin     | boolean | User is noraml user or admin user.                  |
+| state       | boolean | User account state.                                 |
 
 #### Product Collection
 
@@ -116,38 +145,18 @@ their products to sell and buy products from other users.
 }
 ```
 
-### Technologies
-
--   React
-    -   We will use React as our single-page web application framework.
-    -   We will create components for the elements that we include on our pages.
--   Redis
-    -   Redis will be used to cache data and HTML to improve user experience.
--   Redux
-    -   We will use redux to do global variables management.
--   Sagas
-    -   We will use redux-saga to make side effects like asynchronous data fetching easier and more efficient.
--   React Bootstrap
-    -   React Bootstrap will make our website prettier.
--   Firebase
-    -   Firebase Authentication is a framework that allows authentication via email/password credentials or other identity providers.
-    -   We will be utilizing the Firebase authentication system to authorize users for the site. This will include email/password, Google, and Facebook login.
--   ImageMagick
-    -   ImageMagick is a library that is used for manipulating images.
-    -   We will use ImageMagick to allow users to edit the profile photos that they upload to the site.
-
 ### API
 
-#### Sign in/up
+#### Sign in/up Page
 
--   **post('v1/account/signin')**
+-   **post('v1/users/signin')**
     ```json
     {
         "email": "String",
         "password": "String"
     }
     ```
--   **post('v1/account/signup')**
+-   **post('v1/users/signup')**
     ```json
     {
         "email": "String",
