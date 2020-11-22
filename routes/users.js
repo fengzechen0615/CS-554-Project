@@ -123,10 +123,13 @@ router.post('/signin', async (req, res) => {
         };
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebase.key}`;
 
-        await axios.post(url, authData);
+        const firebaseResult = await axios.post(url, authData);
 
         const user = await userData.getUserByEmail(email);
-        res.status(user.status).json(user.rersult);
+        res.status(user.status).json({
+            ...user.result,
+            idToken: firebaseResult.data.idToken,
+        });
     } catch (error) {
         if (error.response) {
             res.status(error.response.status).json({

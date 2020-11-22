@@ -24,7 +24,7 @@ let exportedMethods = {
             throw { status: 404, errorMessage: `No user with email: ${email}` };
         }
 
-        return { status: 200, rersult: user };
+        return { status: 200, result: user };
     },
 
     async addUser(nickname, email) {
