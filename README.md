@@ -14,7 +14,7 @@
         -   [Quesiton Collection](#quesiton-collection)
         -   [Order Collection](#order-collection)
     -   [API](#api)
-        -   [Sign in/up](#sign-in-up)
+        -   [Sign in/up Page](#sign-in-up-page)
         -   [Main Page](#main-page)
         -   [Product Page](#product-page)
         -   [User Information Page](#user-information-page)
@@ -179,7 +179,6 @@ their products to sell and buy products from other users.
 | description | string  | a text describes the product in detail.              |
 | imageUrl    | string  | The image of the product                             |
 
-
 ### API
 
 #### Sign in/up Page
@@ -248,10 +247,10 @@ their products to sell and buy products from other users.
         "avatar": "String"
     }
     ```
--   **patch('v1/account/password)**
+-   **post('v1/user/password)**
     ```json
     {
-        "oldPassword": "String",
+        "idToken": "String",
         "newPassword": "String"
     }
     ```
