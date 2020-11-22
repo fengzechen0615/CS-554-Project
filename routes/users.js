@@ -126,6 +126,9 @@ router.post('/signin', async (req, res) => {
         const firebaseResult = await axios.post(url, authData);
 
         const user = await userData.getUserByEmail(email);
+        if (!user.result.status) {
+            res.status(403).json({ error: 'Your account has been locked' });
+        }
         res.status(user.status).json({
             ...user.result,
             idToken: firebaseResult.data.idToken,
