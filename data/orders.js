@@ -40,7 +40,7 @@ async function createOrder(
         isCompleted: false,
         price: price,
         dealNumber: dealNumber,
-        productName:productName,
+        productName: productName,
         description: description,
         imgUrl: imgUrl,
     };
@@ -83,7 +83,7 @@ async function getOrderByBuyerId(buyerId) {
     return orderArr;
 }
 
-async function setOrderIsCompeleted(id,isCompleted) {
+async function setOrderIsCompeleted(id, isCompleted) {
     if (!id || typeof id !== 'string')
         throw 'You must provide an order id to search for an order';
     if (!isCompleted || typeof isCompleted !== 'boolean')
@@ -93,7 +93,7 @@ async function setOrderIsCompeleted(id,isCompleted) {
         { _id: id },
         {
             $set: {
-                isCompleted:isCompleted
+                isCompleted: isCompleted,
             },
         }
     );
@@ -109,6 +109,5 @@ module.exports = {
     getOrderById,
     getOrderBySellerId,
     getOrderByBuyerId,
-    setOrderIsCompeleted
+    setOrderIsCompeleted,
 };
-
