@@ -5,7 +5,8 @@ const productData = data.products;
 const questionData = data.questions;
 const { authenticated } = require('../utility/authMiddleware');
 
-//seller发布一个新product
+// seller发布一个新product
+// anyone
 router.post('/', authenticated, async (req, res) => {
     try {
         let sellerId = req.body.sellerId;
@@ -34,7 +35,7 @@ router.post('/', authenticated, async (req, res) => {
     }
 });
 
-//获取全部商品
+// 获取全部商品
 router.get('/', authenticated, async (req, res) => {
     try {
         let allProduct = await productData.getAllProduct();
@@ -44,7 +45,7 @@ router.get('/', authenticated, async (req, res) => {
     }
 });
 
-//获取id对应的商品，返回此product
+// 获取id对应的商品，返回此product
 router.get('/:id', authenticated, async (req, res) => {
     try {
         let productGoal = await productData.getProductById(req.params.id);
@@ -54,7 +55,7 @@ router.get('/:id', authenticated, async (req, res) => {
     }
 });
 
-//提问，返回这个问题
+// 提问，返回这个问题
 router.post('/questions', authenticated, async (req, res) => {
     try {
         let productId = req.body.productId;
@@ -72,7 +73,8 @@ router.post('/questions', authenticated, async (req, res) => {
     }
 });
 
-//回答，返回被回答的问题与答案
+// 回答，返回被回答的问题与答案
+// only seller
 router.post('/answer', authenticated, async (req, res) => {
     try {
         let questionId = req.body.questionId;
@@ -85,7 +87,8 @@ router.post('/answer', authenticated, async (req, res) => {
     }
 });
 
-//修改价格，返回修改后的product
+// 修改价格，返回修改后的product
+// only seller
 router.patch('/:id', authenticated, async (req, res) => {
     try {
         let productId = req.params.id;
@@ -98,7 +101,8 @@ router.patch('/:id', authenticated, async (req, res) => {
     }
 });
 
-//删除问题，返回被删除的问题
+// 删除问题，返回被删除的问题
+// seller and admin
 router.delete('/quesitons/:id', authenticated, async (req, res) => {
     try {
         let questionId = req.params.id;
@@ -110,7 +114,8 @@ router.delete('/quesitons/:id', authenticated, async (req, res) => {
     }
 });
 
-//删除商品（此router会同时删除该商品下所有的question），返回被删除的商品与被删除的问题
+// 删除商品（此router会同时删除该商品下所有的question），返回被删除的商品与被删除的问题
+// seller and admin
 router.delete('/:id', authenticated, async (req, res) => {
     try {
         let productId = req.params.id;
@@ -125,7 +130,8 @@ router.delete('/:id', authenticated, async (req, res) => {
     }
 });
 
-//查询此用户作为seller发布的所有product,返回一个数组
+// 查询此用户作为seller发布的所有product,返回一个数组
+// only seller
 router.get('/user/:id', authenticated, async (req, res) => {
     try {
         let sellerId = req.params.id;

@@ -279,3 +279,5 @@ their products to sell and buy products from other users.
 | 401         | Unauthorized          | the user does not have valid authentication credentials for the target resource.                                      |
 | 404         | Not Found             | The requested resource could not be found but may be available in the future.                                         |
 | 500         | Internal Server Error | A generic error message, given when an unexpected condition was encountered and no more specific message is suitable. |
+
+#### Authority

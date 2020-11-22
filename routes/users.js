@@ -8,6 +8,7 @@ const inputChecker = require('../utility/inputChecker');
 const xss = require('xss');
 const { authenticated, admin } = require('../utility/authMiddleware');
 
+// get id from session
 router.get('/userinfo/:id', authenticated, async (req, res) => {
     try {
         const user = await userData.getUserById(req.params.id);
@@ -204,6 +205,7 @@ router.post('/password', authenticated, async (req, res) => {
     }
 });
 
+// get id from session
 router.patch('/userinfo/:id', authenticated, async (req, res) => {
     /*
      nickname
@@ -282,7 +284,7 @@ router.patch('/userinfo/:id', authenticated, async (req, res) => {
     }
 });
 
-router.put('/userstate', admin, async (req, res) => {
+router.put('/userstate', authenticated, admin, async (req, res) => {
     try {
         let userId = xss(req.body.userId);
 
