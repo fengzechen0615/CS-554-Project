@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
 const configRoutes = require('./routes');
+const cors = require('cores');
 
 app.use(express.json());
+app.use(cors());
 
 configRoutes(app);
 
