@@ -102,23 +102,35 @@ their products to sell and buy products from other users.
 
 ```json
 {
-    "id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "seller": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "name": "",
+    "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "sellerId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "productName": "",
     "description": "",
-    "category": ["", ""],
+    "categoryArr": ["", ""],
     "imageUrl": "",
     "stock": 10,
     "price": 10000,
-    "time": "date"
+    "time": "new Date()"
 }
 ```
+
+| Name        | Type   | Description                                            |
+| :---------- | :----- | :----------------------------------------------------- |
+| \_id        | string | A globally unique identifier to represent the product. |
+| sellerId    | string | seller's id.                                           |
+| productName | string | The name/title of product.                             |
+| description | string | a text describes the product in detail.                |
+| categoryArr | Array  | An array of the catagories of the product.             |
+| imageUrl    | string | The image of the product                               |
+| stock       | number | The number of the product in stock.                    |
+| price       | number | The price of each product.                             |
+| time        | Date   | The time the product is posted.                        |
 
 #### Quesiton Collection
 
 ```json
 {
-    "id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "productId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "nickName": "",
     "question": "",
@@ -126,24 +138,47 @@ their products to sell and buy products from other users.
 }
 ```
 
+| Name      | Type   | Description                                             |
+| :-------- | :----- | :------------------------------------------------------ |
+| \_id      | string | A globally unique identifier to represent the question. |
+| productId | string | product's id.                                           |
+| nickName  | string | The nickname of the Questioner.                         |
+| answer    | string | The answer from seller/.                                |
+
 #### Order Collection
 
 ```json
 {
-    "id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "productId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "sellerId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "userId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "orderTime": "date",
-    "orderState": false,
-    "price": 1000,
-    "number": 2,
-    "name": "",
+    "buyerId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "address": "",
+    "orderTime": "new Date()",
+    "isCompleted": false,
+    "price": 2,
+    "dealNumber": 2,
+    "productName": "",
     "description": "",
-    "category": ["", ""],
-    "imageUrl": "",
-    "address": ""
+    "imageUrl": ""
 }
 ```
+
+| Name        | Type    | Description                                          |
+| :---------- | :------ | :--------------------------------------------------- |
+| \_id        | string  | A globally unique identifier to represent the order. |
+| productId   | string  | product's id.                                        |
+| buyerId     | string  | buyer's id.                                          |
+| sellerId    | string  | seller's id.                                         |
+| adress      | string  | buyer's adress                                       |
+| orderTime   | Date    | The time the product is buyed.                       |
+| isCompleted | boolean | if buyer recieved products,the true; else false.     |
+| price       | number  | The price of each product.                           |
+| dealNumber  | number  | The number of the product buyer bought.              |
+| productName | string  | The name/title of product.                           |
+| description | string  | a text describes the product in detail.              |
+| imageUrl    | string  | The image of the product                             |
+
 
 ### API
 
