@@ -51,6 +51,10 @@ let exportedMethods = {
         }
         return true;
     },
+
+    checkAddress(address) {
+        return typeof address === 'string';
+    },
 };
 
 module.exports = exportedMethods;

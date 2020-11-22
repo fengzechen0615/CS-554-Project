@@ -188,4 +188,82 @@ router.post('/password', async (req, res) => {
     }
 });
 
+router.patch('/userinfo/:id', async (req, res) => {
+    /*
+     nickname
+     phoneNumber
+     address
+     zipCode
+     */
+    try {
+        let userInfo = req.body;
+
+        if (userInfo.length) {
+            res.status(400).json({
+                error: 'You must provide data to update a user information',
+            });
+            return;
+        }
+
+        // check nickname field
+        if (userInfo.nickname) {
+            if (!inputChecker.checkNickname(userInfo.nickname)) {
+                res.status(400).json({ error: 'Not valid nickname' });
+                return;
+            }
+        }
+
+        // check phoneNumber field
+        if (userInfo.phoneNumber) {
+            if (!inputChecker.checkPhoneNumber(userInfo.phoneNumber)) {
+                res.status(400).json({ error: 'Not valid phone number' });
+                return;
+            }
+        }
+
+        // check address field
+        if (userInfo.address) {
+            if (!inputChecker.checkAddress(userInfo.address)) {
+                res.status(400).json({ error: 'Not valid address' });
+                return;
+            }
+        }
+
+        // check zipCode field
+        if (userInfo.zipCode) {
+            if (!inputChecker.checkZipCode(userInfo.zipCode)) {
+                res.status(400).json({ error: 'Not valid zip code' });
+                return;
+            }
+        }
+
+        const user = await userData.getUserById(req.params.id);
+
+        const nickname = userInfo.nickname
+            ? xss(userInfo.nickname)
+            : user.reuslt.nickname;
+        const phoneNumber = userInfo.phoneNumber
+            ? xss(userInfo.phoneNumber)
+            : user.reuslt.phoneNumber;
+        const address = userInfo.address
+            ? xss(userInfo.address)
+            : user.reuslt.address;
+        const zipCode = userInfo.zipCode
+            ? xss(userInfo.zipCode)
+            : user.reuslt.zipCode;
+
+        const updatedUser = await userData.updatedUser(
+            xss(req.params.id),
+            nickname,
+            phoneNumber,
+            address,
+            zipCode
+        );
+        res.status(updatedUser.status).json(updatedUser.result);
+    } catch (error) {
+        console.log(error);
+        res.status(error.status).json({ error: error.errorMessage });
+    }
+});
+
 module.exports = router;

@@ -53,18 +53,14 @@ let exportedMethods = {
         };
     },
 
-    async updatedUser(id, nickname, email, phoneNumber, address, zipCode) {
+    async updatedUser(id, nickname, phoneNumber, address, zipCode) {
         const userCollection = await users();
 
         const updatedUser = {
             nickname: nickname,
-            email: email,
             phoneNumber: phoneNumber,
             address: address,
             zipCode: zipCode,
-            bio: bio,
-            gender: gender,
-            birthDate: birthDate,
         };
 
         const updateInfo = await userCollection.updateOne(
@@ -73,10 +69,13 @@ let exportedMethods = {
         );
 
         if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-            throw `Could not update user successfully by id: ${id}`;
+            throw {
+                status: 500,
+                errorMessage: `Could not update user successfully by id: ${id}`,
+            };
         }
 
-        return await this.getUserById(id);
+        return { status: 200, result: (await this.getUserById(id)).reuslt };
     },
 
     async updatedAvatar(id, avatar) {
