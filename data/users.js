@@ -20,8 +20,11 @@ let exportedMethods = {
         const user = await userCollection.findOne({
             email: new RegExp(`^${email}$`, 'i'),
         });
+        if (!user) {
+            throw { status: 404, errorMessage: `No user with email: ${email}` };
+        }
 
-        return user;
+        return { status: 200, rersult: user };
     },
 
     async addUser(nickname, email) {

@@ -5,6 +5,7 @@ const userData = data.users;
 const firebase = require('../config/firebase');
 const axios = require('axios');
 const inputChecker = require('../utility/inputChecker');
+const xss = require('xss');
 
 router.get('/:id', async (req, res) => {
     try {
@@ -18,9 +19,9 @@ router.get('/:id', async (req, res) => {
 router.post('/signup', async (req, res) => {
     try {
         let userInfo = req.body;
-        let email = req.body.email;
-        let nickname = req.body.nickname;
-        let password = req.body.password;
+        let email = xss(req.body.email);
+        let nickname = xss(req.body.nickname);
+        let password = xss(req.body.password);
 
         if (!userInfo) {
             res.status(400).json({
@@ -85,6 +86,47 @@ router.post('/signup', async (req, res) => {
 
         const newUser = await userData.addUser(nickname, email);
         res.status(newUser.status).json(newUser.result);
+    } catch (error) {
+        if (error.response) {
+            res.status(error.response.status).json({
+                error: error.response.data.error.message,
+            });
+        } else {
+            res.status(error.status).json({ error: error.errorMessage });
+        }
+    }
+});
+
+router.post('/signin', async (req, res) => {
+    try {
+        let email = xss(req.body.email);
+        let password = xss(req.body.password);
+
+        if (!email) {
+            res.status(400).json({
+                error: 'No email provided',
+            });
+            return;
+        }
+
+        if (!password) {
+            res.status(400).json({
+                error: 'No password provided',
+            });
+            return;
+        }
+
+        const authData = {
+            email: email,
+            password: password,
+            returnSecureToken: true,
+        };
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${firebase.key}`;
+
+        await axios.post(url, authData);
+
+        const user = await userData.getUserByEmail(email);
+        res.status(user.status).json(user.rersult);
     } catch (error) {
         if (error.response) {
             res.status(error.response.status).json({
