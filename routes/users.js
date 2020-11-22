@@ -6,11 +6,21 @@ const firebase = require('../config/firebase');
 const axios = require('axios');
 const inputChecker = require('../utility/inputChecker');
 const xss = require('xss');
+const { authenticated, admin } = require('../utility/authMiddleware');
 
-router.get('/:id', async (req, res) => {
+router.get('/userinfo/:id', authenticated, async (req, res) => {
     try {
         const user = await userData.getUserById(req.params.id);
         res.status(user.status).json(user.reuslt);
+    } catch (error) {
+        res.status(error.status).json({ error: error.errorMessage });
+    }
+});
+
+router.get('/users', authenticated, admin, async (req, res) => {
+    try {
+        const users = await userData.getAllUsers();
+        res.status(users.status).json(users.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
     }
@@ -126,13 +136,16 @@ router.post('/signin', async (req, res) => {
         const firebaseResult = await axios.post(url, authData);
 
         const user = await userData.getUserByEmail(email);
-        if (!user.result.status) {
+        if (!user.result.state) {
             res.status(403).json({ error: 'Your account has been locked' });
+            return;
         }
-        res.status(user.status).json({
+        const result = {
             ...user.result,
             idToken: firebaseResult.data.idToken,
-        });
+        };
+        req.session.AuthCookie = result;
+        res.status(user.status).json(result);
     } catch (error) {
         if (error.response) {
             res.status(error.response.status).json({
@@ -144,7 +157,7 @@ router.post('/signin', async (req, res) => {
     }
 });
 
-router.post('/password', async (req, res) => {
+router.post('/password', authenticated, async (req, res) => {
     try {
         let idToken = xss(req.body.idToken);
         let password = xss(req.body.password);
@@ -191,7 +204,7 @@ router.post('/password', async (req, res) => {
     }
 });
 
-router.patch('/userinfo/:id', async (req, res) => {
+router.patch('/userinfo/:id', authenticated, async (req, res) => {
     /*
      nickname
      phoneNumber
@@ -267,6 +280,29 @@ router.patch('/userinfo/:id', async (req, res) => {
         console.log(error);
         res.status(error.status).json({ error: error.errorMessage });
     }
+});
+
+router.put('/userstate', admin, async (req, res) => {
+    try {
+        let userId = xss(req.body.userId);
+
+        if (!userId) {
+            res.status(400).json({
+                error: 'No userId provided',
+            });
+            return;
+        }
+
+        const updatedUser = await userData.updatedUserState(userId);
+        res.status(updatedUser.status).json(updatedUser.result);
+    } catch (error) {
+        res.status(error.status).json({ error: error.errorMessage });
+    }
+});
+
+router.get('/logout', authenticated, async (req, res) => {
+    req.session.AuthCookie = undefined;
+    res.status(200).json({ result: 'Logout successful' });
 });
 
 module.exports = router;

@@ -14,6 +14,17 @@ let exportedMethods = {
         return { status: 200, reuslt: user };
     },
 
+    async getAllUsers() {
+        const userCollection = await users();
+
+        const allUsers = await userCollection.find({}).toArray();
+        if (!allUsers) {
+            throw { status: 404, errorMessage: `No users` };
+        }
+
+        return { status: 200, result: allUsers };
+    },
+
     async getUserByEmail(email) {
         const userCollection = await users();
 
@@ -72,6 +83,28 @@ let exportedMethods = {
             throw {
                 status: 500,
                 errorMessage: `Could not update user successfully by id: ${id}`,
+            };
+        }
+
+        return { status: 200, result: (await this.getUserById(id)).reuslt };
+    },
+
+    async updatedUserState(id) {
+        const userCollection = await users();
+
+        const updatedUser = {
+            state: !(await this.getUserById(id)).reuslt.state,
+        };
+
+        const updateInfo = await userCollection.updateOne(
+            { _id: id },
+            { $set: updatedUser }
+        );
+
+        if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+            throw {
+                status: 500,
+                errorMessage: `Could not update user state successfully by id: ${id}`,
             };
         }
 
