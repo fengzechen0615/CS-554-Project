@@ -8,10 +8,10 @@ let exportedMethods = {
 
         const user = await userCollection.findOne({ _id: id });
         if (!user) {
-            throw `No user with id: ${id}`;
+            throw { status: 404, errorMessage: `No user with id: ${id}` };
         }
 
-        return user;
+        return { status: 200, reuslt: user };
     },
 
     async getUserByEmail(email) {
@@ -41,10 +41,13 @@ let exportedMethods = {
 
         const insertInfo = await userCollection.insertOne(newUser);
         if (insertInfo.insertedCount === 0) {
-            throw 'Insert user failed!';
+            throw { status: 500, serrorMessage: 'Insert user failed!' };
         }
 
-        return await this.getUserById(insertInfo.insertedId);
+        return {
+            status: 200,
+            result: (await this.getUserById(insertInfo.insertedId)).reuslt,
+        };
     },
 
     async updatedUser(id, nickname, email, phoneNumber, address, zipCode) {

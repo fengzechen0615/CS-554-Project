@@ -4,30 +4,95 @@ const data = require('../data');
 const userData = data.users;
 const firebase = require('../config/firebase');
 const axios = require('axios');
+const inputChecker = require('../utility/inputChecker');
 
 router.get('/:id', async (req, res) => {
     try {
         const user = await userData.getUserById(req.params.id);
-        res.status(200).json(user);
+        res.status(user.status).json(user.reuslt);
     } catch (error) {
-        res.status(404).json({ error: error });
+        res.status(error.status).json({ error: error.errorMessage });
     }
 });
 
 router.post('/signup', async (req, res) => {
     try {
+        let userInfo = req.body;
+        let email = req.body.email;
+        let nickname = req.body.nickname;
+        let password = req.body.password;
+
+        if (!userInfo) {
+            res.status(400).json({
+                error: 'You must provide data to create a user',
+            });
+            return;
+        }
+
+        if (!nickname) {
+            res.status(400).json({
+                error: 'No nickname provided',
+            });
+            return;
+        }
+
+        // check nickname
+        if (!inputChecker.checkNickname(nickname)) {
+            res.status(400).json({
+                error:
+                    'Nickname must 3-16 characters, only contains lower case word, upper case word or number',
+            });
+            return;
+        }
+
+        if (!email) {
+            res.status(400).json({
+                error: 'No email address provided',
+            });
+            return;
+        }
+
+        // check email
+        if (!inputChecker.checkEmail(email)) {
+            res.status(400).json({ error: 'Not valid e-mail address' });
+            return;
+        }
+
+        if (!password) {
+            res.status(400).json({
+                error: 'No password provided',
+            });
+            return;
+        }
+
+        // check password
+        if (!inputChecker.checkPassword(password)) {
+            res.status(400).json({
+                error:
+                    'Password must 8-16 characters. Only should contain lower case word, upper case word or number',
+            });
+            return;
+        }
+
         const authData = {
-            email: req.body.email,
-            password: req.body.password,
+            email: email,
+            password: password,
             returnSecureToken: true,
         };
-
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${firebase.key}`;
 
-        const result = await axios.post(url, authData);
-        res.status(200).json({ data: result.data.idToken });
+        await axios.post(url, authData);
+
+        const newUser = await userData.addUser(nickname, email);
+        res.status(newUser.status).json(newUser.result);
     } catch (error) {
-        console.log(error);
+        if (error.response) {
+            res.status(error.response.status).json({
+                error: error.response.data.error.message,
+            });
+        } else {
+            res.status(error.status).json({ error: error.errorMessage });
+        }
     }
 });
 
