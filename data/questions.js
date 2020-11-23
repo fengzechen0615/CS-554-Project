@@ -2,11 +2,17 @@ const mongoCollections = require('../config/mongoCollection');
 const questions = mongoCollections.questions;
 const uuid = require('uuid');
 
-async function createQuestion(productId, nickName, question) {
+async function createQuestion(productId, sellerId, nickName, question) {
     if (!productId || typeof productId !== 'string') {
         throw {
             status: 400,
             errorMessage: 'you should input a string as productId',
+        };
+    }
+    if (!sellerId || typeof sellerId !== 'string') {
+        throw {
+            status: 400,
+            errorMessage: 'you should input a string as sellerId',
         };
     }
     if (!nickName || typeof nickName !== 'string') {
@@ -27,6 +33,7 @@ async function createQuestion(productId, nickName, question) {
     let newQuestion = {
         _id: uuid.v4(),
         productId: productId,
+        sellerId: sellerId,
         nickName: nickName,
         question: question,
         answer: null,
@@ -79,6 +86,23 @@ async function getQuestionsByProductId(productId) {
 
     let questionArr = await questionCollection
         .find({ productId: productId })
+        .toArray();
+    return { status: 200, result: questionArr };
+}
+
+async function getQuestionsBySellerId(sellerId) {
+    if (!sellerId || typeof sellerId !== 'string') {
+        throw {
+            status: 400,
+            errorMessage:
+                'You must provide an sellerId to search for questions',
+        };
+    }
+
+    let questionCollection = await questions();
+
+    let questionArr = await questionCollection
+        .find({ sellerId: sellerId })
         .toArray();
     return { status: 200, result: questionArr };
 }
@@ -160,6 +184,7 @@ module.exports = {
     getAllQuestion,
     getQuestionById,
     getQuestionsByProductId,
+    getQuestionsBySellerId,
     giveAnswer,
     deleteOneQuestion,
     deleteAllQuestionInProduct,
