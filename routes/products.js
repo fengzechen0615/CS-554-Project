@@ -46,8 +46,8 @@ router.get('/', authenticated, async (req, res) => {
 // 获取id对应的商品，返回此product
 router.get('/:id', authenticated, async (req, res) => {
     try {
-        let productGoal = await productData.getProductById(req.params.id);
-        res.status(productGoal.status).json(productGoal.reuslt);
+        let productGoal = await productData.getProductById(xss(req.params.id));
+        res.status(productGoal.status).json(productGoal.result);
     } catch (error) {
         res.status(error.status).json(error.errorMessage);
     }
