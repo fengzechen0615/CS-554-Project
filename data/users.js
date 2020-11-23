@@ -18,9 +18,6 @@ let exportedMethods = {
         const userCollection = await users();
 
         const allUsers = await userCollection.find({}).toArray();
-        if (!allUsers) {
-            throw { status: 404, errorMessage: `No users` };
-        }
 
         return { status: 200, result: allUsers };
     },
