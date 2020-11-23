@@ -132,6 +132,7 @@ their products to sell and buy products from other users.
 {
     "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "productId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "sellerId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "nickName": "",
     "question": "",
     "answer": ""
@@ -142,7 +143,8 @@ their products to sell and buy products from other users.
 | :-------- | :----- | :------------------------------------------------------ |
 | \_id      | string | A globally unique identifier to represent the question. |
 | productId | string | product's id.                                           |
-| nickName  | string | The nickname of the Questioner.                         |
+| sellerId  | string | product's id.                                           |
+| nickName  | string | The id of the product seller.                           |
 | answer    | string | The answer from seller/.                                |
 
 #### Order Collection
@@ -223,6 +225,7 @@ their products to sell and buy products from other users.
     ```json
     {
         "productId": "String",
+        "sellerId": "String",
         "nickName": "String",
         "question": "String"
     }
