@@ -4,7 +4,7 @@ const data = require('../data');
 const productData = data.products;
 const questionData = data.questions;
 const xss = require('xss');
-const { authenticated } = require('../utility/authMiddleware');
+const { authenticated, seller, admin } = require('../utility/authMiddleware');
 
 // seller发布一个新product
 // anyone
@@ -49,7 +49,7 @@ router.get('/:id', authenticated, async (req, res) => {
         let productGoal = await productData.getProductById(xss(req.params.id));
         res.status(productGoal.status).json(productGoal.result);
     } catch (error) {
-        res.status(error.status).json(error.errorMessage);
+        res.status(error.status).json({ error: error.errorMessage });
     }
 });
 
@@ -87,15 +87,15 @@ router.post('/answer', authenticated, async (req, res) => {
 
 // 修改价格，返回修改后的product
 // only seller
-router.patch('/:id', authenticated, async (req, res) => {
+router.patch('/:id', authenticated, seller, async (req, res) => {
     try {
-        let productId = req.params.id;
+        let productId = xss(req.params.id);
         let newPrice = Number(req.body.price);
 
         let updatedProduct = await productData.updatePrice(productId, newPrice);
         res.status(updatedProduct.status).json(updatedProduct.result);
     } catch (error) {
-        res.status(error.status).json(error.errorMessage);
+        res.status(error.status).json({ error: error.errorMessage });
     }
 });
 
@@ -140,7 +140,7 @@ router.get('/user/seller', authenticated, async (req, res) => {
         );
         res.status(sellerProducts.status).json(sellerProducts.result);
     } catch (error) {
-        res.status(error.status).json(error.errorMessage);
+        res.status(error.status).json({ error: error.errorMessage });
     }
 });
 

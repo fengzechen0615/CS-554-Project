@@ -130,7 +130,7 @@ async function updatePrice(id, price) {
     if (!id || typeof id !== 'string')
         throw {
             status: 400,
-            errorMessage: 'You must provide an id to uodate Product',
+            errorMessage: 'You must provide an id to update Product',
         };
     if (!price || typeof price !== 'number') {
         throw {
