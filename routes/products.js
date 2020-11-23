@@ -60,8 +60,12 @@ router.post('/questions', authenticated, async (req, res) => {
         let nickName = xss(req.session.AuthCookie.nickname);
         let question = xss(req.body.question);
 
+        const sellerId = (await productData.getProductById(productId)).result
+            .sellerId;
+        console.log(sellerId);
         let questionCreated = await questionData.createQuestion(
             productId,
+            sellerId,
             nickName,
             question
         );
@@ -73,9 +77,9 @@ router.post('/questions', authenticated, async (req, res) => {
 
 // 回答，返回被回答的问题与答案
 // only seller
-router.post('/answer', authenticated, async (req, res) => {
+router.post('/answer/:questionId', authenticated, seller, async (req, res) => {
     try {
-        let questionId = xss(req.body.questionId);
+        let questionId = xss(req.params.questionId);
         let answer = xss(req.body.answer);
 
         let answerGiven = await questionData.giveAnswer(questionId, answer);
@@ -87,9 +91,9 @@ router.post('/answer', authenticated, async (req, res) => {
 
 // 修改价格，返回修改后的product
 // only seller
-router.patch('/:id', authenticated, seller, async (req, res) => {
+router.patch('/:productId', authenticated, seller, async (req, res) => {
     try {
-        let productId = xss(req.params.id);
+        let productId = xss(req.params.productId);
         let newPrice = Number(req.body.price);
 
         let updatedProduct = await productData.updatePrice(productId, newPrice);
