@@ -116,7 +116,7 @@ router.delete('/quesitons/:id', authenticated, async (req, res) => {
 // seller and admin
 router.delete('/:id', authenticated, async (req, res) => {
     try {
-        let productId = req.params.id;
+        let productId = xss(req.params.id);
 
         let productDeleted = await productData.deleteProduct(productId);
         let questionsDeleted = await questionData.deleteAllQuestionInProduct(
@@ -124,10 +124,10 @@ router.delete('/:id', authenticated, async (req, res) => {
         );
         res.status(productDeleted.status).json({
             products: productDeleted.result,
-            questions: questionsDeleted,
+            questions: questionsDeleted.result,
         });
     } catch (error) {
-        res.status(404).json(error);
+        res.status(error.status).json(error.errorMessage);
     }
 });
 
