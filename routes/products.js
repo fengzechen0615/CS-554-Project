@@ -103,12 +103,12 @@ router.patch('/:id', authenticated, seller, async (req, res) => {
 // seller and admin
 router.delete('/quesitons/:id', authenticated, async (req, res) => {
     try {
-        let questionId = req.params.id;
+        let questionId = xss(req.params.id);
 
         let questionDeleted = await questionData.deleteOneQuestion(questionId);
-        res.status(200).json(questionDeleted);
+        res.status(questionDeleted.status).json(questionDeleted.result);
     } catch (error) {
-        res.status(404).json(error);
+        res.status(error.status).json(error.errorMessage);
     }
 });
 
