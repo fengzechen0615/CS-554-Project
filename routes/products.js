@@ -56,18 +56,18 @@ router.get('/:id', authenticated, async (req, res) => {
 // 提问，返回这个问题
 router.post('/questions', authenticated, async (req, res) => {
     try {
-        let productId = req.body.productId;
-        let nickName = req.body.nickName;
-        let question = req.body.question;
+        let productId = xss(req.body.productId);
+        let nickName = xss(req.session.AuthCookie.nickname);
+        let question = xss(req.body.question);
 
         let questionCreated = await questionData.createQuestion(
             productId,
             nickName,
             question
         );
-        res.status(200).json(questionCreated);
+        res.status(questionCreated.status).json(questionCreated.result);
     } catch (error) {
-        res.status(404).json(error);
+        res.status(error.status).json({ error: error.errorMessage });
     }
 });
 
