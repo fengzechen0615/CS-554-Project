@@ -3,22 +3,20 @@ const router = express.Router();
 const data = require('../data');
 const productData = data.products;
 const questionData = data.questions;
+const xss = require('xss');
 const { authenticated } = require('../utility/authMiddleware');
 
 // seller发布一个新product
 // anyone
 router.post('/', authenticated, async (req, res) => {
     try {
-        let sellerId = req.body.sellerId;
-        let productName = req.body.productName;
-        let description = req.body.description;
-        let categoryArr = req.body.categoryArr;
-        let imageUrl = req.body.imageUrl;
-        let stock = Number(req.body.stock);
-        let price = Number(req.body.price);
-
-        if (stock <= 0) throw 'stock should > 0';
-        if (price <= 0) throw 'price should > 0';
+        let sellerId = req.session.AuthCookie._id;
+        let productName = xss(req.body.productName);
+        let description = xss(req.body.description);
+        let categoryArr = req.body.categoryArr.map((item) => xss(item));
+        let imageUrl = xss(req.body.imageUrl);
+        let stock = Number(xss(req.body.stock));
+        let price = Number(xss(req.body.price));
 
         let newProduct = await productData.createPoduct(
             sellerId,
@@ -29,9 +27,9 @@ router.post('/', authenticated, async (req, res) => {
             stock,
             price
         );
-        res.status(200).json(newProduct);
+        res.status(newProduct.status).json(newProduct.result);
     } catch (error) {
-        res.status(404).json(error);
+        res.status(error.status).json({ error: error.errorMessage });
     }
 });
 
@@ -39,9 +37,9 @@ router.post('/', authenticated, async (req, res) => {
 router.get('/', authenticated, async (req, res) => {
     try {
         let allProduct = await productData.getAllProduct();
-        res.status(200).json(allProduct);
+        res.status(allProduct.status).json(allProduct.reuslt);
     } catch (error) {
-        res.status(404).json(error);
+        res.status(error.status).json({ error: error.errorMessage });
     }
 });
 
@@ -49,9 +47,9 @@ router.get('/', authenticated, async (req, res) => {
 router.get('/:id', authenticated, async (req, res) => {
     try {
         let productGoal = await productData.getProductById(req.params.id);
-        res.status(200).json(productGoal);
+        res.status(productGoal.status).json(productGoal.reuslt);
     } catch (error) {
-        res.status(404).json(error);
+        res.status(error.status).json(error.errorMessage);
     }
 });
 
@@ -95,9 +93,9 @@ router.patch('/:id', authenticated, async (req, res) => {
         let newPrice = Number(req.body.price);
 
         let updatedProduct = await productData.updatePrice(productId, newPrice);
-        res.status(200).json(updatedProduct);
+        res.status(updatedProduct.status).json(updatedProduct.result);
     } catch (error) {
-        res.status(404).json(error);
+        res.status(error.status).json(error.errorMessage);
     }
 });
 
@@ -124,7 +122,10 @@ router.delete('/:id', authenticated, async (req, res) => {
         let questionsDeleted = await questionData.deleteAllQuestionInProduct(
             productId
         );
-        res.status(200).json({ productDeleted, questionsDeleted });
+        res.status(productDeleted.status).json({
+            products: productDeleted.result,
+            questions: questionsDeleted,
+        });
     } catch (error) {
         res.status(404).json(error);
     }
@@ -132,14 +133,14 @@ router.delete('/:id', authenticated, async (req, res) => {
 
 // 查询此用户作为seller发布的所有product,返回一个数组
 // only seller
-router.get('/user/:id', authenticated, async (req, res) => {
+router.get('/user/seller', authenticated, async (req, res) => {
     try {
-        let sellerId = req.params.id;
-
-        let sellerProducts = await productData.getProductsBySellerId(sellerId);
-        res.status(200).json(sellerProducts);
+        let sellerProducts = await productData.getProductsBySellerId(
+            req.session.AuthCookie._id
+        );
+        res.status(sellerProducts.status).json(sellerProducts.result);
     } catch (error) {
-        res.status(404).json(error);
+        res.status(error.status).json(error.errorMessage);
     }
 });
 
