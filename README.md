@@ -206,6 +206,19 @@ their products to sell and buy products from other users.
 #### Product Page
 
 -   **get('v1/products/:id')**
+-   **get('v1/products/user/:id')**
+-   **post('v1/products/')**
+    ```json
+    {
+        "sellerId": "String",
+        "productName": "String",
+        "description": "String",
+        "categoryArr": "Array",
+        "imageUrl": "String",
+        "stock": "Number",
+        "price": "Number"
+    }
+    ```
 -   **post('v1/products/questions')**
     ```json
     {
@@ -229,6 +242,24 @@ their products to sell and buy products from other users.
     ```
 -   **delete('v1/products/quesitons/:id)**
 -   **delete('v1/products/:id')**
+
+-   **get('v1/orders/buyer/:id')**
+-   **get('v1/orders/seller/:id')**
+-   **post('v1/orders/')**
+    ```json
+    {
+        "productId": "String",
+        "sellerId": "String",
+        "buyerId": "String",
+        "adress": "String",
+        "price": "Number",
+        "dealNumber": "Number",
+        "productName": "String",
+        "discription": "String",
+        "imgUrl": "String"
+    }
+    ```
+-   **patch('v1/orders/:id')**
 
 #### User Information Page
 
