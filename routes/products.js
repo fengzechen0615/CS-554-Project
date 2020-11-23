@@ -4,7 +4,12 @@ const data = require('../data');
 const productData = data.products;
 const questionData = data.questions;
 const xss = require('xss');
-const { authenticated, seller, admin } = require('../utility/authMiddleware');
+const {
+    authenticated,
+    seller,
+    admin,
+    sellerAndAdmin,
+} = require('../utility/authMiddleware');
 
 // seller发布一个新product
 // anyone
@@ -118,22 +123,27 @@ router.delete('/quesitons/:id', authenticated, async (req, res) => {
 
 // 删除商品（此router会同时删除该商品下所有的question），返回被删除的商品与被删除的问题
 // seller and admin
-router.delete('/:id', authenticated, async (req, res) => {
-    try {
-        let productId = xss(req.params.id);
+router.delete(
+    '/:productId',
+    authenticated,
+    sellerAndAdmin,
+    async (req, res) => {
+        try {
+            let productId = xss(req.params.productId);
 
-        let productDeleted = await productData.deleteProduct(productId);
-        let questionsDeleted = await questionData.deleteAllQuestionInProduct(
-            productId
-        );
-        res.status(productDeleted.status).json({
-            products: productDeleted.result,
-            questions: questionsDeleted.result,
-        });
-    } catch (error) {
-        res.status(error.status).json(error.errorMessage);
+            let productDeleted = await productData.deleteProduct(productId);
+            let questionsDeleted = await questionData.deleteAllQuestionInProduct(
+                productId
+            );
+            res.status(productDeleted.status).json({
+                products: productDeleted.result,
+                questions: questionsDeleted.result,
+            });
+        } catch (error) {
+            res.status(error.status).json(error.errorMessage);
+        }
     }
-});
+);
 
 // 查询此用户作为seller发布的所有product,返回一个数组
 // only seller

@@ -20,6 +20,29 @@ function admin(req, res, next) {
 }
 
 async function seller(req, res, next) {
+    let sellerId = await getSellerId(req, res);
+
+    if (sellerId === req.session.AuthCookie._id) {
+        next();
+    } else {
+        res.status(401).json({ error: 'Request Fobidden' });
+    }
+}
+
+async function sellerAndAdmin(req, res, next) {
+    let sellerId = await getSellerId(req, res);
+
+    if (
+        sellerId === req.session.AuthCookie._id ||
+        req.session.AuthCookie.isAdmin
+    ) {
+        next();
+    } else {
+        res.status(401).json({ error: 'Request Fobidden' });
+    }
+}
+
+async function getSellerId(req, res) {
     try {
         let sellerId = null;
         if (req.params.productId) {
@@ -31,11 +54,7 @@ async function seller(req, res, next) {
                 await questionData.getQuestionById(xss(req.params.questionId))
             ).result.sellerId;
         }
-        if (sellerId === req.session.AuthCookie._id) {
-            next();
-        } else {
-            res.status(401).json({ error: 'Request Fobidden' });
-        }
+        return sellerId;
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
     }
@@ -45,4 +64,5 @@ module.exports = {
     authenticated: authenticated,
     admin: admin,
     seller: seller,
+    sellerAndAdmin: sellerAndAdmin,
 };

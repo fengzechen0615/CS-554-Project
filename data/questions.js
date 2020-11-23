@@ -176,7 +176,7 @@ async function deleteAllQuestionInProduct(productId) {
             errorMessage: `Delete all questions failed`,
         };
     }
-    return { status: 200, result: questionsToDelete };
+    return { status: 200, result: questionsToDelete.result };
 }
 
 module.exports = {
