@@ -3,13 +3,27 @@ const questions = mongoCollections.questions;
 const uuid = require('uuid');
 
 async function createQuestion(productId, nickName, question) {
-    if (!productId || typeof productId !== 'string')
-        throw 'you should input a string as productId';
-    if (!nickName || typeof nickName !== 'string')
-        throw 'you should input a string as nickName';
-    if (!question || typeof question !== 'string')
-        throw 'you should input a string as the question';
+    if (!productId || typeof productId !== 'string') {
+        throw {
+            status: 400,
+            errorMessage: 'you should input a string as productId',
+        };
+    }
+    if (!nickName || typeof nickName !== 'string') {
+        throw {
+            status: 400,
+            errorMessage: 'you should input a string as nickName',
+        };
+    }
+    if (!question || typeof question !== 'string') {
+        throw {
+            status: 400,
+            errorMessage: 'you should input a string as the question',
+        };
+    }
+
     let questionCollection = await questions();
+
     let newQuestion = {
         _id: uuid.v4(),
         productId: productId,
@@ -18,43 +32,70 @@ async function createQuestion(productId, nickName, question) {
         answer: null,
     };
     let insertInfo = await questionCollection.insertOne(newQuestion);
-    if (insertInfo.insertedCount === 0)
-        throw 'Something wrong when creating the question';
+    if (insertInfo.insertedCount === 0) {
+        throw {
+            error: 500,
+            errorMessage: 'Something wrong when creating the question',
+        };
+    }
     let newId = insertInfo.insertedId;
-    let questionCreated = await getQuestionById(newId);
-    return questionCreated;
+    return { status: 200, result: (await getQuestionById(newId)).result };
 }
 
 async function getAllQuestion() {
     let questionCollection = await questions();
+
     let allQuestion = await questionCollection.find({}).toArray();
-    return allQuestion;
+    return { status: 200, result: allQuestion };
 }
 
 async function getQuestionById(id) {
-    if (!id || typeof id !== 'string')
-        throw 'You must provide an question id to search for a question';
+    if (!id || typeof id !== 'string') {
+        throw {
+            status: 400,
+            error: 'You must provide an question id to search for a question',
+        };
+    }
+
     let questionCollection = await questions();
+
     let questionGoal = await questionCollection.findOne({ _id: id });
-    if (questionGoal === null) throw 'No Question with that id';
-    return questionGoal;
+    if (questionGoal === null) {
+        throw { status: 404, errorMessage: `No Question with that ${id}` };
+    }
+    return { status: 200, result: questionGoal };
 }
 
 async function getQuestionsByProductId(productId) {
-    if (!productId || typeof productId !== 'string')
-        throw 'You must provide an productId to search for its questions';
+    if (!productId || typeof productId !== 'string') {
+        throw {
+            status: 400,
+            errorMessage:
+                'You must provide an productId to search for its questions',
+        };
+    }
+
     let questionCollection = await questions();
+
     let questionArr = await questionCollection
         .find({ productId: productId })
         .toArray();
-    return questionArr;
+    return { status: 200, result: questionArr };
 }
 
 async function giveAnswer(id, answer) {
-    if (!id || typeof id !== 'string') throw 'You must provide an id to answer';
-    if (!answer || typeof answer !== 'string')
-        throw 'You must provide a string as answer';
+    if (!id || typeof id !== 'string') {
+        throw { status: 400, errorMessage: 'You must provide an id to answer' };
+    }
+    if (!answer || typeof answer !== 'string') {
+        throw {
+            status: 400,
+            errorMessage: 'You must provide a string as answer',
+        };
+    }
+
     let questionCollection = await questions();
+
     let updateInfo = await questionCollection.updateOne(
         { _id: id },
         {
@@ -64,32 +105,54 @@ async function giveAnswer(id, answer) {
         }
     );
     if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
-        throw 'Could not give the answer';
+        throw { status: 500, errorMessage: 'Could not give the answer' };
     }
-    return await getQuestionById(id);
+    return { status: 200, result: (await getQuestionById(id)).result };
 }
 
 async function deleteOneQuestion(id) {
-    if (!id || typeof id !== 'string')
-        throw 'You must provide an id to delete Question';
+    if (!id || typeof id !== 'string') {
+        throw {
+            status: 400,
+            errorMessage: 'You must provide an id to delete Question',
+        };
+    }
+
     let questionCollection = await questions();
-    let questionToDelete = await getQuestionById(id);
+
+    let questionToDelete = (await getQuestionById(id)).result;
     let deletionInfo = await questionCollection.removeOne({ _id: id });
-    if (deletionInfo.deletedCount === 0)
-        throw `Could not delete the Question with this id`;
-    return questionToDelete;
+    if (deletionInfo.deletedCount === 0) {
+        throw {
+            status: 500,
+            errorMessage: `Could not delete the Question with this ${id}`,
+        };
+    }
+    return { status: 200, result: questionToDelete };
 }
 
 async function deleteAllQuestionInProduct(productId) {
-    if (!productId || typeof productId !== 'string')
-        throw 'You must provide a productId to delete its Question';
+    if (!productId || typeof productId !== 'string') {
+        throw {
+            status: 400,
+            errorMessage: 'You must provide a productId to delete its Question',
+        };
+    }
+
     let questionCollection = await questions();
+
     let questionsToDelete = await getQuestionsByProductId(productId);
     let deletionInfo = await questionCollection.remove({
         //deleteMany
         productId: productId,
     });
-    return questionsToDelete;
+    if (deletionInfo.deletedCount === 0) {
+        throw {
+            status: 500,
+            errorMessage: `Delete all questions failed`,
+        };
+    }
+    return { status: 200, result: questionsToDelete };
 }
 
 module.exports = {
