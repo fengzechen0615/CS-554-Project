@@ -110,16 +110,23 @@ router.patch('/:productId', authenticated, seller, async (req, res) => {
 
 // 删除问题，返回被删除的问题
 // seller and admin
-router.delete('/quesitons/:id', authenticated, async (req, res) => {
-    try {
-        let questionId = xss(req.params.id);
+router.delete(
+    '/questions/:questionId',
+    authenticated,
+    sellerAndAdmin,
+    async (req, res) => {
+        try {
+            let questionId = xss(req.params.questionId);
 
-        let questionDeleted = await questionData.deleteOneQuestion(questionId);
-        res.status(questionDeleted.status).json(questionDeleted.result);
-    } catch (error) {
-        res.status(error.status).json(error.errorMessage);
+            let questionDeleted = await questionData.deleteOneQuestion(
+                questionId
+            );
+            res.status(questionDeleted.status).json(questionDeleted.result);
+        } catch (error) {
+            res.status(error.status).json({ error: error.errorMessage });
+        }
     }
-});
+);
 
 // 删除商品（此router会同时删除该商品下所有的question），返回被删除的商品与被删除的问题
 // seller and admin
@@ -140,7 +147,7 @@ router.delete(
                 questions: questionsDeleted.result,
             });
         } catch (error) {
-            res.status(error.status).json(error.errorMessage);
+            res.status(error.status).json({ error: error.errorMessage });
         }
     }
 );
