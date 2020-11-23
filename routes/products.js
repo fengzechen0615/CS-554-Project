@@ -75,13 +75,13 @@ router.post('/questions', authenticated, async (req, res) => {
 // only seller
 router.post('/answer', authenticated, async (req, res) => {
     try {
-        let questionId = req.body.questionId;
-        let answer = req.body.answer;
+        let questionId = xss(req.body.questionId);
+        let answer = xss(req.body.answer);
 
         let answerGiven = await questionData.giveAnswer(questionId, answer);
-        res.status(200).json(answerGiven);
+        res.status(answerGiven.status).json(answerGiven.result);
     } catch (error) {
-        res.status(404).json(error);
+        res.status(error.status).json({ error: error.errorMessage });
     }
 });
 
