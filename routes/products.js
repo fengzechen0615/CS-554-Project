@@ -37,7 +37,7 @@ router.post('/', authenticated, async (req, res) => {
 router.get('/', authenticated, async (req, res) => {
     try {
         let allProduct = await productData.getAllProduct();
-        res.status(allProduct.status).json(allProduct.reuslt);
+        res.status(allProduct.status).json(allProduct.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
     }

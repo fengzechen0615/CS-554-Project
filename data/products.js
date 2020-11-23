@@ -89,7 +89,7 @@ async function createPoduct(
 async function getAllProduct() {
     let productCollection = await products();
     let allProducts = await productCollection.find({}).toArray();
-    return { status: 200, reuslt: allProducts };
+    return { status: 200, result: allProducts };
 }
 
 async function getProductById(id) {
@@ -123,7 +123,7 @@ async function getProductsBySellerId(sellerId) {
     let productArr = await productCollection
         .find({ sellerId: sellerId })
         .toArray();
-    return { status: 200, reuslt: productArr };
+    return { status: 200, result: productArr };
 }
 
 async function updatePrice(id, price) {
