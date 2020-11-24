@@ -15,49 +15,49 @@ async function createOrder(
 ) {
     if (!productId || typeof productId !== 'string') {
         throw {
-            status: 200,
+            status: 400,
             errorMessage: 'you should input a string as productId',
         };
     }
     if (!sellerId || typeof sellerId !== 'string') {
         throw {
-            status: 200,
+            status: 400,
             errorMessage: 'you should input a string as sellerId',
         };
     }
     if (!buyerId || typeof buyerId !== 'string') {
         throw {
-            status: 200,
+            status: 400,
             errorMessage: 'you should input a string as buyerId',
         };
     }
     if (!adress || typeof adress !== 'string') {
         throw {
-            status: 200,
-            errorMessage: 'you should input a string as adress',
+            status: 400,
+            errorMessage: 'you should input a string as address',
         };
     }
     if (!price || typeof price !== 'number') {
         throw {
-            status: 200,
-            errorMessage: 'you should input a numer as the price',
+            status: 400,
+            errorMessage: 'you should input a number as the price',
         };
     }
     if (!dealNumber || typeof dealNumber !== 'number') {
         throw {
-            status: 200,
-            errorMessage: 'you should input a numer as the dealNumber',
+            status: 400,
+            errorMessage: 'you should input a number as the dealNumber',
         };
     }
     if (!description || typeof description !== 'string') {
         throw {
-            status: 200,
+            status: 400,
             errorMessage: 'you should input a string as description',
         };
     }
     if (!imgUrl || typeof imgUrl !== 'string') {
         throw {
-            status: 200,
+            status: 400,
             errorMessage: 'you should input a string as imgUrl',
         };
     }
@@ -93,7 +93,7 @@ async function createOrder(
 async function getAllOrder() {
     let orderCollection = await orders();
     let allOrder = await orderCollection.find({}).toArray();
-    return { status: 200, result: allOrder };
+    return { status: 400, result: allOrder };
 }
 
 async function getOrderById(id) {

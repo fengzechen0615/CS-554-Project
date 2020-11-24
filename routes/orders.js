@@ -3,21 +3,17 @@ const router = express.Router();
 const data = require('../data');
 const orderData = data.orders;
 const xss = require('xss');
-const {
-    authenticated,
-    seller,
-    sellerAndAdmin,
-} = require('../utility/authMiddleware');
+const { authenticated } = require('../utility/authMiddleware');
 
 // Create a new Order (default isCompleted is false), return the order information
 router.post('/', authenticated, async (req, res) => {
     try {
         let productId = xss(req.body.productId);
         let sellerId = xss(req.body.sellerId);
-        let buyerId = xss(req.body.buyerId);
-        let adress = xss(req.body.adress);
-        let price = xss(req.body.price);
-        let dealNumber = xss(req.body.dealNumber);
+        let buyerId = xss(req.session.AuthCookie._id);
+        let adress = xss(req.body.address);
+        let price = Number(xss(req.body.price));
+        let dealNumber = Number(xss(req.body.dealNumber));
         let productName = xss(req.body.productName);
         let discription = xss(req.body.discription);
         let imgUrl = xss(req.body.imgUrl);
@@ -52,9 +48,9 @@ router.patch('/:id', authenticated, async (req, res) => {
 });
 
 // Get a user's all the orders as the buyer
-router.get('/buyer/:id', authenticated, async (req, res) => {
+router.get('/buyer', authenticated, async (req, res) => {
     try {
-        let buyerId = xss(req.params.id);
+        let buyerId = xss(req.session.AuthCookie._id);
 
         let buyerOrders = await orderData.getOrderByBuyerId(buyerId);
         res.status(buyerOrders.status).json(buyerOrders.result);
@@ -64,9 +60,9 @@ router.get('/buyer/:id', authenticated, async (req, res) => {
 });
 
 // Get a user's all the orders as the seller
-router.get('/seller/:id', authenticated, async (req, res) => {
+router.get('/seller', authenticated, async (req, res) => {
     try {
-        let sellerId = xss(req.params.id);
+        let sellerId = xss(req.session.AuthCookie._id);
 
         let sellerOrders = await orderData.getOrderBySellerId(sellerId);
         res.status(sellerOrders.status).json(sellerOrders.result);
