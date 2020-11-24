@@ -333,7 +333,6 @@ their products to sell and buy products from other users.
     {
         "productId": "String",
         "sellerId": "String",
-        "buyerId": "String",
         "adress": "String",
         "price": "Number",
         "dealNumber": "Number",
