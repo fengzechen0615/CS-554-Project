@@ -198,20 +198,25 @@ their products to sell and buy products from other users.
 
 ##### GET
 
--   **get('v1/users/userinfo')**
--   **get('v1/users/users')**
--   **get('v1/userrs/logout')**
+-   **get('v1/users/userinfo')**  
+    _Access_: authenticated
+-   **get('v1/users/users')**  
+    _Access_: authenticated, admin
+-   **get('v1/userrs/logout')**  
+    _Access_: authenticated
 
 ##### POST
 
--   **post('v1/users/signin')**
+-   **post('v1/users/signin')**  
+    _Access_: null
     ```json
     {
         "email": "String",
         "password": "String"
     }
     ```
--   **post('v1/users/signup')**
+-   **post('v1/users/signup')**  
+    _Access_: null
     ```json
     {
         "email": "String",
@@ -219,7 +224,8 @@ their products to sell and buy products from other users.
         "password": "String"
     }
     ```
--   **post('v1/users/password)**
+-   **post('v1/users/password)**  
+    _Access_: authenticated
     ```json
     {
         "idToken": "String",
@@ -229,7 +235,8 @@ their products to sell and buy products from other users.
 
 ##### PUT
 
--   **put('v1/users/userstate)**
+-   **put('v1/users/userstate)**  
+    _Access_: authenticated, admin
     ```json
     {
         "userid": "String"
@@ -238,7 +245,8 @@ their products to sell and buy products from other users.
 
 ##### PATCH
 
--   **patch('v1/users/userinfo')**
+-   **patch('v1/users/userinfo')**  
+    _Access_: authenticated
     ```json
     {
         "nickname": "String",
@@ -252,13 +260,17 @@ their products to sell and buy products from other users.
 
 ##### GET
 
--   **get('v1/products)**
--   **get('v1/products/:id')**
--   **get('v1/products/user/seller')**
+-   **get('v1/products)**  
+    _Access_: authenticated
+-   **get('v1/products/:id')**  
+    _Access_: authenticated
+-   **get('v1/products/user/seller')**  
+    _Access_: authenticated
 
 ##### POST
 
--   **post('v1/products/')**
+-   **post('v1/products/')**  
+    _Access_: authenticated
     ```json
     {
         "sellerId": "String",
@@ -270,7 +282,8 @@ their products to sell and buy products from other users.
         "price": "Number"
     }
     ```
--   **post('v1/products/questions')**
+-   **post('v1/products/questions')**  
+    _Access_: authenticated
     ```json
     {
         "productId": "String",
@@ -278,7 +291,8 @@ their products to sell and buy products from other users.
         "question": "String"
     }
     ```
--   **post('v1/products/answer/:quesitonId')**
+-   **post('v1/products/answer/:quesitonId')**  
+    _Access_: authenticated, seller
     ```json
     {
         "answer": "String"
@@ -287,7 +301,8 @@ their products to sell and buy products from other users.
 
 ##### PATCH
 
--   **patch('v1/products/:productId')**
+-   **patch('v1/products/:productId')**  
+    _Access_: authenticated, seller
     ```json
     {
         "price": "Number"
@@ -296,8 +311,10 @@ their products to sell and buy products from other users.
 
 ##### DELETE
 
--   **delete('v1/products/quesitons/:questionId)**
--   **delete('v1/products/:productId')**
+-   **delete('v1/products/quesitons/:questionId)**  
+    _Access_: authenticated, seller, admin
+-   **delete('v1/products/:productId')**  
+    _Access_: authenticated, seller, admin
 
 #### Orders
 
