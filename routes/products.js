@@ -7,7 +7,6 @@ const xss = require('xss');
 const {
     authenticated,
     seller,
-    admin,
     sellerAndAdmin,
 } = require('../utility/authMiddleware');
 
