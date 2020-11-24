@@ -14,11 +14,22 @@
         -   [Quesiton Collection](#quesiton-collection)
         -   [Order Collection](#order-collection)
     -   [API](#api)
-        -   [Sign in/up Page](#sign-in-up-page)
-        -   [Main Page](#main-page)
-        -   [Product Page](#product-page)
-        -   [User Information Page](#user-information-page)
+        -   [Users](#users)
+            -   [GET](#get)
+            -   [POST](#post)
+            -   [PUT](#put)
+            -   [PATCH](#patch)
+        -   [Products](#products)
+            -   [GET](#get-1)
+            -   [POST](#post-1)
+            -   [PATCH](#patch-1)
+            -   [DELETE](#delete)
+        -   [Orders](#orders)
+            -   [GET](#get-2)
+            -   [POST](#post-2)
+            -   [PATCH](#patch-2)
     -   [Other](#other)
+        -   [Format](#format)
         -   [Http Status Code](#http-status-code)
 
 ### Description
@@ -80,7 +91,7 @@ their products to sell and buy products from other users.
     "phoneNumber": "5513008708",
     "address": "1 Castle Point Terrace, Hoboken",
     "zipCode": "07030",
-    "avatar": "",
+    "avatar": "avatar.png",
     "isAdmin": false,
     "state": true
 }
@@ -104,13 +115,13 @@ their products to sell and buy products from other users.
 {
     "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "sellerId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "productName": "",
-    "description": "",
-    "categoryArr": ["", ""],
-    "imageUrl": "",
+    "productName": "Product",
+    "description": "This is product",
+    "categoryArr": ["product1", "product2"],
+    "imageUrl": "productImg.png",
     "stock": 10,
     "price": 10000,
-    "time": "new Date()"
+    "time": "2020-11-23T23:51:33.927Z"
 }
 ```
 
@@ -133,9 +144,9 @@ their products to sell and buy products from other users.
     "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "productId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "sellerId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "nickName": "",
-    "question": "",
-    "answer": ""
+    "nickName": "nickName",
+    "question": "This is a question.",
+    "answer": "This is an answer."
 }
 ```
 
@@ -155,14 +166,14 @@ their products to sell and buy products from other users.
     "productId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "sellerId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "buyerId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
-    "address": "",
-    "orderTime": "new Date()",
+    "address": "1 Castle Point Terrace, Hoboken",
+    "orderTime": "2020-11-23T23:51:33.927Z",
     "isCompleted": false,
     "price": 2,
     "dealNumber": 2,
-    "productName": "",
-    "description": "",
-    "imageUrl": ""
+    "productName": "Product",
+    "description": "This is a product",
+    "imageUrl": "productImg.png"
 }
 ```
 
@@ -183,7 +194,15 @@ their products to sell and buy products from other users.
 
 ### API
 
-#### Sign in/up Page
+#### Users
+
+##### GET
+
+-   **get('v1/users/userinfo')**
+-   **get('v1/users/users')**
+-   **get('v1/userrs/logout')**
+
+##### POST
 
 -   **post('v1/users/signin')**
     ```json
@@ -200,15 +219,45 @@ their products to sell and buy products from other users.
         "password": "String"
     }
     ```
+-   **post('v1/users/password)**
+    ```json
+    {
+        "idToken": "String",
+        "newPassword": "String"
+    }
+    ```
 
-#### Main Page
+##### PUT
+
+-   **put('v1/users/userstate)**
+    ```json
+    {
+        "userid": "String"
+    }
+    ```
+
+##### PATCH
+
+-   **patch('v1/users/userinfo')**
+    ```json
+    {
+        "nickname": "String",
+        "phoneNumber": "String",
+        "address": "String",
+        "zipCode": "String"
+    }
+    ```
+
+#### Products
+
+##### GET
 
 -   **get('v1/products)**
-
-#### Product Page
-
 -   **get('v1/products/:id')**
--   **get('v1/products/user/:id')**
+-   **get('v1/products/user/seller')**
+
+##### POST
+
 -   **post('v1/products/')**
     ```json
     {
@@ -225,29 +274,40 @@ their products to sell and buy products from other users.
     ```json
     {
         "productId": "String",
-        "sellerId": "String",
         "nickName": "String",
         "question": "String"
     }
     ```
--   **post('v1/products/answer')**
+-   **post('v1/products/answer/:quesitonId')**
     ```json
     {
-        "productId": "String",
         "answer": "String"
     }
     ```
--   **patch('v1/products/:id')**
+
+##### PATCH
+
+-   **patch('v1/products/:productId')**
     ```json
     {
         "price": "Number"
     }
     ```
--   **delete('v1/products/quesitons/:id)**
--   **delete('v1/products/:id')**
+
+##### DELETE
+
+-   **delete('v1/products/quesitons/:questionId)**
+-   **delete('v1/products/:productId')**
+
+#### Orders
+
+##### GET
 
 -   **get('v1/orders/buyer/:id')**
 -   **get('v1/orders/seller/:id')**
+
+##### POST
+
 -   **post('v1/orders/')**
     ```json
     {
@@ -262,47 +322,20 @@ their products to sell and buy products from other users.
         "imgUrl": "String"
     }
     ```
+
+##### PATCH
+
 -   **patch('v1/orders/:id')**
 
-#### User Information Page
-
--   **get('v1/user/:id')**
--   **get('v1/user/:id/orders')**
--   **get('v1/user/:id/products')**
--   **patch('v1/user/:id')**
-    ```json
-    {
-        "userName": "String",
-        "email": "String",
-        "phoneNumber": "String",
-        "address": "String",
-        "zipCode": "String",
-        "password": "String",
-        "avatar": "String"
-    }
-    ```
--   **post('v1/user/password)**
-    ```json
-    {
-        "idToken": "String",
-        "newPassword": "String"
-    }
-    ```
--   **post('v1/user/products')**
-    ```json
-    {
-        "seller": "String",
-        "name": "String",
-        "description": "String",
-        "category": ["String", "String"],
-        "imageUrl": "String",
-        "stock": "Number",
-        "price": "Number"
-    }
-    ```
--   **delete('v1/user/products/:id')**
-
 ### Other
+
+#### Format
+
+-   **userName**: 3-16 characters, only contains lower case word, upper case word & number
+-   **email**: basic email format
+-   **password**:
+    1. 8-16 characters
+    2. Should only contains lower case word, upper case word & number
 
 #### Http Status Code
 
@@ -313,5 +346,3 @@ their products to sell and buy products from other users.
 | 401         | Unauthorized          | the user does not have valid authentication credentials for the target resource.                                      |
 | 404         | Not Found             | The requested resource could not be found but may be available in the future.                                         |
 | 500         | Internal Server Error | A generic error message, given when an unexpected condition was encountered and no more specific message is suitable. |
-
-#### Authority
