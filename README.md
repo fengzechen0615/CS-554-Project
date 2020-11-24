@@ -320,12 +320,15 @@ their products to sell and buy products from other users.
 
 ##### GET
 
--   **get('v1/orders/buyer/:id')**
--   **get('v1/orders/seller/:id')**
+-   **get('v1/orders/buyer')**  
+    _Access_: authenticated
+-   **get('v1/orders/seller')**  
+    _Access_: authenticated
 
 ##### POST
 
--   **post('v1/orders/')**
+-   **post('v1/orders/')**  
+    _Access_: authenticated
     ```json
     {
         "productId": "String",
@@ -342,7 +345,8 @@ their products to sell and buy products from other users.
 
 ##### PATCH
 
--   **patch('v1/orders/:id')**
+-   **patch('v1/orders/:id')**  
+    _Access_: authenticated
 
 ### Other
 
