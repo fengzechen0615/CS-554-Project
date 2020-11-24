@@ -1,26 +1,27 @@
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
-// const userData = data.users;
-// const productData = data.products;
-// const questionData = data.questions;
 const orderData = data.orders;
-// const firebase = require('../config/firebase');
-// const axios = require('axios');
-// const inputChecker = require('../utility/inputChecker');
+const xss = require('xss');
+const {
+    authenticated,
+    seller,
+    sellerAndAdmin,
+} = require('../utility/authMiddleware');
 
 // Create a new Order (default isCompleted is false), return the order information
-router.post('/', async (req, res) => {
+router.post('/', authenticated, async (req, res) => {
     try {
-        let productId = req.body.productId;
-        let sellerId = req.body.sellerId;
-        let buyerId = req.body.buyerId;
-        let adress = req.body.adress;
-        let price = req.body.price;
-        let dealNumber = req.body.dealNumber;
-        let productName = req.body.productName;
-        let discription = req.body.discription;
-        let imgUrl = req.body.imgUrl;
+        let productId = xss(req.body.productId);
+        let sellerId = xss(req.body.sellerId);
+        let buyerId = xss(req.body.buyerId);
+        let adress = xss(req.body.adress);
+        let price = xss(req.body.price);
+        let dealNumber = xss(req.body.dealNumber);
+        let productName = xss(req.body.productName);
+        let discription = xss(req.body.discription);
+        let imgUrl = xss(req.body.imgUrl);
+
         let newOrder = await orderData.createOrder(
             productId,
             sellerId,
@@ -32,42 +33,45 @@ router.post('/', async (req, res) => {
             discription,
             imgUrl
         );
-        res.status(200).json(newOrder);
+        res.status(newOrder.status).json(newOrder.result);
     } catch (error) {
-        res.status(404).json(error);
+        res.status(error.status).json({ error: error.errorMessage });
     }
 });
 
 // Set isCompleted status to true (it means the order is completed), return the order information
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', authenticated, async (req, res) => {
     try {
-        let orderId = req.params.id;
+        let orderId = xss(req.params.id);
+
         let orderCreated = await orderData.setOrderIsCompeleted(orderId, true);
-        res.status(200).json(orderCreated);
+        res.status(orderCreated.status).json(orderCreated.result);
     } catch (error) {
-        res.status(404).json(error);
+        res.status(error.status).json({ error: error.errorMessage });
     }
 });
 
 // Get a user's all the orders as the buyer
-router.get('/buyer/:id', async (req, res) => {
+router.get('/buyer/:id', authenticated, async (req, res) => {
     try {
-        let buyerId = req.params.id;
+        let buyerId = xss(req.params.id);
+
         let buyerOrders = await orderData.getOrderByBuyerId(buyerId);
-        res.status(200).json(buyerOrders);
+        res.status(buyerOrders.status).json(buyerOrders.result);
     } catch (error) {
-        res.status(404).json(error);
+        res.status(error.status).json({ error: error.errorMessage });
     }
 });
 
 // Get a user's all the orders as the seller
-router.get('/seller/:id', async (req, res) => {
+router.get('/seller/:id', authenticated, async (req, res) => {
     try {
-        let sellerId = req.params.id;
+        let sellerId = xss(req.params.id);
+
         let sellerOrders = await orderData.getOrderBySellerId(sellerId);
-        res.status(200).json(sellerOrders);
+        res.status(sellerOrders.status).json(sellerOrders.result);
     } catch (error) {
-        res.status(404).json(error);
+        res.status(error.status).json({ error: error.errorMessage });
     }
 });
 
