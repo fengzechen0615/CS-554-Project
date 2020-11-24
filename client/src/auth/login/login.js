@@ -2,20 +2,24 @@ import React, { useState } from 'react';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { SIGN_IN_API } from '../../constants';
+import { setUser } from '../../store/reducers/userSlice';
+import { useDispatch } from 'react-redux';
 
 export default function Login() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('htkzmo@gmail.com');
+    const [password, setPassword] = useState('12345678');
     const [showAlert, setShowAlert] = useState(false);
+    const dispatch = useDispatch();
 
     const submitHandler = async (event) => {
         event.preventDefault();
         try {
-            const res = await axios.post(SIGN_IN_API, {
+            const { data } = await axios.post(SIGN_IN_API, {
                 email,
                 password,
             });
-            console.log(res);
+            console.log(data);
+            dispatch(setUser(data));
         } catch (error) {
             setShowAlert(true);
             window.setTimeout(() => {
