@@ -7,7 +7,7 @@ import {
     FormControl,
     Button,
 } from 'react-bootstrap';
-import ProductCard from '../components/productCard/productCard';
+import ProductCard from '../../components/productCard/productCard';
 import { useSelector } from 'react-redux';
 
 export default function Main() {
