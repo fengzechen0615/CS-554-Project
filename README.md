@@ -202,7 +202,7 @@ their products to sell and buy products from other users.
     _Access_: authenticated
 -   **get('v1/users/users')**  
     _Access_: authenticated, admin
--   **get('v1/userrs/logout')**  
+-   **get('v1/users/logout')**  
     _Access_: authenticated
 
 ##### POST
