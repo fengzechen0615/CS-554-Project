@@ -11,8 +11,8 @@ import ProductCard from '../components/productCard/productCard';
 import { useSelector } from 'react-redux';
 
 export default function Main() {
-    const data = useSelector((state) => state.user);
-    console.log(data);
+    const user = useSelector((state) => state.user);
+    console.log(user);
 
     const [products, setProducts] = useState([
         {
@@ -78,8 +78,8 @@ export default function Main() {
                 </Form>
             </div>
             <Row>
-                {products.map((product) => (
-                    <Col>
+                {products.map((product, idx) => (
+                    <Col key={idx}>
                         <ProductCard
                             title={product.name}
                             description={product.description}

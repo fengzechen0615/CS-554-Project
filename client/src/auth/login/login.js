@@ -18,8 +18,8 @@ export default function Login() {
                 email,
                 password,
             });
-            console.log(data);
             dispatch(setUser(data));
+            localStorage.setItem('token', data.idToken);
         } catch (error) {
             setShowAlert(true);
             window.setTimeout(() => {
