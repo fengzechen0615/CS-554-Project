@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, NavDropdown } from 'react-bootstrap';
 
 export default function NavBar() {
     return (
@@ -12,9 +12,17 @@ export default function NavBar() {
                 <Nav.Link as={Link} to='/products'>
                     Products
                 </Nav.Link>
-                <Nav.Link as={Link} to='/user'>
-                    User
-                </Nav.Link>
+                <NavDropdown title='User'>
+                    <NavDropdown.Item as={Link} to='/user/info'>
+                        Info
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to='/user/selling'>
+                        Selling
+                    </NavDropdown.Item>
+                    <NavDropdown.Item as={Link} to='/user/purchase'>
+                        Purchase
+                    </NavDropdown.Item>
+                </NavDropdown>
                 <Nav.Link as={Link} to='/login'>
                     Login
                 </Nav.Link>
