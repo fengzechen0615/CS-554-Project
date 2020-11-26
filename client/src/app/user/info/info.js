@@ -18,13 +18,13 @@ export default function UserInfo(props) {
             await updateUser(nickname, phoneNumber, address, zipCode);
             showSuccess('Successfully updated user information!');
         } catch (error) {
-            showError(error.message);
+            showError(error?.response?.data?.error || error.message);
         }
     };
 
     return (
         <Container className='my-5'>
-            <h1 className='text-center my-5'>User Infomation</h1>
+            <h1 className='text-center my-5'>User Information</h1>
             <Form onSubmit={submitHandler}>
                 <Form.Group>
                     <Form.Label>Nick Name</Form.Label>
