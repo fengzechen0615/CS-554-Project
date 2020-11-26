@@ -19,7 +19,6 @@ export default function Login() {
                 password,
             });
             dispatch(setUser(data));
-            localStorage.setItem('token', data.idToken);
         } catch (error) {
             setShowAlert(true);
             window.setTimeout(() => {
