@@ -12,17 +12,15 @@ export default function NavBar() {
                 <Nav.Link as={Link} to='/products'>
                     Products
                 </Nav.Link>
-                <NavDropdown title='User'>
-                    <NavDropdown.Item as={Link} to='/user/info'>
-                        Info
-                    </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to='/user/selling'>
-                        Selling
-                    </NavDropdown.Item>
-                    <NavDropdown.Item as={Link} to='/user/purchase'>
-                        Purchase
-                    </NavDropdown.Item>
-                </NavDropdown>
+                <Nav.Link as={Link} to='/user/info'>
+                    Info
+                </Nav.Link>
+                <Nav.Link as={Link} to='/user/selling'>
+                    Selling
+                </Nav.Link>
+                <Nav.Link as={Link} to='/user/purchase'>
+                    Pruchase
+                </Nav.Link>
                 <Nav.Link as={Link} to='/logout'>
                     Log out
                 </Nav.Link>
