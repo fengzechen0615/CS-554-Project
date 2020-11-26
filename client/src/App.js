@@ -1,5 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Redirect,
+} from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './components/navBar/navBar';
 import Main from './app/products/products';
@@ -8,6 +14,25 @@ import SignUp from './auth/signup/signup';
 import UserInfo from './app/user/info/info';
 
 function App() {
+    const user = useSelector((state) => state.user);
+    if (!user.email) {
+        return (
+            <Router>
+                <div>
+                    <Switch>
+                        <Route path='/login'>
+                            <Login />
+                        </Route>
+                        <Route path='/signup'>
+                            <SignUp />
+                        </Route>
+                        <Redirect to='/login' />
+                    </Switch>
+                </div>
+            </Router>
+        );
+    }
+
     return (
         <Router>
             <div>
@@ -19,12 +44,7 @@ function App() {
                     <Route path='/user/info'>
                         <UserInfo />
                     </Route>
-                    <Route path='/login'>
-                        <Login />
-                    </Route>
-                    <Route path='/signup'>
-                        <SignUp />
-                    </Route>
+                    <Redirect to='/products' />
                 </Switch>
             </div>
         </Router>

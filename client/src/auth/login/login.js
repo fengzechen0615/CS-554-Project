@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { SIGN_IN_API } from '../../constants';
 import { setUser } from '../../store/reducers/userSlice';
@@ -60,6 +61,10 @@ export default function Login() {
                     >
                         Submit
                     </Button>
+                    <div className='text-center pt-5'>
+                        Do not have an account?{' '}
+                        <Link to='/signup'>Register</Link> here{' '}
+                    </div>
                 </Form>
             </div>
         </Container>

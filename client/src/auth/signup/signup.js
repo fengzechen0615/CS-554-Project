@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { SIGN_UP_API } from '../../constants';
 
@@ -68,6 +69,10 @@ export default function Login() {
                     >
                         Submit
                     </Button>
+                    <div className='text-center pt-5'>
+                        Already have an account? <Link to='/login'>Login</Link>{' '}
+                        here{' '}
+                    </div>
                 </Form>
             </div>
         </Container>
