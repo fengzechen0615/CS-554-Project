@@ -1,11 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
-import {
-    showError,
-    showSuccess,
-} from '../../../components/sweetAlert/sweetAlert';
-
+import { showError, showSuccess } from 'components/sweetAlert/sweetAlert';
+import { updateUser } from 'api/users';
 // address, avatar, nickname, phoneNumber, state, zipcode
 
 export default function UserInfo(props) {
@@ -13,18 +10,16 @@ export default function UserInfo(props) {
     const [address, setAddress] = useState(user.address);
     const [nickname, setNickname] = useState(user.nickname);
     const [phoneNumber, setPhoneNumber] = useState(user.phoneNumber);
-    const [state, setState] = useState(user.state);
-    const [zipcode, setZipcode] = useState(user.zipcode);
+    const [zipCode, setZipCode] = useState(user.zipCode);
 
-    const submitHandler = (event) => {
+    const submitHandler = async (event) => {
         event.preventDefault();
-        const newInfo = {
-            address,
-            nickname,
-            phoneNumber,
-            state,
-            zipcode,
-        };
+        try {
+            await updateUser(nickname, phoneNumber, address, zipCode);
+            showSuccess('Successfully updated user information!');
+        } catch (error) {
+            showError(error.message);
+        }
     };
 
     return (
@@ -40,19 +35,11 @@ export default function UserInfo(props) {
                     />
                 </Form.Group>
                 <Form.Group>
-                    <Form.Label>State</Form.Label>
-                    <Form.Control
-                        type='text'
-                        value={state || ''}
-                        onChange={(ev) => setState(ev.target.value)}
-                    />
-                </Form.Group>
-                <Form.Group>
                     <Form.Label>Zip Code</Form.Label>
                     <Form.Control
                         type='text'
-                        value={zipcode || ''}
-                        onChange={(ev) => setZipcode(ev.target.value)}
+                        value={zipCode || ''}
+                        onChange={(ev) => setZipCode(ev.target.value)}
                     />
                 </Form.Group>
                 <Form.Group>

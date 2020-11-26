@@ -24,3 +24,11 @@ export const changePassword = async (idToken, newPassword) =>
         idToken,
         newPassword,
     });
+
+export const updateUser = async (nickname, phoneNumber, address, zipCode) =>
+    await axios.patch('users/userinfo', {
+        nickname,
+        phoneNumber,
+        address,
+        zipCode,
+    });
