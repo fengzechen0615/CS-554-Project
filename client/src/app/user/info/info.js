@@ -1,6 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import {
+    showError,
+    showSuccess,
+} from '../../../components/sweetAlert/sweetAlert';
 
 // address, avatar, nickname, phoneNumber, state, zipcode
 
@@ -12,7 +16,8 @@ export default function UserInfo(props) {
     const [state, setState] = useState(user.state);
     const [zipcode, setZipcode] = useState(user.zipcode);
 
-    const submitHandler = () => {
+    const submitHandler = (event) => {
+        event.preventDefault();
         const newInfo = {
             address,
             nickname,

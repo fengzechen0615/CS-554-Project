@@ -12,6 +12,7 @@ import Main from './app/products/products';
 import Login from './auth/login/login';
 import SignUp from './auth/signup/signup';
 import UserInfo from './app/user/info/info';
+import Logout from './auth/logout/logout';
 
 function App() {
     const user = useSelector((state) => state.user);
@@ -43,6 +44,9 @@ function App() {
                     </Route>
                     <Route path='/user/info'>
                         <UserInfo />
+                    </Route>
+                    <Route path='/logout'>
+                        <Logout />
                     </Route>
                     <Redirect to='/products' />
                 </Switch>

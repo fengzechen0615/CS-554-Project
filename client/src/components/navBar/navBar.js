@@ -23,6 +23,9 @@ export default function NavBar() {
                         Purchase
                     </NavDropdown.Item>
                 </NavDropdown>
+                <Nav.Link as={Link} to='/logout'>
+                    Log out
+                </Nav.Link>
             </Nav>
         </Navbar>
     );

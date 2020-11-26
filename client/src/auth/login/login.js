@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Alert } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { SIGN_IN_API } from '../../constants';
 import { setUser } from '../../store/reducers/userSlice';
+import { signIn } from '../../api/users';
 import { useDispatch } from 'react-redux';
 
 export default function Login() {
@@ -15,10 +14,7 @@ export default function Login() {
     const submitHandler = async (event) => {
         event.preventDefault();
         try {
-            const { data } = await axios.post(SIGN_IN_API, {
-                email,
-                password,
-            });
+            const { data } = await signIn(email, password);
             dispatch(setUser(data));
         } catch (error) {
             setShowAlert(true);
