@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Chip } from '@material-ui/core';
-import { showError } from 'components/sweetAlert/sweetAlert';
+import { showError, showSuccess } from 'components/sweetAlert/sweetAlert';
+import { uploadProductImage, createProduct } from 'api/products';
 
 // address, avatar, nickname, phoneNumber, state, zipcode
 
@@ -12,9 +13,10 @@ export default function AddProductModal(props) {
     const [description, setDescription] = useState('');
     const [categoryArr, setCategoryArr] = useState([]);
     const [category, setCategory] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
-    const [stock, setStock] = useState(10);
-    const [price, setPrice] = useState(25);
+    const [file, setFile] = useState(null);
+    const [stock, setStock] = useState('');
+    const [price, setPrice] = useState('');
+    const [fileKey, setFileKey] = useState('');
 
     const addCategory = () => {
         if (!category) return;
@@ -28,9 +30,56 @@ export default function AddProductModal(props) {
         setCategory('');
     };
 
-    const submitHandler = (event) => {
+    const clearForm = () => {
+        setProductName('');
+        setDescription('');
+        setCategoryArr([]);
+        setCategory('');
+        setStock('');
+        setPrice('');
+        resetFileInput();
+    };
+
+    const resetFileInput = () => {
+        const randomString = Math.random().toString(36);
+        setFileKey(randomString);
+    };
+
+    const uploadFile = async () => {
+        if (!file) {
+            showError('No File Selected!');
+            return;
+        }
+        try {
+            const formData = new FormData();
+            formData.append('product', file, file.name);
+            const fileName = (await uploadProductImage(formData)).data.file;
+            return fileName;
+        } catch (error) {
+            showError(error.message);
+        }
+    };
+
+    const submitHandler = async (event) => {
         event.preventDefault();
-        alert(1);
+        const fileName = await uploadFile();
+        if (!fileName) return;
+        try {
+            const imageUrl = `/images/products/${fileName}`;
+            await createProduct(
+                user._id,
+                productName,
+                description,
+                categoryArr,
+                imageUrl,
+                stock,
+                price
+            );
+            showSuccess('Successfully Created New Product!');
+            clearForm();
+        } catch (error) {
+            showError(error?.response?.data?.error || error.message);
+        }
     };
 
     return (
@@ -121,7 +170,12 @@ export default function AddProductModal(props) {
                             Image
                         </Form.Label>
                         <Col sm={9}>
-                            <Form.File required />
+                            <Form.File
+                                accept='image/x-png,image/gif,image/jpeg'
+                                required
+                                onChange={(ev) => setFile(ev.target.files[0])}
+                                key={fileKey}
+                            />
                         </Col>
                     </Form.Group>
                     <Form.Group as={Row}>
@@ -130,7 +184,7 @@ export default function AddProductModal(props) {
                         </Form.Label>
                         <Col sm={9}>
                             <Form.Control
-                                type='text'
+                                type='number'
                                 value={stock}
                                 onChange={(ev) => setStock(ev.target.value)}
                                 required
@@ -143,7 +197,7 @@ export default function AddProductModal(props) {
                         </Form.Label>
                         <Col sm={9}>
                             <Form.Control
-                                type='text'
+                                type='number'
                                 value={price}
                                 onChange={(ev) => setPrice(ev.target.value)}
                                 required

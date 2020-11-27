@@ -18,3 +18,7 @@ export const createProduct = async (
         stock,
         price,
     });
+
+export const uploadProductImage = async (formData) => {
+    return await axios.post('/images/product', formData);
+};
