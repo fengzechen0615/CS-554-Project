@@ -77,6 +77,7 @@ export default function AddProductModal(props) {
             );
             showSuccess('Successfully Created New Product!');
             clearForm();
+            props.refresh();
         } catch (error) {
             showError(error?.response?.data?.error || error.message);
         }
