@@ -1,7 +1,6 @@
 const express = require('express');
-const router = express.Router();
 const multer = require('multer');
-const { authenticated } = require('../utility/authMiddleware');
+// const { authenticated } = require('../utility/authMiddleware');
 
 const getFileExtension = (file) => {
     const index = file.indexOf('/');
@@ -20,18 +19,4 @@ const storage = multer.diskStorage({
 
 const uploadProduct = multer({ storage: storage });
 
-router.post(
-    '/product',
-    authenticated,
-    uploadProduct.single('product'),
-    async (req, res) => {
-        try {
-            console.log(req.file.filename);
-            res.json({ file: req.file.filename });
-        } catch (error) {
-            res.status(error.status).json({ error: error.errorMessage });
-        }
-    }
-);
-
-module.exports = router;
+module.exports = { uploadProduct: uploadProduct };

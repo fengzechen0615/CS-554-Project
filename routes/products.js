@@ -9,33 +9,40 @@ const {
     seller,
     sellerAndAdmin,
 } = require('../utility/authMiddleware');
+const { uploadProduct } = require('../utility/imageUpload');
 
 // seller发布一个新product
 // anyone
-router.post('/', authenticated, async (req, res) => {
-    try {
-        let sellerId = req.session.AuthCookie._id;
-        let productName = xss(req.body.productName);
-        let description = xss(req.body.description);
-        let categoryArr = req.body.categoryArr.map((item) => xss(item));
-        let imageUrl = xss(req.body.imageUrl);
-        let stock = Number(xss(req.body.stock));
-        let price = Number(xss(req.body.price));
+router.post(
+    '/',
+    authenticated,
+    uploadProduct.single('product'),
+    async (req, res) => {
+        try {
+            let sellerId = req.session.AuthCookie._id;
+            let productName = xss(req.body.productName);
+            let description = xss(req.body.description);
+            let categoryArr = req.body.categoryArr.map((item) => xss(item));
+            let imageUrl = xss(req.file.filename);
+            let stock = Number(xss(req.body.stock));
+            let price = Number(xss(req.body.price));
 
-        let newProduct = await productData.createPoduct(
-            sellerId,
-            productName,
-            description,
-            categoryArr,
-            imageUrl,
-            stock,
-            price
-        );
-        res.status(newProduct.status).json(newProduct.result);
-    } catch (error) {
-        res.status(error.status).json({ error: error.errorMessage });
+            let newProduct = await productData.createPoduct(
+                sellerId,
+                productName,
+                description,
+                categoryArr,
+                imageUrl,
+                stock,
+                price
+            );
+            res.status(newProduct.status).json(newProduct.result);
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({ error: error.errorMessage });
+        }
     }
-});
+);
 
 // 获取全部商品
 router.get('/', authenticated, async (req, res) => {
