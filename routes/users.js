@@ -159,8 +159,13 @@ router.post('/signin', async (req, res) => {
             ...user.result,
             idToken: firebaseResult.data.idToken,
         };
+
+        const expiresTime = new Date();
+        expiresTime.setHours(expiresTime.getHours() + 1);
+
         req.session.AuthCookie = result;
-        res.status(user.status).json(result);
+        req.session.cookie.expires = expiresTime;
+        res.status(user.status).json({ ...result, expiresTime: expiresTime });
     } catch (error) {
         if (error.response) {
             res.status(error.response.status).json({
