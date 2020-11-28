@@ -255,20 +255,10 @@ router.patch('/userinfo', authenticated, async (req, res) => {
             }
         }
 
-        const user = await userData.getUserById(req.session.AuthCookie._id);
-
-        const nickname = userInfo.nickname
-            ? xss(userInfo.nickname)
-            : user.reuslt.nickname;
-        const phoneNumber = userInfo.phoneNumber
-            ? xss(userInfo.phoneNumber)
-            : user.reuslt.phoneNumber;
-        const address = userInfo.address
-            ? xss(userInfo.address)
-            : user.reuslt.address;
-        const zipCode = userInfo.zipCode
-            ? xss(userInfo.zipCode)
-            : user.reuslt.zipCode;
+        const nickname = xss(userInfo.nickname);
+        const phoneNumber = xss(userInfo.phoneNumber);
+        const address = xss(userInfo.address);
+        const zipCode = xss(userInfo.zipCode);
 
         const updatedUser = await userData.updatedUser(
             req.session.AuthCookie._id,
