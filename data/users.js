@@ -45,7 +45,7 @@ let exportedMethods = {
             phoneNumber: '',
             address: '',
             zipCode: '',
-            avatar: '',
+            avatar: 'default.jpg',
             isAdmin: false,
             state: true,
         };
