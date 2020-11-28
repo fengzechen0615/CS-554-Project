@@ -12,7 +12,7 @@ const { authenticated, admin } = require('../utility/authMiddleware');
 router.get('/userinfo', authenticated, async (req, res) => {
     try {
         const authData = {
-            idToken: req.session.AuthCookie.idToken,
+            idToken: req.body.idToken,
         };
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${firebase.key}`;
 
@@ -179,7 +179,7 @@ router.post('/signin', async (req, res) => {
 
 router.post('/password', authenticated, async (req, res) => {
     try {
-        let idToken = xss(req.session.AuthCookie.idToken);
+        let idToken = xss(req.body.idToken);
         let password = xss(req.body.password);
 
         if (!idToken) {
@@ -218,7 +218,6 @@ router.post('/password', authenticated, async (req, res) => {
             idToken: firebaseResult.data.idToken,
         });
     } catch (error) {
-        console.log(error);
         res.status(error.response.status).json({
             error: error.response.data.error.message,
         });

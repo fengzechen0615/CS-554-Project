@@ -200,6 +200,11 @@ their products to sell and buy products from other users.
 
 -   **get('v1/users/userinfo')**  
     _Access_: authenticated
+    ```json
+    {
+        "idToken": "String"
+    }
+    ```
 -   **get('v1/users/users')**  
     _Access_: authenticated, admin
 -   **get('v1/users/logout')**  
@@ -228,6 +233,7 @@ their products to sell and buy products from other users.
     _Access_: authenticated
     ```json
     {
+        "idToken": "String",
         "newPassword": "String"
     }
     ```
