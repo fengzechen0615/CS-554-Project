@@ -22,7 +22,13 @@ router.get('/userinfo', authenticated, async (req, res) => {
         );
         res.status(user.status).json(user.result);
     } catch (error) {
-        res.status(error.status).json({ error: error.errorMessage });
+        if (error.response) {
+            res.status(error.response.status).json({
+                error: error.response.data.error.message,
+            });
+        } else {
+            res.status(error.status).json({ error: error.errorMessage });
+        }
     }
 });
 
@@ -168,7 +174,7 @@ router.post('/signin', async (req, res) => {
 
 router.post('/password', authenticated, async (req, res) => {
     try {
-        let idToken = xss(req.body.idToken);
+        let idToken = xss(req.session.AuthCookie.idToken);
         let password = xss(req.body.password);
 
         if (!idToken) {
@@ -202,6 +208,7 @@ router.post('/password', authenticated, async (req, res) => {
         const url = `https://identitytoolkit.googleapis.com/v1/accounts:update?key=${firebase.key}`;
 
         const firebaseResult = await axios.post(url, authData);
+        req.session.AuthCookie.idToken = firebaseResult.data.idToken;
         res.status(firebaseResult.status).json({
             idToken: firebaseResult.data.idToken,
         });

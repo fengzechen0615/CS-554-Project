@@ -228,7 +228,6 @@ their products to sell and buy products from other users.
     _Access_: authenticated
     ```json
     {
-        "idToken": "String",
         "newPassword": "String"
     }
     ```
