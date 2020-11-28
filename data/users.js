@@ -11,7 +11,7 @@ let exportedMethods = {
             throw { status: 404, errorMessage: `No user with id: ${id}` };
         }
 
-        return { status: 200, reuslt: user };
+        return { status: 200, result: user };
     },
 
     async getAllUsers() {
@@ -57,7 +57,7 @@ let exportedMethods = {
 
         return {
             status: 200,
-            result: (await this.getUserById(insertInfo.insertedId)).reuslt,
+            result: (await this.getUserById(insertInfo.insertedId)).result,
         };
     },
 
@@ -83,14 +83,14 @@ let exportedMethods = {
             };
         }
 
-        return { status: 200, result: (await this.getUserById(id)).reuslt };
+        return { status: 200, result: (await this.getUserById(id)).result };
     },
 
     async updatedUserState(id) {
         const userCollection = await users();
 
         const updatedUser = {
-            state: !(await this.getUserById(id)).reuslt.state,
+            state: !(await this.getUserById(id)).result.state,
         };
 
         const updateInfo = await userCollection.updateOne(
@@ -105,7 +105,7 @@ let exportedMethods = {
             };
         }
 
-        return { status: 200, result: (await this.getUserById(id)).reuslt };
+        return { status: 200, result: (await this.getUserById(id)).result };
     },
 
     async updatedAvatar(id, avatar) {

@@ -11,8 +11,16 @@ const { authenticated, admin } = require('../utility/authMiddleware');
 // get id from session
 router.get('/userinfo', authenticated, async (req, res) => {
     try {
-        const user = await userData.getUserById(req.session.AuthCookie._id);
-        res.status(user.status).json(user.reuslt);
+        const authData = {
+            idToken: req.session.AuthCookie.idToken,
+        };
+        const url = `https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=${firebase.key}`;
+
+        const firebaseResult = await axios.post(url, authData);
+        const user = await userData.getUserByEmail(
+            firebaseResult.data.users[0].email
+        );
+        res.status(user.status).json(user.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
     }
