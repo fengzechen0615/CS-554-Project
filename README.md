@@ -242,9 +242,18 @@ their products to sell and buy products from other users.
 
 -   **put('v1/users/userstate)**  
     _Access_: authenticated, admin
+
     ```json
     {
         "userid": "String"
+    }
+    ```
+
+-   **put('v1/users/userinfo/avatar)**  
+    _Access_: authenticated
+    ```json
+    {
+        "avatar": "String"
     }
     ```
 
