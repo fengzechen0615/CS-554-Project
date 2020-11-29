@@ -57,7 +57,7 @@ let exportedMethods = {
     },
 
     checkImage(image) {
-        const re = /(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$/;
+        const re = /\.(png|jpe?g|gif|svg)(\?.*)?$/;
         if (!re.test(image)) {
             return false;
         }

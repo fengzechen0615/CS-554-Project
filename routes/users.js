@@ -299,7 +299,7 @@ router.put(
         try {
             if (!req.file) {
                 res.status(400).json({
-                    error: 'No avatar image provided',
+                    error: 'No avatar image provided or invalid image type',
                 });
                 return;
             }

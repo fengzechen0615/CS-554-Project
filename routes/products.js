@@ -19,6 +19,13 @@ router.post(
     uploadProduct.single('product'),
     async (req, res) => {
         try {
+            if (!req.file) {
+                res.status(400).json({
+                    error: 'No product image provided or invalid image type',
+                });
+                return;
+            }
+
             let sellerId = req.session.AuthCookie._id;
             let productName = xss(req.body.productName);
             let description = xss(req.body.description);

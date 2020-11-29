@@ -1,5 +1,5 @@
 const multer = require('multer');
-// const inputChecker = require('../utility/inputChecker');
+const inputChecker = require('../utility/inputChecker');
 
 const getFileExtension = (file) => {
     const index = file.indexOf('/');
@@ -26,7 +26,15 @@ const avatarStorage = multer.diskStorage({
     },
 });
 
-const uploadProduct = multer({ storage: productStorage });
-const uploadAvatar = multer({ storage: avatarStorage });
+const filter = (req, file, cb) => {
+    if (inputChecker.checkImage(file.originalname)) {
+        cb(null, true);
+    } else {
+        cb(null, false);
+    }
+};
+
+const uploadProduct = multer({ storage: productStorage, fileFilter: filter });
+const uploadAvatar = multer({ storage: avatarStorage, fileFilter: filter });
 
 module.exports = { uploadProduct: uploadProduct, uploadAvatar: uploadAvatar };
