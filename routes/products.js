@@ -38,8 +38,7 @@ router.post(
             );
             res.status(newProduct.status).json(newProduct.result);
         } catch (error) {
-            console.log(error);
-            res.status(500).json({ error: error.errorMessage });
+            res.status(error.status).json({ error: error.errorMessage });
         }
     }
 );
