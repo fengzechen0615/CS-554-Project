@@ -213,6 +213,10 @@ router.delete(
             let questionsDeleted = await questionData.deleteAllQuestionInProduct(
                 productId
             );
+            // delete product cache
+            client.del('product' + productId);
+            // delete index Cache
+            client.del('indexPage');
             res.status(productDeleted.status).json({
                 products: productDeleted.result,
                 questions: questionsDeleted.result,
@@ -230,11 +234,6 @@ router.get('/user/seller', authenticated, async (req, res) => {
         let sellerProducts = await productData.getProductsBySellerId(
             req.session.AuthCookie._id
         );
-
-        // delete product cache
-        client.del('product' + productId);
-        // delete index Cache
-        client.del('indexPage');
         res.status(sellerProducts.status).json(sellerProducts.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });

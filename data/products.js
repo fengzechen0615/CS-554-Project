@@ -112,7 +112,7 @@ async function getProductById(id) {
 async function getProductsBySellerId(sellerId) {
     if (!sellerId || typeof sellerId !== 'string') {
         throw {
-            error: 400,
+            status: 400,
             errorMessage:
                 'You must provide an sellerId to search for his Products',
         };
