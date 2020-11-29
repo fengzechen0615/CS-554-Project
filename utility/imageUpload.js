@@ -1,13 +1,12 @@
-const express = require('express');
 const multer = require('multer');
-// const { authenticated } = require('../utility/authMiddleware');
+// const inputChecker = require('../utility/inputChecker');
 
 const getFileExtension = (file) => {
     const index = file.indexOf('/');
     return '.' + file.substring(index + 1);
 };
 
-const storage = multer.diskStorage({
+const productStorage = multer.diskStorage({
     destination: function (req, file, cb) {
         cb(null, 'client/public/images/products');
     },
@@ -17,6 +16,19 @@ const storage = multer.diskStorage({
     },
 });
 
-const uploadProduct = multer({ storage: storage });
+const avatarStorage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'client/public/images/avatars');
+    },
+    filename: function (req, file, cb) {
+        const extension = getFileExtension(file.mimetype);
+        cb(null, `avatar-${new Date().getTime()}` + extension);
+    },
+});
 
-module.exports = { uploadProduct: uploadProduct };
+const uploadProduct = multer({ storage: productStorage });
+const uploadAvatar = multer({
+    storage: avatarStorage,
+});
+
+module.exports = { uploadProduct: uploadProduct, uploadAvatar: uploadAvatar };

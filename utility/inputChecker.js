@@ -55,6 +55,14 @@ let exportedMethods = {
     checkAddress(address) {
         return typeof address === 'string';
     },
+
+    checkImage(image) {
+        const re = /(.*)\\.(jpg|bmp|gif|ico|pcx|jpeg|tif|png|raw|tga)$/;
+        if (!re.test(image)) {
+            return false;
+        }
+        return true;
+    },
 };
 
 module.exports = exportedMethods;

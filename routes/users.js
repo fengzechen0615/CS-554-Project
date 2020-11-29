@@ -7,8 +7,8 @@ const axios = require('axios');
 const inputChecker = require('../utility/inputChecker');
 const xss = require('xss');
 const { authenticated, admin } = require('../utility/authMiddleware');
+const { uploadAvatar } = require('../utility/imageUpload');
 
-// get id from session
 router.get('/userinfo', authenticated, async (req, res) => {
     try {
         const authData = {
@@ -224,7 +224,6 @@ router.post('/password', authenticated, async (req, res) => {
     }
 });
 
-// get id from session
 router.patch('/userinfo', authenticated, async (req, res) => {
     /*
      nickname
@@ -291,6 +290,31 @@ router.patch('/userinfo', authenticated, async (req, res) => {
         res.status(error.status).json({ error: error.errorMessage });
     }
 });
+
+router.put(
+    '/userinfo/avatar',
+    authenticated,
+    uploadAvatar.single('avatar'),
+    async (req, res) => {
+        try {
+            if (!req.file) {
+                res.status(400).json({
+                    error: 'No avatar image provided',
+                });
+                return;
+            }
+            let imageUrl = xss(req.file.filename);
+
+            const updatedAvatar = await userData.updatedAvatar(
+                req.session.AuthCookie._id,
+                imageUrl
+            );
+            res.status(updatedAvatar.status).json(updatedAvatar.result);
+        } catch (error) {
+            res.status(error.status).json({ error: error.errorMessage });
+        }
+    }
+);
 
 router.put('/userstate', authenticated, admin, async (req, res) => {
     try {

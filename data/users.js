@@ -117,10 +117,13 @@ let exportedMethods = {
         );
 
         if (!updateAvatarInfo.matchedCount && !updateAvatarInfo.modifiedCount) {
-            throw `updateAvatar Update failed by id: ${id}`;
+            throw {
+                status: 500,
+                errorMessage: `updateAvatar Update failed by id: ${id}`,
+            };
         }
 
-        return await this.getUserById(id);
+        return { status: 200, result: (await this.getUserById(id)).result };
     },
 };
 
