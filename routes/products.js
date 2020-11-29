@@ -10,6 +10,11 @@ const {
     sellerAndAdmin,
 } = require('../utility/authMiddleware');
 const { uploadProduct } = require('../utility/imageUpload');
+const bluebird = require('bluebird');
+const redis = require('redis');
+const client = redis.createClient();
+bluebird.promisifyAll(redis.RedisClient.prototype);
+bluebird.promisifyAll(redis.Multi.prototype);
 
 // seller发布一个新product
 // anyone
@@ -43,6 +48,7 @@ router.post(
                 stock,
                 price
             );
+            let deleteIndexCache = client.del('indexPage');
             res.status(newProduct.status).json(newProduct.result);
         } catch (error) {
             res.status(error.status).json({ error: error.errorMessage });
@@ -52,8 +58,15 @@ router.post(
 
 // 获取全部商品
 router.get('/', authenticated, async (req, res) => {
+    let indexCacheExist = await client.existsAsync('indexPage');
+    if (indexCacheExist) {
+        let indexCache = await client.getAsync('indexPage');
+        res.status(200).json(JSON.parse(indexCache).result);
+        return;
+    }
     try {
         let allProduct = await productData.getAllProduct();
+        client.setAsync('indexPage', JSON.stringify(allProduct));
         res.status(allProduct.status).json(allProduct.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
@@ -62,8 +75,18 @@ router.get('/', authenticated, async (req, res) => {
 
 // 获取id对应的商品，返回此product
 router.get('/:id', authenticated, async (req, res) => {
+    let productCacheExist = await client.existsAsync('product' + req.params.id);
+    if (productCacheExist) {
+        let productCache = await client.getAsync('product' + req.params.id);
+        res.status(200).json(JSON.parse(productCache).result);
+        return;
+    }
     try {
         let productGoal = await productData.getProductById(xss(req.params.id));
+        let productCache = client.set(
+            'product' + req.params.id,
+            JSON.stringify(productGoal)
+        );
         res.status(productGoal.status).json(productGoal.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
@@ -114,6 +137,8 @@ router.patch('/:productId', authenticated, seller, async (req, res) => {
         let newPrice = Number(req.body.price);
 
         let updatedProduct = await productData.updatePrice(productId, newPrice);
+        let deleteProductCache = client.del('product' + productId);
+        let deleteIndexCache = client.del('indexPage');
         res.status(updatedProduct.status).json(updatedProduct.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
@@ -171,6 +196,8 @@ router.get('/user/seller', authenticated, async (req, res) => {
         let sellerProducts = await productData.getProductsBySellerId(
             req.session.AuthCookie._id
         );
+        let deleteProductCache = client.del('product' + productId);
+        let deleteIndexCache = client.del('indexPage');
         res.status(sellerProducts.status).json(sellerProducts.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
