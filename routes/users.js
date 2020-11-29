@@ -11,6 +11,12 @@ const { uploadAvatar } = require('../utility/imageUpload');
 
 router.get('/userinfo', authenticated, async (req, res) => {
     try {
+        if (!req.body) {
+            res.status(400).json({
+                error: 'You must provide data to get user information',
+            });
+            return;
+        }
         const authData = {
             idToken: req.body.idToken,
         };
@@ -44,16 +50,16 @@ router.get('/users', authenticated, admin, async (req, res) => {
 router.post('/signup', async (req, res) => {
     try {
         let userInfo = req.body;
-        let email = xss(req.body.email);
-        let nickname = xss(req.body.nickname);
-        let password = xss(req.body.password);
-
         if (!userInfo) {
             res.status(400).json({
                 error: 'You must provide data to create a user',
             });
             return;
         }
+
+        let email = xss(req.body.email);
+        let nickname = xss(req.body.nickname);
+        let password = xss(req.body.password);
 
         if (!nickname) {
             res.status(400).json({
@@ -124,6 +130,13 @@ router.post('/signup', async (req, res) => {
 
 router.post('/signin', async (req, res) => {
     try {
+        if (!req.body) {
+            res.status(400).json({
+                error: 'You must provide information to sign in',
+            });
+            return;
+        }
+
         let email = xss(req.body.email);
         let password = xss(req.body.password);
 
@@ -179,6 +192,13 @@ router.post('/signin', async (req, res) => {
 
 router.post('/password', authenticated, async (req, res) => {
     try {
+        if (!req.body) {
+            res.status(400).json({
+                error: 'You must provide information to update password',
+            });
+            return;
+        }
+
         let idToken = xss(req.body.idToken);
         let password = xss(req.body.password);
 
@@ -233,6 +253,12 @@ router.patch('/userinfo', authenticated, async (req, res) => {
      */
     try {
         let userInfo = req.body;
+        if (!req.body) {
+            res.status(400).json({
+                error: 'You must provide information to update a user',
+            });
+            return;
+        }
 
         if (userInfo.length) {
             res.status(400).json({
@@ -318,6 +344,13 @@ router.put(
 
 router.put('/userstate', authenticated, admin, async (req, res) => {
     try {
+        if (!req.body) {
+            res.status(400).json({
+                error: 'You must provide information to update a user',
+            });
+            return;
+        }
+
         let userId = xss(req.body.userId);
 
         if (!userId) {

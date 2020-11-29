@@ -13,6 +13,7 @@ const { uploadProduct } = require('../utility/imageUpload');
 const bluebird = require('bluebird');
 const redis = require('redis');
 const client = redis.createClient();
+
 bluebird.promisifyAll(redis.RedisClient.prototype);
 bluebird.promisifyAll(redis.Multi.prototype);
 
@@ -24,6 +25,12 @@ router.post(
     uploadProduct.single('product'),
     async (req, res) => {
         try {
+            if (!req.body) {
+                res.status(400).json({
+                    error: 'You must provide information to create a product',
+                });
+                return;
+            }
             if (!req.file) {
                 res.status(400).json({
                     error: 'No product image provided or invalid image type',
@@ -48,7 +55,9 @@ router.post(
                 stock,
                 price
             );
-            let deleteIndexCache = client.del('indexPage');
+
+            // delete index cache
+            client.del('indexPage');
             res.status(newProduct.status).json(newProduct.result);
         } catch (error) {
             res.status(error.status).json({ error: error.errorMessage });
@@ -64,6 +73,7 @@ router.get('/', authenticated, async (req, res) => {
         res.status(200).json(JSON.parse(indexCache).result);
         return;
     }
+
     try {
         let allProduct = await productData.getAllProduct();
         client.setAsync('indexPage', JSON.stringify(allProduct));
@@ -81,12 +91,12 @@ router.get('/:id', authenticated, async (req, res) => {
         res.status(200).json(JSON.parse(productCache).result);
         return;
     }
+
     try {
         let productGoal = await productData.getProductById(xss(req.params.id));
-        let productCache = client.set(
-            'product' + req.params.id,
-            JSON.stringify(productGoal)
-        );
+
+        // set product cache
+        client.set('product' + req.params.id, JSON.stringify(productGoal));
         res.status(productGoal.status).json(productGoal.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
@@ -96,6 +106,13 @@ router.get('/:id', authenticated, async (req, res) => {
 // 提问，返回这个问题
 router.post('/questions', authenticated, async (req, res) => {
     try {
+        if (!req.body) {
+            res.status(400).json({
+                error: 'You must provide information to create a question',
+            });
+            return;
+        }
+
         let productId = xss(req.body.productId);
         let nickName = xss(req.session.AuthCookie.nickname);
         let question = xss(req.body.question);
@@ -119,6 +136,13 @@ router.post('/questions', authenticated, async (req, res) => {
 // only seller
 router.post('/answer/:questionId', authenticated, seller, async (req, res) => {
     try {
+        if (!req.body) {
+            res.status(400).json({
+                error: 'You must provide information to answer a question',
+            });
+            return;
+        }
+
         let questionId = xss(req.params.questionId);
         let answer = xss(req.body.answer);
 
@@ -133,12 +157,22 @@ router.post('/answer/:questionId', authenticated, seller, async (req, res) => {
 // only seller
 router.patch('/:productId', authenticated, seller, async (req, res) => {
     try {
+        if (!req.body) {
+            res.status(400).json({
+                error: 'You must provide information to update a product',
+            });
+            return;
+        }
+
         let productId = xss(req.params.productId);
         let newPrice = Number(req.body.price);
 
         let updatedProduct = await productData.updatePrice(productId, newPrice);
-        let deleteProductCache = client.del('product' + productId);
-        let deleteIndexCache = client.del('indexPage');
+
+        // delete product cache
+        client.del('product' + productId);
+        // delete index cache
+        client.del('indexPage');
         res.status(updatedProduct.status).json(updatedProduct.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
@@ -196,8 +230,11 @@ router.get('/user/seller', authenticated, async (req, res) => {
         let sellerProducts = await productData.getProductsBySellerId(
             req.session.AuthCookie._id
         );
-        let deleteProductCache = client.del('product' + productId);
-        let deleteIndexCache = client.del('indexPage');
+
+        // delete product cache
+        client.del('product' + productId);
+        // delete index Cache
+        client.del('indexPage');
         res.status(sellerProducts.status).json(sellerProducts.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });

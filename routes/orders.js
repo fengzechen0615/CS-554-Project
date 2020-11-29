@@ -8,6 +8,13 @@ const { authenticated } = require('../utility/authMiddleware');
 // Create a new Order (default isCompleted is false), return the order information
 router.post('/', authenticated, async (req, res) => {
     try {
+        if (!req.body) {
+            res.status(400).json({
+                error: 'You must provide data to create an order',
+            });
+            return;
+        }
+
         let productId = xss(req.body.productId);
         let sellerId = xss(req.body.sellerId);
         let buyerId = xss(req.session.AuthCookie._id);
