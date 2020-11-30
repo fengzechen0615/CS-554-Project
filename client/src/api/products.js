@@ -1,23 +1,7 @@
 import axios from './axios';
 
-export const createProduct = async (
-    sellId,
-    productName,
-    description,
-    categoryArr,
-    imageUrl,
-    stock,
-    price
-) =>
-    await axios.post('/products', {
-        sellId,
-        productName,
-        description,
-        categoryArr,
-        imageUrl,
-        stock,
-        price,
-    });
+export const createProduct = async (product) =>
+    await axios.post('/products', product);
 
 export const uploadProductImage = async (formData) => {
     return await axios.post('/images/product', formData);
@@ -29,4 +13,4 @@ export const getUserProducts = async () => {
 
 export const getProducts = async () => {
     return (await axios.get('/products/')).data;
-}
+};

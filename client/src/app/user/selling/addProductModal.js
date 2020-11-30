@@ -45,36 +45,22 @@ export default function AddProductModal(props) {
         setFileKey(randomString);
     };
 
-    const uploadFile = async () => {
+    const submitHandler = async (event) => {
+        event.preventDefault();
         if (!file) {
             showError('No File Selected!');
             return;
         }
+
         try {
             const formData = new FormData();
             formData.append('product', file, file.name);
-            const fileName = (await uploadProductImage(formData)).data.file;
-            return fileName;
-        } catch (error) {
-            showError(error.message);
-        }
-    };
-
-    const submitHandler = async (event) => {
-        event.preventDefault();
-        const fileName = await uploadFile();
-        if (!fileName) return;
-        try {
-            const imageUrl = `/images/products/${fileName}`;
-            await createProduct(
-                user._id,
-                productName,
-                description,
-                categoryArr,
-                imageUrl,
-                stock,
-                price
-            );
+            formData.append('productName', productName);
+            formData.append('description', description);
+            formData.append('categoryArr', categoryArr);
+            formData.append('stock', stock);
+            formData.append('price', price);
+            await createProduct(formData);
             showSuccess('Successfully Created New Product!');
             clearForm();
             props.refresh();
