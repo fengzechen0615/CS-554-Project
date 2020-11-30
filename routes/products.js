@@ -37,12 +37,11 @@ router.post(
                 });
                 return;
             }
-
             let sellerId = req.session.AuthCookie._id;
             let productName = xss(req.body.productName);
             let description = xss(req.body.description);
-            let categoryArr = req.body.categoryArr.map((item) => xss(item));
-            let imageUrl = xss(req.file.filename);
+            let categoryArr = xss(req.body.categoryArr).split(',');
+            let imageUrl = `/images/products/${xss(req.file.filename)}`;
             let stock = Number(xss(req.body.stock));
             let price = Number(xss(req.body.price));
 
