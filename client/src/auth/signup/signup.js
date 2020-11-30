@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Form, Button, Alert } from 'react-bootstrap';
+import { Container, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { SIGN_UP_API } from '../../constants';
@@ -13,7 +13,7 @@ export default function Login() {
     const submitHandler = async (event) => {
         event.preventDefault();
         try {
-            const res = await axios.post(SIGN_UP_API, {
+            await axios.post(SIGN_UP_API, {
                 email,
                 password,
                 nickname,

@@ -1,50 +1,23 @@
-import React, { useState } from 'react';
-import {
-    Container,
-    Row,
-    Col,
-    Form,
-    FormControl,
-    Button,
-} from 'react-bootstrap';
-import ProductCard from '../../components/productCard/productCard';
-import { useSelector } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { Container, Form, FormControl, Button } from 'react-bootstrap';
+import { getProducts } from 'api/products';
+import { showError } from 'components/sweetAlert/sweetAlert';
+import Product from './product/product';
 
 export default function Main() {
-    const user = useSelector((state) => state.user);
-    console.log(user);
+    const [products, setProducts] = useState([]);
 
-    const [products, setProducts] = useState([
-        {
-            name: 'rice',
-            description: 'Botan Musenmai Calrose Rice, 5 Pound',
-            image: 'rice-1.jpg',
-        },
-        {
-            name: 'rice',
-            description:
-                'Iberia Jasmine Rice, 5 lbs Long Grain Naturally Fragrant Enriched Jasmine Rice, White',
-            image: 'rice-1.jpg',
-        },
-        {
-            name: 'rice',
-            description:
-                'Iberia Jasmine Rice, 5 lbs Long Grain Naturally Fragrant Enriched Jasmine Rice, White',
-            image: 'rice-1.jpg',
-        },
-        {
-            name: 'rice',
-            description:
-                'Iberia Jasmine Rice, 5 lbs Long Grain Naturally Fragrant Enriched Jasmine Rice, White',
-            image: 'rice-1.jpg',
-        },
-        {
-            name: 'rice',
-            description:
-                'Iberia Jasmine Rice, 5 lbs Long Grain Naturally Fragrant Enriched Jasmine Rice, White',
-            image: 'rice-1.jpg',
-        },
-    ]);
+    useEffect(() => {
+        const initProducts = async () => {
+            try {
+                const products = await getProducts();
+                setProducts(products);
+            } catch (error) {
+                showError(error.message);
+            }
+        };
+        initProducts();
+    }, []);
 
     return (
         <Container className='p-3'>
@@ -77,17 +50,19 @@ export default function Main() {
                     <Button variant='outline-info'>Search</Button>
                 </Form>
             </div>
-            <Row>
+            <div className='d-flex flex-wrap'>
                 {products.map((product, idx) => (
-                    <Col key={idx}>
-                        <ProductCard
-                            title={product.name}
-                            description={product.description}
-                            image={product.image}
-                        />
-                    </Col>
+                    <Product
+                        key={idx}
+                        title={product.productName}
+                        description={product.description}
+                        imageUrl={product.imageUrl}
+                        price={product.price}
+                        stock={product.stock}
+                        categories={product.catagoryArr}
+                    />
                 ))}
-            </Row>
+            </div>
         </Container>
     );
 }

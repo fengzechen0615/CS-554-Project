@@ -1,22 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Button } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
 import AddProductModal from './addProductModal';
 import Product from './product/product';
 import { getUserProducts } from 'api/products';
+import { showError } from 'components/sweetAlert/sweetAlert';
 
 // address, avatar, nickname, phoneNumber, state, zipcode
 
 export default function UserSellingProducts(props) {
-    const user = useSelector((state) => state.user);
     const [products, setProducts] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const initProducts = async () => {
-            const products = await getUserProducts();
-            console.log(products);
-            setProducts(products);
+            try {
+                const products = await getUserProducts();
+                console.log(products);
+                setProducts(products);
+            } catch (error) {
+                showError(error.message);
+            }
         };
         initProducts();
     }, []);
