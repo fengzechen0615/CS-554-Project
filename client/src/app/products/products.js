@@ -6,18 +6,33 @@ import Product from './product/product';
 
 export default function Main() {
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
 
     useEffect(() => {
         const initProducts = async () => {
             try {
                 const products = await getProducts();
+                const categories = products
+                    .map((product) => product.categoryArr)
+                    .flat();
+                const categorySet = [...new Set(categories)];
                 setProducts(products);
+                setFilteredProducts(products);
+                setCategories(categorySet);
             } catch (error) {
                 showError(error.message);
             }
         };
         initProducts();
     }, []);
+
+    const handleCategoryChange = (event) => {
+        const category = event.target.value;
+        const filteredProducts = products.filter(
+            (product) => product.categoryArr
+        );
+    };
 
     return (
         <Container className='p-3'>
@@ -31,12 +46,15 @@ export default function Main() {
                     </Button>
                     <Form inline className='m-1'>
                         <p className='m-1'>Category</p>
-                        <Form.Control as='select' custom>
-                            <option>rice</option>
-                            <option>computer</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                        <Form.Control
+                            as='select'
+                            custom
+                            onChange={handleCategoryChange}
+                        >
+                            <option>All</option>
+                            {categories.map((cat, idx) => (
+                                <option key={idx}>{cat}</option>
+                            ))}
                         </Form.Control>
                     </Form>
                 </div>
@@ -59,7 +77,7 @@ export default function Main() {
                         imageUrl={product.imageUrl}
                         price={product.price}
                         stock={product.stock}
-                        categories={product.catagoryArr}
+                        categories={product.categoryArr}
                     />
                 ))}
             </div>

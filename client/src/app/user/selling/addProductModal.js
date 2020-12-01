@@ -3,12 +3,11 @@ import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import { Chip } from '@material-ui/core';
 import { showError, showSuccess } from 'components/sweetAlert/sweetAlert';
-import { uploadProductImage, createProduct } from 'api/products';
+import { createProduct } from 'api/products';
 
 // address, avatar, nickname, phoneNumber, state, zipcode
 
 export default function AddProductModal(props) {
-    const user = useSelector((state) => state.user);
     const [productName, setProductName] = useState('');
     const [description, setDescription] = useState('');
     const [categoryArr, setCategoryArr] = useState([]);

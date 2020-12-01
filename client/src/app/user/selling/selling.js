@@ -48,7 +48,7 @@ export default function UserSellingProducts(props) {
                         imageUrl={product.imageUrl}
                         price={product.price}
                         stock={product.stock}
-                        categories={product.catagoryArr}
+                        categories={product.categoryArr}
                     />
                 ))}
             </div>

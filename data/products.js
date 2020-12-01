@@ -6,7 +6,7 @@ async function createPoduct(
     sellerId,
     productName,
     description,
-    catagoryArr,
+    categoryArr,
     imageUrl,
     stock,
     price
@@ -29,7 +29,7 @@ async function createPoduct(
             errorMessage: 'you should input a string as the content',
         };
     }
-    if (!catagoryArr || !Array.isArray(catagoryArr)) {
+    if (!categoryArr || !Array.isArray(categoryArr)) {
         throw {
             status: 400,
             errorMessage: 'You must provide an array of catagories',
@@ -68,7 +68,7 @@ async function createPoduct(
         sellerId: sellerId,
         productName: productName,
         description: description,
-        catagoryArr: catagoryArr,
+        categoryArr: categoryArr,
         imageUrl: imageUrl,
         stock: stock,
         price: price,
