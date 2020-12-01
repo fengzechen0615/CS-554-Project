@@ -9,6 +9,7 @@ export default function Product(props) {
             <Card.Body>
                 <Card.Title>{props.title}</Card.Title>
                 <p className='mb-0'>{props.description}</p>
+                <p className='mb-0'>Date: {props.date.split('T')[0]}</p>
                 <p className='mb-0'>Price: {props.price}</p>
                 <p className='mb-0'>Stock: {props.stock}</p>
                 <div className='mb-2'>
