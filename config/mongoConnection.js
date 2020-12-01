@@ -1,7 +1,8 @@
 const MongoClient = require('mongodb').MongoClient;
+const { password } = require('./mongodb');
 
 const mongoConfig = {
-    serverUrl: 'mongodb://localhost:27017/',
+    serverUrl: `mongodb+srv://undefined:${password}@undefined.ex623.mongodb.net?retryWrites=true&w=majority`,
     database: 'undefined',
 };
 
