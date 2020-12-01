@@ -35,7 +35,7 @@ let exportedMethods = {
         return { status: 200, result: user };
     },
 
-    async addUser(nickname, email) {
+    async addUser(nickname, email, isAdmin) {
         const userCollection = await users();
 
         let newUser = {
@@ -46,7 +46,7 @@ let exportedMethods = {
             address: '',
             zipCode: '',
             avatar: 'default.jpg',
-            isAdmin: false,
+            isAdmin: isAdmin,
             state: true,
         };
 

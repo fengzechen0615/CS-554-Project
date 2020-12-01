@@ -229,6 +229,15 @@ their products to sell and buy products from other users.
         "password": "String"
     }
     ```
+-   **post('v1/users/admin/signup')**  
+    _Access_: null
+    ```json
+    {
+        "email": "String",
+        "nickname": "String",
+        "password": "String"
+    }
+    ```
 -   **post('v1/users/password)**  
     _Access_: authenticated
     ```json
