@@ -4,6 +4,7 @@ const uuid = require('uuid');
 
 async function createPoduct(
     sellerId,
+    sellerName,
     productName,
     description,
     categoryArr,
@@ -15,6 +16,12 @@ async function createPoduct(
         throw {
             status: 400,
             errorMessage: 'you should input a string as sellerId',
+        };
+    }
+    if (!sellerName || typeof sellerName !== 'string') {
+        throw {
+            status: 400,
+            errorMessage: 'you should input a string as sellerName',
         };
     }
     if (!productName || typeof productName !== 'string') {
@@ -66,6 +73,7 @@ async function createPoduct(
     let newProduct = {
         _id: uuid.v4(),
         sellerId: sellerId,
+        sellerName: sellerName,
         productName: productName,
         description: description,
         categoryArr: categoryArr,

@@ -3,6 +3,7 @@ const router = express.Router();
 const data = require('../data');
 const productData = data.products;
 const questionData = data.questions;
+const userData = data.users;
 const xss = require('xss');
 const {
     authenticated,
@@ -38,6 +39,8 @@ router.post(
                 return;
             }
             let sellerId = req.session.AuthCookie._id;
+            let sellerName = (await userData.getUserById(sellerId)).result
+                .nickname;
             let productName = xss(req.body.productName);
             let description = xss(req.body.description);
             let categoryArr = xss(req.body.categoryArr).split(',');
@@ -47,6 +50,7 @@ router.post(
 
             let newProduct = await productData.createPoduct(
                 sellerId,
+                sellerName,
                 productName,
                 description,
                 categoryArr,
