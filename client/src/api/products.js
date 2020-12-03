@@ -10,3 +10,7 @@ export const getUserProducts = async () => {
 export const getProducts = async () => {
     return (await axios.get('/products/')).data;
 };
+
+export const getProduct = async (id) => {
+    return (await axios.get(`/products/${id}`)).data;
+};

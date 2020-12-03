@@ -14,6 +14,7 @@ import SignUp from 'auth/signup/signup';
 import UserInfo from 'app/user/info/info';
 import UserSelling from 'app/user/selling/selling';
 import Logout from 'auth/logout/logout';
+import Product from 'app/product/product';
 
 function App() {
     const user = useSelector((state) => state.user);
@@ -42,6 +43,9 @@ function App() {
                 <Switch>
                     <Route path='/products'>
                         <Main />
+                    </Route>
+                    <Route path='/product/:productId'>
+                        <Product />
                     </Route>
                     <Route path='/user/info'>
                         <UserInfo />
