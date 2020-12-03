@@ -9,7 +9,7 @@ const xss = require('xss');
 const { authenticated, admin } = require('../utility/authMiddleware');
 const { uploadAvatar } = require('../utility/imageUpload');
 
-router.get('/userinfo', authenticated, async (req, res) => {
+router.post('/userinfo', authenticated, async (req, res) => {
     try {
         if (!req.body) {
             res.status(400).json({
