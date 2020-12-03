@@ -87,16 +87,23 @@ router.get('/:id', authenticated, async (req, res) => {
     let productCacheExist = await client.existsAsync('product' + req.params.id);
     if (productCacheExist) {
         let productCache = await client.getAsync('product' + req.params.id);
-        res.status(200).json(JSON.parse(productCache).result);
+        res.status(200).json(JSON.parse(productCache));
         return;
     }
 
     try {
         let productGoal = await productData.getProductById(xss(req.params.id));
-
+        let QuestionAnswerArr = await questionData.getQuestionsByProductId(
+            req.params.id
+        );
+        let pgResult = productGoal.result;
+        let qaResult = QuestionAnswerArr.result;
         // set product cache
-        client.set('product' + req.params.id, JSON.stringify(productGoal));
-        res.status(productGoal.status).json(productGoal.result);
+        client.set(
+            'product' + req.params.id,
+            JSON.stringify({ paResult, qaResult })
+        );
+        res.status(productGoal.status).json({ pgResult, qaResult });
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
     }
@@ -118,13 +125,14 @@ router.post('/questions', authenticated, async (req, res) => {
 
         const sellerId = (await productData.getProductById(productId)).result
             .sellerId;
-        console.log(sellerId);
+
         let questionCreated = await questionData.createQuestion(
             productId,
             sellerId,
             nickName,
             question
         );
+        client.del('product' + productId);
         res.status(questionCreated.status).json(questionCreated.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
@@ -146,6 +154,7 @@ router.post('/answer/:questionId', authenticated, seller, async (req, res) => {
         let answer = xss(req.body.answer);
 
         let answerGiven = await questionData.giveAnswer(questionId, answer);
+        client.del('product' + answerGiven.result.productId);
         res.status(answerGiven.status).json(answerGiven.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
