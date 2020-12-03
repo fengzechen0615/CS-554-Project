@@ -44,6 +44,9 @@ router.post(
             let productName = xss(req.body.productName);
             let description = xss(req.body.description);
             let categoryArr = xss(req.body.categoryArr).split(',');
+            if (!req.body.categoryArr || req.body.categoryArr.length === 0) {
+                categoryArr = [];
+            }
             let imageUrl = `/images/products/${xss(req.file.filename)}`;
             let stock = Number(xss(req.body.stock));
             let price = Number(xss(req.body.price));
@@ -105,7 +108,7 @@ router.get('/:id', authenticated, async (req, res) => {
         // set product cache
         client.set(
             'product' + req.params.id,
-            JSON.stringify({ paResult, qaResult })
+            JSON.stringify({ pgResult, qaResult })
         );
         res.status(productGoal.status).json({ pgResult, qaResult });
     } catch (error) {
