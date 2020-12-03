@@ -15,7 +15,7 @@ export default function Main() {
     useEffect(() => {
         const initProduct = async () => {
             try {
-                const product = await getProduct(productId);
+                const product = (await getProduct(productId)).result;
                 console.log(product);
                 setProduct(product);
             } catch (error) {
