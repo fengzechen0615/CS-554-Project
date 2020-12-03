@@ -15,6 +15,7 @@ export default function Login() {
         event.preventDefault();
         try {
             const { data } = await signIn(email, password);
+            localStorage.setItem('idToken', data.idToken);
             dispatch(setUser(data));
         } catch (error) {
             setShowAlert(true);

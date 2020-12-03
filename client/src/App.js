@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
@@ -15,9 +15,26 @@ import UserInfo from 'app/user/info/info';
 import UserSelling from 'app/user/selling/selling';
 import Logout from 'auth/logout/logout';
 import Product from 'app/product/product';
+import { signInWithIdToken } from 'api/users';
+import { setUser } from 'store/reducers/userSlice';
+import { useDispatch } from 'react-redux';
+import { showSuccess } from 'components/sweetAlert/sweetAlert';
 
 function App() {
     const user = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const autoLogin = async () => {
+            const idToken = localStorage.getItem('idToken');
+            if (!idToken) return;
+            const user = await signInWithIdToken(idToken);
+            dispatch(setUser(user));
+            showSuccess('Login with idToken!');
+        };
+        autoLogin();
+    }, []);
+
     if (!user.email) {
         return (
             <Router>

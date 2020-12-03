@@ -12,6 +12,13 @@ export const signIn = async (email, password) =>
         password,
     });
 
+export const signInWithIdToken = async (idToken) => {
+    const response = await axios.post('/users/userinfo', {
+        idToken,
+    });
+    return response.data;
+};
+
 export const signUp = async (nickname, email, password) =>
     await axios.post('users/signup', {
         email,
