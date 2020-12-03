@@ -48,11 +48,15 @@ export default function Main() {
                     </p>
                     <div className='m-1'>
                         Category:{' '}
-                        {product.categoryArr &&
-                            product.categoryArr.length > 0 &&
-                            product.categoryArr.map((cat, idx) => (
-                                <Chip key={idx} label={cat} />
-                            ))}
+                        {product.categoryArr && product.categoryArr.length > 0
+                            ? product.categoryArr.map((cat, idx) => (
+                                  <Chip
+                                      key={idx}
+                                      label={cat}
+                                      className='ml-1'
+                                  />
+                              ))
+                            : 'N/A'}
                     </div>
                 </Col>
             </Row>
