@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { showError } from 'components/sweetAlert/sweetAlert';
 import { getProduct } from 'api/products';
 import './product.css';
+import Questions from './questions/questions';
 
 export default function Main() {
     const [product, setProduct] = useState({});
@@ -49,6 +50,8 @@ export default function Main() {
                     </div>
                 </Col>
             </Row>
+            <br />
+            <Questions />
         </Container>
     );
 }
