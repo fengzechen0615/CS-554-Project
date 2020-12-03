@@ -9,15 +9,18 @@ import Questions from './questions/questions';
 
 export default function Main() {
     const [product, setProduct] = useState({});
+    const [questions, setQuestions] = useState([]);
     const params = useParams();
     const { productId } = params;
 
     useEffect(() => {
         const initProduct = async () => {
             try {
-                const product = (await getProduct(productId)).result;
-                console.log(product);
+                const response = await getProduct(productId);
+                const product = response.pgResult;
+                const questions = response.qaResult;
                 setProduct(product);
+                setQuestions(questions);
             } catch (error) {
                 showError(error.message);
             }
@@ -36,7 +39,10 @@ export default function Main() {
                     <p>{product.description}</p>
                     <p className='m-1'>Price: {product.price}</p>
                     <p className='m-1'>Stock: {product.stock}</p>
-                    <p className='m-1'>Seller: </p>
+                    <p className='m-1'>
+                        Seller:{' '}
+                        {product.sellerName ? product.sellerName : 'N/A'}
+                    </p>
                     <p className='m-1'>
                         Post Date: {product.date && product.date.split('T')[0]}{' '}
                     </p>
@@ -51,7 +57,7 @@ export default function Main() {
                 </Col>
             </Row>
             <br />
-            <Questions />
+            <Questions questions={questions} />
         </Container>
     );
 }

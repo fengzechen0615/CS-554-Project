@@ -15,7 +15,6 @@ export default function UserSellingProducts(props) {
         const initProducts = async () => {
             try {
                 const products = await getUserProducts();
-                console.log(products);
                 setProducts(products);
             } catch (error) {
                 showError(error.message);

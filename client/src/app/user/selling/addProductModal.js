@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
 import { Chip } from '@material-ui/core';
 import { showError, showSuccess } from 'components/sweetAlert/sweetAlert';
 import { createProduct } from 'api/products';

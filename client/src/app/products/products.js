@@ -16,7 +16,6 @@ export default function Main() {
         const initProducts = async () => {
             try {
                 const products = await getProducts();
-                console.log(products);
                 const categories = products
                     .map((product) => product.categoryArr)
                     .flat();
