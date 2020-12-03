@@ -25,3 +25,12 @@ yarn-error.log*
 firebase.js
 mongodb.js
 *.rdb
+
+tasks/images
+bags.js
+electronics.js
+healthBeauty.js
+men.js
+watchJewelry.js
+women.js
+productSeed.js
