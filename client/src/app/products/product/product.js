@@ -1,5 +1,7 @@
 import React from 'react';
-import { Card, Button, Badge } from 'react-bootstrap';
+import { Card, Badge } from 'react-bootstrap';
+import {Button} from '@material-ui/core';
+import { Link } from 'react-router-dom';
 import './product.css';
 
 export default function Product(props) {
@@ -21,7 +23,7 @@ export default function Product(props) {
                             </Badge>
                         ))}
                 </div>
-                <Button size='sm' variant='outline-primary'>
+                <Button color='primary' variant='outlined' component={Link} to={`/product/${props.productId}`}>
                     Detail
                 </Button>
             </Card.Body>
