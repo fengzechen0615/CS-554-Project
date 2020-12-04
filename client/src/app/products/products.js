@@ -147,6 +147,7 @@ export default function Main() {
                         stock={product.stock}
                         categories={product.categoryArr}
                         productId={product._id}
+                        seller={product.sellerName}
                     />
                 ))}
             </div>
