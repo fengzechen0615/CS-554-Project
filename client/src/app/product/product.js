@@ -61,7 +61,7 @@ export default function Main() {
                 </Col>
             </Row>
             <br />
-            <Questions questions={questions} />
+            <Questions productId={productId} questions={questions} />
         </Container>
     );
 }
