@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
     Container,
-    Form,
-    FormControl,
-    Button,
     Row,
     Col,
     Tab,
     ListGroup,
     Spinner,
+    Button,
+    InputGroup,
+    FormControl,
 } from 'react-bootstrap';
 import { getProducts } from 'api/products';
 import { showError } from 'components/sweetAlert/sweetAlert';
@@ -49,6 +49,10 @@ export default function Main() {
     const handleSearchChange = (event) => {
         const searchWord = event.target.value;
         setSearchWord(searchWord);
+    };
+
+    const handleSearchSubmit = (event) => {
+        event.preventDefault();
         handleFilterChange(sortOrder, category, searchWord);
     };
 
@@ -166,17 +170,25 @@ export default function Main() {
                         </Tab.Container>
                     </div>
                 </Col>
+
                 <Col md='10'>
                     <div className='d-flex justify-content-between'>
-                        <Form inline>
+                        <InputGroup className='mb-3'>
                             <FormControl
-                                type='text'
-                                placeholder='Search'
-                                className='mr-sm-2'
+                                placeholder='Search Products'
+                                aria-label='Search Products'
+                                aria-describedby='basic-addon2'
                                 onChange={handleSearchChange}
                             />
-                            <Button variant='outline-info'>Search</Button>
-                        </Form>
+                            <InputGroup.Append>
+                                <Button
+                                    variant='outline-secondary'
+                                    onClick={handleSearchSubmit}
+                                >
+                                    Search
+                                </Button>
+                            </InputGroup.Append>
+                        </InputGroup>
                     </div>
                     <div className='d-flex flex-wrap'>
                         {filteredProducts.map((product, idx) => (
