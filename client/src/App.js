@@ -18,7 +18,7 @@ import Product from 'app/product/product';
 import { signInWithIdToken } from 'api/users';
 import { setUser } from 'store/reducers/userSlice';
 import { useDispatch } from 'react-redux';
-import { showSuccess } from 'components/sweetAlert/sweetAlert';
+import { showLoginSuccess } from 'components/sweetAlert/sweetAlert';
 
 function App() {
     const user = useSelector((state) => state.user);
@@ -30,7 +30,7 @@ function App() {
             if (!idToken) return;
             const user = await signInWithIdToken(idToken);
             dispatch(setUser(user));
-            showSuccess('Login with idToken!');
+            showLoginSuccess();
         };
         autoLogin();
     }, []);

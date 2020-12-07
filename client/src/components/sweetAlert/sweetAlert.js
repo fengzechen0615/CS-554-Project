@@ -14,3 +14,12 @@ export const showError = (message) =>
         title: 'Error',
         text: message,
     });
+
+export const showLoginSuccess = () =>
+    Swal.fire({
+        position: 'top',
+        icon: 'success',
+        title: 'Login with Token!',
+        showConfirmButton: false,
+        timer: 1500,
+    });

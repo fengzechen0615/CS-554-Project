@@ -8,11 +8,12 @@ import {
     Col,
     Tab,
     ListGroup,
-    Nav,
+    Spinner,
 } from 'react-bootstrap';
 import { getProducts } from 'api/products';
 import { showError } from 'components/sweetAlert/sweetAlert';
 import Product from './product/product';
+import './products.css';
 
 export default function Main() {
     const [products, setProducts] = useState([]);
@@ -51,8 +52,7 @@ export default function Main() {
         handleFilterChange(sortOrder, category, searchWord);
     };
 
-    const handleSortChange = (event) => {
-        const sortOrder = event.target.value;
+    const handleSortChange = (sortOrder) => {
         setSortOrder(sortOrder);
         handleFilterChange(sortOrder, category, searchWord);
     };
@@ -102,52 +102,72 @@ export default function Main() {
         setFilteredProducts(filteredProducts);
     };
 
+    if (!categories || categories.length === 0) {
+        return (
+            <div className='spinner-container'>
+                <Spinner animation='border' role='status' className='spinner'>
+                    <span className='sr-only'>Loading...</span>
+                </Spinner>
+            </div>
+        );
+    }
+
     return (
         <Container className='p-3' fluid={true}>
             <Row>
                 <Col md='2'>
-                    <div>
+                    <Tab.Container
+                        defaultActiveKey='All'
+                        onSelect={handleCategoryChange}
+                    >
+                        <ListGroup>
+                            <ListGroup.Item>Category</ListGroup.Item>
+                            <ListGroup.Item action eventKey='All'>
+                                All
+                            </ListGroup.Item>
+
+                            {categories.map((cat, idx) => (
+                                <ListGroup.Item key={idx} action eventKey={cat}>
+                                    {cat}
+                                </ListGroup.Item>
+                            ))}
+                        </ListGroup>
+                    </Tab.Container>
+                    <div className='mt-5'>
                         <Tab.Container
-                            defaultActiveKey='All'
-                            onSelect={handleCategoryChange}
+                            defaultActiveKey='Default'
+                            onSelect={handleSortChange}
+                            className='mt-5'
                         >
                             <ListGroup>
-                                <ListGroup.Item>Category</ListGroup.Item>
-                                <ListGroup.Item action eventKey='All'>
-                                    All
+                                <ListGroup.Item>Sort</ListGroup.Item>
+                                <ListGroup.Item action eventKey='Default'>
+                                    Default
                                 </ListGroup.Item>
-
-                                {categories.map((cat, idx) => (
-                                    <ListGroup.Item
-                                        key={idx}
-                                        action
-                                        eventKey={cat}
-                                    >
-                                        {cat}
-                                    </ListGroup.Item>
-                                ))}
+                                <ListGroup.Item
+                                    action
+                                    eventKey='Price: Low to High'
+                                >
+                                    Price: Low to High
+                                </ListGroup.Item>
+                                <ListGroup.Item
+                                    action
+                                    eventKey='Price: High to Low'
+                                >
+                                    Price: High to Low
+                                </ListGroup.Item>
+                                <ListGroup.Item
+                                    action
+                                    eventKey='Newest Arrivals'
+                                >
+                                    Newest Arrivals
+                                </ListGroup.Item>
                             </ListGroup>
                         </Tab.Container>
                     </div>
                 </Col>
                 <Col md='10'>
                     <div className='d-flex justify-content-between'>
-                        <div className='d-flex'>
-                            <Form inline className='m-1'>
-                                <p className='m-1'>Sort By</p>
-                                <Form.Control
-                                    as='select'
-                                    custom
-                                    onChange={handleSortChange}
-                                >
-                                    <option>Default</option>
-                                    <option>Price: Low to High</option>
-                                    <option>Price: High to Low</option>
-                                    <option>Newest Arrivals</option>
-                                </Form.Control>
-                            </Form>
-                        </div>
-
                         <Form inline>
                             <FormControl
                                 type='text'
