@@ -1,0 +1,21 @@
+.bg {
+    background: #e6eaea;
+}
+
+.home {
+    padding-bottom: 100px;
+}
+
+.category {
+    width: 350px;
+    background-color: #fff;
+}
+
+.card {
+    width: 350px;
+    margin: 12px;
+}
+
+.media {
+    height: 240px;
+}

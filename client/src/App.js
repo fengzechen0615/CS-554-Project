@@ -15,6 +15,7 @@ import UserInfo from 'app/user/info/info';
 import UserSelling from 'app/user/selling/selling';
 import Logout from 'auth/logout/logout';
 import Product from 'app/product/product';
+import Home from 'app/home/home';
 import { signInWithIdToken } from 'api/users';
 import { setUser } from 'store/reducers/userSlice';
 import { useDispatch } from 'react-redux';
@@ -46,6 +47,9 @@ function App() {
                         <Route path='/signup'>
                             <SignUp />
                         </Route>
+                        <Route path='/' exact>
+                            <Home />
+                        </Route>
                         <Redirect to='/login' />
                     </Switch>
                 </div>
@@ -58,6 +62,9 @@ function App() {
             <div>
                 <NavBar />
                 <Switch>
+                    <Route path='/' exact>
+                        <Home />
+                    </Route>
                     <Route path='/products'>
                         <Main />
                     </Route>

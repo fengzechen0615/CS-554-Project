@@ -2,17 +2,21 @@ import React, { useState } from 'react';
 import { Button, Divider } from '@material-ui/core';
 import { Row, Col } from 'react-bootstrap';
 import PostQuestionModal from './postQuestionModal';
+import { useSelector } from 'react-redux';
 import './questions.css';
 
 export default function Questions(props) {
     const [showPostQuestionModal, setShowPostQuestionModal] = useState(false);
     const questions = props.questions;
+    const user = useSelector((state) => state.user);
+    console.log(user);
+    console.log(props);
     return (
         <div>
             <h2>Customer questions and answers</h2>
             <div>
                 {questions.map((question) => (
-                    <div>
+                    <div key={question._id}>
                         <Divider className='my-2' />
                         <Row>
                             <Col xs={1}>Question:</Col>
