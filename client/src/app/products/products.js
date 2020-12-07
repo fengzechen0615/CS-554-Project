@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Form, FormControl, Button } from 'react-bootstrap';
+import {
+    Container,
+    Form,
+    FormControl,
+    Button,
+    Row,
+    Col,
+    Tab,
+    ListGroup,
+    Nav,
+} from 'react-bootstrap';
 import { getProducts } from 'api/products';
 import { showError } from 'components/sweetAlert/sweetAlert';
 import Product from './product/product';
@@ -30,8 +40,7 @@ export default function Main() {
         initProducts();
     }, []);
 
-    const handleCategoryChange = (event) => {
-        const category = event.target.value;
+    const handleCategoryChange = (category) => {
         setCategory(category);
         handleFilterChange(sortOrder, category, searchWord);
     };
@@ -94,63 +103,79 @@ export default function Main() {
     };
 
     return (
-        <Container className='p-3'>
-            <div className='d-flex justify-content-between'>
-                <div className='d-flex'>
-                    <Form inline className='m-1'>
-                        <p className='m-1'>Sort By</p>
-                        <Form.Control
-                            as='select'
-                            custom
-                            onChange={handleSortChange}
+        <Container className='p-3' fluid={true}>
+            <Row>
+                <Col md='2'>
+                    <div>
+                        <Tab.Container
+                            defaultActiveKey='All'
+                            onSelect={handleCategoryChange}
                         >
-                            <option>Default</option>
-                            <option>Price: Low to High</option>
-                            <option>Price: High to Low</option>
-                            <option>Newest Arrivals</option>
-                        </Form.Control>
-                    </Form>
-                    <Form inline className='m-1'>
-                        <p className='m-1'>Category</p>
-                        <Form.Control
-                            as='select'
-                            custom
-                            onChange={handleCategoryChange}
-                        >
-                            <option>All</option>
-                            {categories.map((cat, idx) => (
-                                <option key={idx}>{cat}</option>
-                            ))}
-                        </Form.Control>
-                    </Form>
-                </div>
+                            <ListGroup>
+                                <ListGroup.Item>Category</ListGroup.Item>
+                                <ListGroup.Item action eventKey='All'>
+                                    All
+                                </ListGroup.Item>
 
-                <Form inline>
-                    <FormControl
-                        type='text'
-                        placeholder='Search'
-                        className='mr-sm-2'
-                        onChange={handleSearchChange}
-                    />
-                    <Button variant='outline-info'>Search</Button>
-                </Form>
-            </div>
-            <div className='d-flex flex-wrap'>
-                {filteredProducts.map((product, idx) => (
-                    <Product
-                        key={idx}
-                        title={product.productName}
-                        description={product.description}
-                        date={product.date}
-                        imageUrl={product.imageUrl}
-                        price={product.price}
-                        stock={product.stock}
-                        categories={product.categoryArr}
-                        productId={product._id}
-                        seller={product.sellerName}
-                    />
-                ))}
-            </div>
+                                {categories.map((cat, idx) => (
+                                    <ListGroup.Item
+                                        key={idx}
+                                        action
+                                        eventKey={cat}
+                                    >
+                                        {cat}
+                                    </ListGroup.Item>
+                                ))}
+                            </ListGroup>
+                        </Tab.Container>
+                    </div>
+                </Col>
+                <Col md='10'>
+                    <div className='d-flex justify-content-between'>
+                        <div className='d-flex'>
+                            <Form inline className='m-1'>
+                                <p className='m-1'>Sort By</p>
+                                <Form.Control
+                                    as='select'
+                                    custom
+                                    onChange={handleSortChange}
+                                >
+                                    <option>Default</option>
+                                    <option>Price: Low to High</option>
+                                    <option>Price: High to Low</option>
+                                    <option>Newest Arrivals</option>
+                                </Form.Control>
+                            </Form>
+                        </div>
+
+                        <Form inline>
+                            <FormControl
+                                type='text'
+                                placeholder='Search'
+                                className='mr-sm-2'
+                                onChange={handleSearchChange}
+                            />
+                            <Button variant='outline-info'>Search</Button>
+                        </Form>
+                    </div>
+                    <div className='d-flex flex-wrap'>
+                        {filteredProducts.map((product, idx) => (
+                            <Product
+                                key={idx}
+                                title={product.productName}
+                                description={product.description}
+                                date={product.date}
+                                imageUrl={product.imageUrl}
+                                price={product.price}
+                                stock={product.stock}
+                                categories={product.categoryArr}
+                                productId={product._id}
+                                seller={product.sellerName}
+                            />
+                        ))}
+                    </div>
+                </Col>
+            </Row>
         </Container>
     );
 }
