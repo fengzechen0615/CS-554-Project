@@ -13,6 +13,16 @@ export default function Main() {
     const params = useParams();
     const { productId } = params;
 
+    const refreshQuestions = async () => {
+        try {
+            const response = await getProduct(productId);
+            const questions = response.qaResult;
+            setQuestions(questions);
+        } catch (error) {
+            showError(error.message);
+        }
+    };
+
     useEffect(() => {
         const initProduct = async () => {
             try {
@@ -61,7 +71,11 @@ export default function Main() {
                 </Col>
             </Row>
             <br />
-            <Questions productId={productId} questions={questions} />
+            <Questions
+                productId={productId}
+                questions={questions}
+                refresh={refreshQuestions}
+            />
         </Container>
     );
 }

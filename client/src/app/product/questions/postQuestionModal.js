@@ -18,6 +18,7 @@ export default function PostQuestionModal(props) {
     const submitHandler = async () => {
         try {
             await postQuestion(content, productId);
+            await props.refresh();
             showSuccess('Successfully submitted question for this product!');
             props.handleClose();
         } catch (error) {

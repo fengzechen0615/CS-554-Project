@@ -42,6 +42,7 @@ export default function Questions(props) {
                 show={showPostQuestionModal}
                 handleClose={() => setShowPostQuestionModal(false)}
                 productId={props.productId}
+                refresh={props.refresh}
             />
         </div>
     );
