@@ -10,18 +10,23 @@ import {
     InputGroup,
     FormControl,
 } from 'react-bootstrap';
+import Pagination from '@material-ui/lab/Pagination';
 import { getProducts } from 'api/products';
 import { showError } from 'components/sweetAlert/sweetAlert';
 import Product from './product/product';
 import './products.css';
 
 export default function Main() {
+    const COUNT_PER_PAGE = 12;
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
+    const [displayedProducts, setDisplayedProducts] = useState([]);
     const [sortOrder, setSortOrder] = useState('Default');
     const [category, setCategory] = useState('All');
     const [searchWord, setSearchWord] = useState('');
+    const [page, setPage] = useState(1);
+    const [count, setCount] = useState(null);
 
     useEffect(() => {
         const initProducts = async () => {
@@ -33,6 +38,8 @@ export default function Main() {
                 const categorySet = [...new Set(categories)];
                 setProducts(products);
                 setFilteredProducts(products);
+                setDisplayedProducts(products.slice(0, COUNT_PER_PAGE));
+                setCount(Math.ceil(products.length / COUNT_PER_PAGE));
                 setCategories(categorySet);
             } catch (error) {
                 showError(error.message);
@@ -104,9 +111,24 @@ export default function Main() {
         filteredProducts = filterBySearch(filteredProducts, searchWord);
         filteredProducts = filterBySort(filteredProducts, sortOrder);
         setFilteredProducts(filteredProducts);
+        setCount(Math.ceil(filteredProducts.length / COUNT_PER_PAGE));
+        setPage(1);
+        setDisplayedProducts(filteredProducts.slice(0, COUNT_PER_PAGE));
     };
 
-    if (!categories || categories.length === 0) {
+    const handlePageChange = (event, value) => {
+        setPage(value);
+    };
+
+    useEffect(() => {
+        const start = (page - 1) * COUNT_PER_PAGE;
+        const end = start + COUNT_PER_PAGE;
+        setDisplayedProducts(filteredProducts.slice(start, end));
+        console.log(filteredProducts.length, start, end);
+        window.scrollTo(0, 0);
+    }, [page]);
+
+    if (!categories || categories.length === 0 || !count) {
         return (
             <div className='spinner-container'>
                 <Spinner animation='border' role='status' className='spinner'>
@@ -191,7 +213,7 @@ export default function Main() {
                         </InputGroup>
                     </div>
                     <div className='d-flex flex-wrap'>
-                        {filteredProducts.map((product, idx) => (
+                        {displayedProducts.map((product, idx) => (
                             <Product
                                 key={idx}
                                 title={product.productName}
@@ -208,6 +230,13 @@ export default function Main() {
                     </div>
                 </Col>
             </Row>
+            <div className='d-flex justify-content-center'>
+                <Pagination
+                    count={count}
+                    page={page}
+                    onChange={handlePageChange}
+                />
+            </div>
         </Container>
     );
 }
