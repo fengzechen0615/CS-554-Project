@@ -128,7 +128,7 @@ export default function Main() {
         window.scrollTo(0, 0);
     }, [page]);
 
-    if (!categories || categories.length === 0 || !count) {
+    if (!categories || categories.length === 0 || count === null) {
         return (
             <div className='spinner-container'>
                 <Spinner animation='border' role='status' className='spinner'>
