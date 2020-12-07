@@ -124,7 +124,6 @@ export default function Main() {
         const start = (page - 1) * COUNT_PER_PAGE;
         const end = start + COUNT_PER_PAGE;
         setDisplayedProducts(filteredProducts.slice(start, end));
-        console.log(filteredProducts.length, start, end);
         window.scrollTo(0, 0);
     }, [page]);
 
