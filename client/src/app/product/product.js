@@ -10,20 +10,22 @@ import {
     Button,
 } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
-import { showError } from 'components/sweetAlert/sweetAlert';
+import { showError, showSuccess } from 'components/sweetAlert/sweetAlert';
 import { getProduct } from 'api/products';
+import { buyProduct } from 'api/product';
 import './product.css';
 import Questions from './questions/questions';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
-        // margin: theme.spacing(1),
         margin: 0,
         minWidth: 120,
     },
 }));
 
 export default function Main() {
+    const user = useSelector((state) => state.user);
     const classes = useStyles();
     const [product, setProduct] = useState({});
     const [questions, setQuestions] = useState([]);
@@ -36,6 +38,16 @@ export default function Main() {
             const response = await getProduct(productId);
             const questions = response.qaResult;
             setQuestions(questions);
+        } catch (error) {
+            showError(error.message);
+        }
+    };
+
+    const refreshProduct = async () => {
+        try {
+            const response = await getProduct(productId);
+            const product = response.pgResult;
+            setProduct(product);
         } catch (error) {
             showError(error.message);
         }
@@ -55,6 +67,32 @@ export default function Main() {
         };
         initProduct();
     }, [productId]);
+
+    const buyProductHandler = async () => {
+        try {
+            const productId = product._id;
+            const { sellerId, price, productName, description } = product;
+            const imgUrl = product.imageUrl;
+            const address = user.address || 'N/A';
+            const buyerId = user._id;
+            const dealNumber = quantity;
+            await buyProduct(
+                productId,
+                sellerId,
+                buyerId,
+                address,
+                price,
+                dealNumber,
+                productName,
+                description,
+                imgUrl
+            );
+            showSuccess('Successfully bought product!');
+            refreshProduct();
+        } catch (error) {
+            showError(error.message);
+        }
+    };
 
     return (
         <Container className='p-3 mt-5'>
@@ -110,6 +148,7 @@ export default function Main() {
                             color='primary'
                             variant='outlined'
                             className='ml-1'
+                            onClick={buyProductHandler}
                         >
                             Buy Now
                         </Button>
