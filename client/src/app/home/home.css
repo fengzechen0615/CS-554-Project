@@ -11,21 +11,33 @@
     background-color: #fff;
 }
 
-.card {
-    width: 350px;
-    margin: 12px;
+/*  Reuseable Component */
+
+.left {
+    text-align: left;
 }
 
-.media {
-    height: 240px;
+.right {
+    text-align: right;
 }
 
-.carouselItem {
+.center {
+    text-align: center;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+/*  Carousel    */
+
+.carousel {
     background-color: #000000;
 }
 
 .carouselImg {
     opacity: 0.3;
+    /*height: 90vh;*/
 }
 
 .carousel-description {
@@ -39,10 +51,68 @@
     color: white;
 }
 
-.left {
-    text-align: left;
+/*  Card    */
+
+.card-list {
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    height: auto;
 }
 
-.right {
-    text-align: right;
+.card-list li {
+    display: block;
+    width: 33%;
+    float: left;
+}
+
+.card-btn {
+    position: relative;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    border: none;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.card-img {
+    opacity: 0.7;
+    width: 100%;
+    height: auto;
+    transform: scale(1.03);
+    transition: transform 0.5s, opacity 0.5s;
+}
+
+.card-btn:hover .card-img{
+    opacity: 0.3;
+    transform: scale(1.2);
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: 0.5s ease;
+    color: white;
+    transition: opacity 0.5s;
+    z-index: 10;
+}
+
+.overlay p {
+    font-size: 200%;
+    font-weight: lighter;
+}
+
+.card-btn:hover .overlay {
+    opacity: 1;
 }

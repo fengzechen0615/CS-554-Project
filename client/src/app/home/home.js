@@ -14,16 +14,24 @@ export default function Home() {
     const history = useHistory();
     return (
         <div className='bg home'>
-            <Carousel className="carouselItem" interval={100000000}>
+            <Carousel className='carousel'>
                 <Carousel.Item>
                     <img
                         className='d-block w-100 carouselImg'
                         src='images/banners/banner-1.jpg'
                         alt='First slide'
                     />
-                    <div className="carousel-description left">
-                        <h2>Pusedo Title</h2>
-                        <p>Pusedo paragraph</p>
+                    <div className='carousel-description'>
+                        <h2>Xian Yu</h2>
+                        <p>A website to sell & buy products!</p>
+                        <Button
+                            variant='outline-danger'
+                            size='lg'
+                            as={Link}
+                            to='/products'
+                        >
+                            View More
+                        </Button>
                     </div>
                 </Carousel.Item>
                 <Carousel.Item>
@@ -32,9 +40,9 @@ export default function Home() {
                         src='images/banners/banner-2.jpg'
                         alt='Third slide'
                     />
-                    <div className="carousel-description right">
-                        <h2>Pusedo Title</h2>
-                        <p>Pusedo paragraph</p>
+                    <div className='carousel-description'>
+                        <h2>Top 10 products</h2>
+                        <p>top 10</p>
                     </div>
                 </Carousel.Item>
                 <Carousel.Item>
@@ -43,23 +51,13 @@ export default function Home() {
                         src='images/banners/banner-3.jpg'
                         alt='Third slide'
                     />
-                    <div className="carousel-description left">
-                        <h2>Pusedo Title</h2>
-                        <p>Pusedo paragraph</p>
+                    <div className='carousel-description'>
+                        <h2>Xian Yu</h2>
+                        <p>A website to sell & buy products!</p>
                     </div>
                 </Carousel.Item>
             </Carousel>
-            <div className='d-flex justify-content-center m-5'>
-                <Button
-                    variant='outline-danger'
-                    size='lg'
-                    as={Link}
-                    to='/products'
-                >
-                    View More Products
-                </Button>
-            </div>
-            <Container>
+            {/*<Container>
                 <Row className='mt-3 pb-5'>
                     <Card className='card'>
                         <CardActionArea
@@ -206,6 +204,113 @@ export default function Home() {
                         </CardActionArea>
                     </Card>
                 </Row>
+                        </Container>*/}
+            <Container>
+                <h1>Explore Our Website</h1>
+                <ul className='card-list clearfix'>
+                    <li>
+                        <button
+                            className='card-btn'
+                            onClick={() =>
+                                history.push('/products?category=Bags')
+                            }
+                        >
+                            <img
+                                className='card-img'
+                                src='/images/products/product-1607043195509.png'
+                            ></img>
+                            <div className='overlay'>
+                                <p>Discover More Bags</p>
+                            </div>
+                        </button>
+                    </li>
+                    <li>
+                        <button
+                            className='card-btn'
+                            onClick={() =>
+                                history.push('/products?category=Electronics')
+                            }
+                        >
+                            <img
+                                className='card-img'
+                                src='/images/products/product-1607043197891.jpeg'
+                            ></img>
+                            <div className='overlay'>
+                                <p>Discover More Electronics</p>
+                            </div>
+                        </button>
+                    </li>
+                    <li>
+                        <button
+                            className='card-btn'
+                            onClick={() =>
+                                history.push(
+                                    `/products?category=Health & Beauty`
+                                )
+                            }
+                        >
+                            <img
+                                className='card-img'
+                                src='/images/products/product-1607043203344.jpeg'
+                            ></img>
+                            <div className='overlay'>
+                                <p>Discover More Health & Beauty</p>
+                            </div>
+                        </button>
+                    </li>
+                </ul>
+                <ul className='card-list clearfix'>
+                    <li>
+                        <button
+                            className='card-btn'
+                            onClick={() =>
+                                history.push('/products?category=Men')
+                            }
+                        >
+                            <img
+                                className='card-img'
+                                src='/images/products/product-1607043205323.jpeg'
+                            ></img>
+                            <div className='overlay'>
+                                <p>Discover More Clothes for Men</p>
+                            </div>
+                        </button>
+                    </li>
+                    <li>
+                        <button
+                            className='card-btn'
+                            onClick={() =>
+                                history.push('/products?category=Women')
+                            }
+                        >
+                            <img
+                                className='card-img'
+                                src='/images/products/product-1607043211365.webp'
+                            ></img>
+                            <div className='overlay'>
+                                <p>Discover More Clothes for Women</p>
+                            </div>
+                        </button>
+                    </li>
+                    <li>
+                        <button
+                            className='card-btn'
+                            onClick={() =>
+                                history.push(
+                                    '/products?category=Watch & Jewelry'
+                                )
+                            }
+                        >
+                            <img
+                                className='card-img'
+                                src='/images/products/product-1607043208800.png'
+                            ></img>
+                            <div className='overlay'>
+                                <p>Discover More Watch & Jewelry</p>
+                            </div>
+                        </button>
+                    </li>
+                </ul>
             </Container>
         </div>
     );
