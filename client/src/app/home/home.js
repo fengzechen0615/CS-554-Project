@@ -51,7 +51,9 @@ export default function Home() {
                 <Row className='mt-3 pb-5'>
                     <Card className='card'>
                         <CardActionArea
-                            onClick={() => history.push('/product/')}
+                            onClick={() =>
+                                history.push('/products?category=Bags')
+                            }
                         >
                             <CardMedia
                                 className='media'
@@ -72,7 +74,9 @@ export default function Home() {
                     </Card>
                     <Card className='card'>
                         <CardActionArea
-                            onClick={() => history.push('/product/')}
+                            onClick={() =>
+                                history.push('/products?category=Electronics')
+                            }
                         >
                             <CardMedia
                                 className='media'
@@ -93,7 +97,11 @@ export default function Home() {
                     </Card>
                     <Card className='card'>
                         <CardActionArea
-                            onClick={() => history.push('/product/')}
+                            onClick={() =>
+                                history.push(
+                                    `/products?category=Health & Beauty`
+                                )
+                            }
                         >
                             <CardMedia
                                 className='media'
@@ -116,7 +124,9 @@ export default function Home() {
                 <Row className='mt-3 pb-5'>
                     <Card className='card'>
                         <CardActionArea
-                            onClick={() => history.push('/product/')}
+                            onClick={() =>
+                                history.push('/products?category=Men')
+                            }
                         >
                             <CardMedia
                                 className='media'
@@ -137,7 +147,9 @@ export default function Home() {
                     </Card>
                     <Card className='card'>
                         <CardActionArea
-                            onClick={() => history.push('/product/')}
+                            onClick={() =>
+                                history.push('/products?category=Women')
+                            }
                         >
                             <CardMedia
                                 className='media'
@@ -158,7 +170,11 @@ export default function Home() {
                     </Card>
                     <Card className='card'>
                         <CardActionArea
-                            onClick={() => history.push('/product/')}
+                            onClick={() =>
+                                history.push(
+                                    '/products?category=Watch & Jewelry'
+                                )
+                            }
                         >
                             <CardMedia
                                 className='media'

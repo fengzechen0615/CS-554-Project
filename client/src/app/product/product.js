@@ -36,13 +36,13 @@ export default function Main() {
             }
         };
         initProduct();
-    }, []);
+    }, [productId]);
 
     return (
         <Container className='p-3 mt-5'>
             <Row>
                 <Col xs={12} md={6}>
-                    <img src={`${product.imageUrl}`} />
+                    <img src={`${product.imageUrl}`} alt={product.imageUrl} />
                 </Col>
                 <Col xs={12} md={6}>
                     <h1>{product.productName}</h1>
