@@ -6,14 +6,13 @@ async function createOrder(
     productId,
     sellerId,
     buyerId,
-    address,
+    addxress,
     price,
     dealNumber,
     productName,
     description,
     imgUrl
 ) {
-    console.log(123);
     if (!productId || typeof productId !== 'string') {
         throw {
             status: 400,
