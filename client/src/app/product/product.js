@@ -1,15 +1,33 @@
 import React, { useState, useEffect } from 'react';
 import { Col, Container, Row } from 'react-bootstrap';
-import { Chip } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import {
+    Chip,
+    MenuItem,
+    Select,
+    InputLabel,
+    FormControl,
+    Button,
+} from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import { showError } from 'components/sweetAlert/sweetAlert';
 import { getProduct } from 'api/products';
 import './product.css';
 import Questions from './questions/questions';
 
+const useStyles = makeStyles((theme) => ({
+    formControl: {
+        // margin: theme.spacing(1),
+        margin: 0,
+        minWidth: 120,
+    },
+}));
+
 export default function Main() {
+    const classes = useStyles();
     const [product, setProduct] = useState({});
     const [questions, setQuestions] = useState([]);
+    const [quantity, setQuantity] = useState(1);
     const params = useParams();
     const { productId } = params;
 
@@ -67,6 +85,34 @@ export default function Main() {
                                   />
                               ))
                             : 'N/A'}
+                    </div>
+                    <div className='m-1 d-flex'>
+                        <FormControl
+                            variant='outlined'
+                            margin='dense'
+                            className={classes.formControl}
+                        >
+                            <InputLabel id='quantity'>Quantity</InputLabel>
+                            <Select
+                                labelId='quantity'
+                                value={quantity}
+                                onChange={(ev) => setQuantity(ev.target.value)}
+                                label='Quantity'
+                            >
+                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((q) => (
+                                    <MenuItem value={q} key={q}>
+                                        {q}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                        <Button
+                            color='primary'
+                            variant='outlined'
+                            className='ml-1'
+                        >
+                            Buy Now
+                        </Button>
                     </div>
                 </Col>
             </Row>
