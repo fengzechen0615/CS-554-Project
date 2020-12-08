@@ -6,7 +6,7 @@ async function createOrder(
     productId,
     sellerId,
     buyerId,
-    addxress,
+    address,
     price,
     dealNumber,
     productName,
