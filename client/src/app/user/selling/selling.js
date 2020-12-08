@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import AddProductModal from './addProductModal';
-import Product from './product/product';
+import Product from 'components/product/product';
 import { getUserProducts } from 'api/products';
 import { showError } from 'components/sweetAlert/sweetAlert';
 
