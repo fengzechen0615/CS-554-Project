@@ -140,77 +140,83 @@ export default function Main() {
     return (
         <Container className='p-3' fluid={true}>
             <Row>
+                <InputGroup className='mb-3 search-bar'>
+                    <FormControl
+                        placeholder='Search Products'
+                        aria-label='Search Products'
+                        aria-describedby='basic-addon2'
+                        onChange={handleSearchChange}
+                    />
+                    <InputGroup.Append>
+                        <Button
+                            variant='outline-secondary'
+                            onClick={handleSearchSubmit}
+                        >
+                            Search
+                        </Button>
+                    </InputGroup.Append>
+                </InputGroup>
+            </Row>
+            <Row>
                 <Col md='2'>
-                    <Tab.Container
-                        defaultActiveKey='All'
-                        onSelect={handleCategoryChange}
-                    >
-                        <ListGroup>
-                            <ListGroup.Item>Category</ListGroup.Item>
-                            <ListGroup.Item action eventKey='All'>
-                                All
-                            </ListGroup.Item>
-
-                            {categories.map((cat, idx) => (
-                                <ListGroup.Item key={idx} action eventKey={cat}>
-                                    {cat}
-                                </ListGroup.Item>
-                            ))}
-                        </ListGroup>
-                    </Tab.Container>
-                    <div className='mt-5'>
+                    <div className="list-bar">
                         <Tab.Container
-                            defaultActiveKey='Default'
-                            onSelect={handleSortChange}
-                            className='mt-5'
+                            defaultActiveKey='All'
+                            onSelect={handleCategoryChange}
                         >
                             <ListGroup>
-                                <ListGroup.Item>Sort</ListGroup.Item>
-                                <ListGroup.Item action eventKey='Default'>
-                                    Default
+                                <ListGroup.Item>Category</ListGroup.Item>
+                                <ListGroup.Item action eventKey='All'>
+                                    All
                                 </ListGroup.Item>
-                                <ListGroup.Item
-                                    action
-                                    eventKey='Price: Low to High'
-                                >
-                                    Price: Low to High
-                                </ListGroup.Item>
-                                <ListGroup.Item
-                                    action
-                                    eventKey='Price: High to Low'
-                                >
-                                    Price: High to Low
-                                </ListGroup.Item>
-                                <ListGroup.Item
-                                    action
-                                    eventKey='Newest Arrivals'
-                                >
-                                    Newest Arrivals
-                                </ListGroup.Item>
+
+                                {categories.map((cat, idx) => (
+                                    <ListGroup.Item
+                                        key={idx}
+                                        action
+                                        eventKey={cat}
+                                    >
+                                        {cat}
+                                    </ListGroup.Item>
+                                ))}
                             </ListGroup>
                         </Tab.Container>
+                        <div className='mt-5'>
+                            <Tab.Container
+                                defaultActiveKey='Default'
+                                onSelect={handleSortChange}
+                                className='mt-5'
+                            >
+                                <ListGroup>
+                                    <ListGroup.Item>Sort</ListGroup.Item>
+                                    <ListGroup.Item action eventKey='Default'>
+                                        Default
+                                    </ListGroup.Item>
+                                    <ListGroup.Item
+                                        action
+                                        eventKey='Price: Low to High'
+                                    >
+                                        Price: Low to High
+                                    </ListGroup.Item>
+                                    <ListGroup.Item
+                                        action
+                                        eventKey='Price: High to Low'
+                                    >
+                                        Price: High to Low
+                                    </ListGroup.Item>
+                                    <ListGroup.Item
+                                        action
+                                        eventKey='Newest Arrivals'
+                                    >
+                                        Newest Arrivals
+                                    </ListGroup.Item>
+                                </ListGroup>
+                            </Tab.Container>
+                        </div>
                     </div>
                 </Col>
 
                 <Col md='10'>
-                    <div className='d-flex justify-content-between'>
-                        <InputGroup className='mb-3'>
-                            <FormControl
-                                placeholder='Search Products'
-                                aria-label='Search Products'
-                                aria-describedby='basic-addon2'
-                                onChange={handleSearchChange}
-                            />
-                            <InputGroup.Append>
-                                <Button
-                                    variant='outline-secondary'
-                                    onClick={handleSearchSubmit}
-                                >
-                                    Search
-                                </Button>
-                            </InputGroup.Append>
-                        </InputGroup>
-                    </div>
                     <div className='d-flex flex-wrap'>
                         {displayedProducts.map((product, idx) => (
                             <Product
@@ -227,15 +233,15 @@ export default function Main() {
                             />
                         ))}
                     </div>
+                    <div className='d-flex justify-content-center'>
+                        <Pagination
+                            count={count}
+                            page={page}
+                            onChange={handlePageChange}
+                        />
+                    </div>
                 </Col>
             </Row>
-            <div className='d-flex justify-content-center'>
-                <Pagination
-                    count={count}
-                    page={page}
-                    onChange={handlePageChange}
-                />
-            </div>
         </Container>
     );
 }

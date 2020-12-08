@@ -14,27 +14,39 @@ export default function Home() {
     const history = useHistory();
     return (
         <div className='bg home'>
-            <Carousel>
+            <Carousel className="carouselItem" interval={100000000}>
                 <Carousel.Item>
                     <img
-                        className='d-block w-100'
+                        className='d-block w-100 carouselImg'
                         src='images/banners/banner-1.jpg'
                         alt='First slide'
                     />
+                    <div className="carousel-description left">
+                        <h2>Pusedo Title</h2>
+                        <p>Pusedo paragraph</p>
+                    </div>
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
-                        className='d-block w-100'
+                        className='d-block w-100 carouselImg'
                         src='images/banners/banner-2.jpg'
                         alt='Third slide'
                     />
+                    <div className="carousel-description right">
+                        <h2>Pusedo Title</h2>
+                        <p>Pusedo paragraph</p>
+                    </div>
                 </Carousel.Item>
                 <Carousel.Item>
                     <img
-                        className='d-block w-100'
+                        className='d-block w-100 carouselImg'
                         src='images/banners/banner-3.jpg'
                         alt='Third slide'
                     />
+                    <div className="carousel-description left">
+                        <h2>Pusedo Title</h2>
+                        <p>Pusedo paragraph</p>
+                    </div>
                 </Carousel.Item>
             </Carousel>
             <div className='d-flex justify-content-center m-5'>
