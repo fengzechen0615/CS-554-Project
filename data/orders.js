@@ -13,6 +13,7 @@ async function createOrder(
     description,
     imgUrl
 ) {
+    console.log(123);
     if (!productId || typeof productId !== 'string') {
         throw {
             status: 400,
