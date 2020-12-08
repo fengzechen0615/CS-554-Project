@@ -6,7 +6,7 @@ async function createOrder(
     productId,
     sellerId,
     buyerId,
-    adress,
+    address,
     price,
     dealNumber,
     productName,
@@ -31,7 +31,7 @@ async function createOrder(
             errorMessage: 'you should input a string as buyerId',
         };
     }
-    if (!adress || typeof adress !== 'string') {
+    if (!address || typeof address !== 'string') {
         throw {
             status: 400,
             errorMessage: 'you should input a string as address',
@@ -69,7 +69,7 @@ async function createOrder(
         productId: productId,
         sellerId: sellerId,
         buyerId: buyerId,
-        adress: adress,
+        address: address,
         orderTime: new Date(),
         isCompleted: false,
         price: price,

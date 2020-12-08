@@ -34,7 +34,7 @@ function App() {
             showLoginSuccess();
         };
         autoLogin();
-    }, []);
+    }, [dispatch]);
 
     if (!user.email) {
         return (

@@ -18,22 +18,22 @@ router.post('/', authenticated, async (req, res) => {
         let productId = xss(req.body.productId);
         let sellerId = xss(req.body.sellerId);
         let buyerId = xss(req.session.AuthCookie._id);
-        let adress = xss(req.body.address);
+        let address = xss(req.body.address);
         let price = Number(xss(req.body.price));
         let dealNumber = Number(xss(req.body.dealNumber));
         let productName = xss(req.body.productName);
-        let discription = xss(req.body.discription);
+        let description = xss(req.body.description);
         let imgUrl = xss(req.body.imgUrl);
 
         let newOrder = await orderData.createOrder(
             productId,
             sellerId,
             buyerId,
-            adress,
+            address,
             price,
             dealNumber,
             productName,
-            discription,
+            description,
             imgUrl
         );
         res.status(newOrder.status).json(newOrder.result);

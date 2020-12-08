@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Button } from 'react-bootstrap';
-import AddProductModal from './addProductModal';
-import Product from 'components/product/product';
-import { getUserProducts } from 'api/products';
+import { Container } from 'react-bootstrap';
+import Product from './product/product';
 import { showError } from 'components/sweetAlert/sweetAlert';
-
-// address, avatar, nickname, phoneNumber, state, zipcode
 
 export default function UserSellingProducts(props) {
     const [products, setProducts] = useState([]);
-    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         const initProducts = async () => {
             try {
-                const products = await getUserProducts();
+                // const products = await getUserProducts();
+                const products = [];
                 setProducts(products);
             } catch (error) {
                 showError(error.message);
@@ -23,21 +19,9 @@ export default function UserSellingProducts(props) {
         initProducts();
     }, []);
 
-    const refreshProducts = async () => {
-        const products = await getUserProducts();
-        setProducts(products);
-    };
-
     return (
         <Container className='my-5'>
-            <h1 className='text-center my-5'>User Selling products</h1>
-            <Button
-                className='btn-block'
-                variant='outline-primary'
-                onClick={() => setShowModal(true)}
-            >
-                Add Product
-            </Button>
+            <h1 className='text-center my-5'>Purchased Products</h1>
             <div className='d-flex flex-wrap'>
                 {products.map((product, idx) => (
                     <Product
@@ -52,11 +36,6 @@ export default function UserSellingProducts(props) {
                     />
                 ))}
             </div>
-            <AddProductModal
-                show={showModal}
-                handleClose={() => setShowModal(false)}
-                refresh={() => refreshProducts()}
-            />
         </Container>
     );
 }

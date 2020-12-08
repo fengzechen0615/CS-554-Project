@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
-import { postQuestion } from 'api/product-question';
+import { postQuestion } from 'api/product';
 import { showError, showSuccess } from 'components/sweetAlert/sweetAlert';
 
 const useStyles = makeStyles((theme) => ({

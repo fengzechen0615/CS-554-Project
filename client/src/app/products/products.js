@@ -15,9 +15,11 @@ import { getProducts } from 'api/products';
 import { showError } from 'components/sweetAlert/sweetAlert';
 import Product from './product/product';
 import './products.css';
+import { useParams } from 'react-router-dom';
 
 export default function Main() {
     const COUNT_PER_PAGE = 12;
+    const params = useParams();
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
@@ -36,6 +38,7 @@ export default function Main() {
                     .map((product) => product.categoryArr)
                     .flat();
                 const categorySet = [...new Set(categories)];
+                console.log(categorySet);
                 setProducts(products);
                 setFilteredProducts(products);
                 setDisplayedProducts(products.slice(0, COUNT_PER_PAGE));
@@ -125,7 +128,7 @@ export default function Main() {
         const end = start + COUNT_PER_PAGE;
         setDisplayedProducts(filteredProducts.slice(start, end));
         window.scrollTo(0, 0);
-    }, [page]);
+    }, [page, filteredProducts]);
 
     if (!categories || categories.length === 0 || count === null) {
         return (
