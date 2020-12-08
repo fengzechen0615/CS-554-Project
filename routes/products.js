@@ -1,3 +1,5 @@
+const gm = require('gm');
+const path = require('path');
 const express = require('express');
 const router = express.Router();
 const data = require('../data');
@@ -50,6 +52,30 @@ router.post(
             let imageUrl = `/images/products/${xss(req.file.filename)}`;
             let stock = Number(xss(req.body.stock));
             let price = Number(xss(req.body.price));
+
+            //resize the image
+            let path1 = path.join(
+                __dirname,
+                '..',
+                'client',
+                'public',
+                imageUrl
+            ); //source absolute path
+            let imgName = imageUrl.split('products/')[1];
+            let path2 = path.join(
+                __dirname,
+                '..',
+                'client',
+                'public',
+                'images',
+                'products-compressed',
+                imgName
+            ); //target absolute path
+            gm(path1)
+                .resize(250)
+                .write(path2, (err) => {
+                    console.log(err);
+                });
 
             let newProduct = await productData.createPoduct(
                 sellerId,

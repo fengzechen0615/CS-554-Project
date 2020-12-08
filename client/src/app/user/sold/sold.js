@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
 import Product from 'components/product-order/product';
 import { showError } from 'components/sweetAlert/sweetAlert';
-import { getUserPurchasedProducts } from 'api/orders';
+import { getUserSoldProducts } from 'api/orders';
 
 export default function UserSellingProducts(props) {
     const [products, setProducts] = useState([]);
@@ -10,7 +10,7 @@ export default function UserSellingProducts(props) {
     useEffect(() => {
         const initProducts = async () => {
             try {
-                const products = await getUserPurchasedProducts();
+                const products = await getUserSoldProducts();
                 setProducts(products);
             } catch (error) {
                 showError(error.message);
@@ -21,7 +21,7 @@ export default function UserSellingProducts(props) {
 
     return (
         <Container className='my-5'>
-            <h1 className='text-center my-5'>Purchased Products</h1>
+            <h1 className='text-center my-5'>Sold Products</h1>
             <div className='d-flex flex-wrap'>
                 {products.map((product, idx) => (
                     <Product
