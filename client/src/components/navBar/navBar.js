@@ -38,7 +38,7 @@ export default function NavBar(props) {
                     to='/user/purchase'
                     active={location.pathname === '/user/puchase'}
                 >
-                    Pruchase
+                    Purchase
                 </Nav.Link>
                 <Nav.Link as={Link} to='/logout'>
                     Log out
