@@ -1,0 +1,10 @@
+.card {
+    width: 18rem;
+    margin: 0 10px;
+}
+
+.description {
+    height: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

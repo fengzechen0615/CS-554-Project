@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Container } from 'react-bootstrap';
-import Product from './product/product';
+import Product from 'components/product-order/product';
 import { showError } from 'components/sweetAlert/sweetAlert';
+import { getUserPurchasedProducts } from 'api/orders';
 
 export default function UserSellingProducts(props) {
     const [products, setProducts] = useState([]);
@@ -9,8 +10,7 @@ export default function UserSellingProducts(props) {
     useEffect(() => {
         const initProducts = async () => {
             try {
-                // const products = await getUserProducts();
-                const products = [];
+                const products = await getUserPurchasedProducts();
                 setProducts(products);
             } catch (error) {
                 showError(error.message);
@@ -28,11 +28,11 @@ export default function UserSellingProducts(props) {
                         key={idx}
                         title={product.productName}
                         description={product.description}
-                        imageUrl={product.imageUrl}
+                        imageUrl={product.imgUrl}
                         price={product.price}
                         stock={product.stock}
                         categories={product.categoryArr}
-                        productId={product._id}
+                        productId={product.productId}
                     />
                 ))}
             </div>

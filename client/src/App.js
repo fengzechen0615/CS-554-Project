@@ -13,6 +13,7 @@ import Login from 'auth/login/login';
 import SignUp from 'auth/signup/signup';
 import UserInfo from 'app/user/info/info';
 import UserSelling from 'app/user/selling/selling';
+import UserPurchase from 'app/user/purchase/purchase';
 import Logout from 'auth/logout/logout';
 import Product from 'app/product/product';
 import Home from 'app/home/home';
@@ -76,6 +77,9 @@ function App() {
                     </Route>
                     <Route path='/user/selling'>
                         <UserSelling />
+                    </Route>
+                    <Route path='/user/purchase'>
+                        <UserPurchase />
                     </Route>
                     <Route path='/logout'>
                         <Logout />
