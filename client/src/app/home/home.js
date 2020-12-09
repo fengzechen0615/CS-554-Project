@@ -58,7 +58,7 @@ export default function Home() {
                 </Carousel.Item>
             </Carousel>
             <Container>
-                <h1>Explore Our Website</h1>
+                <h1 className="title">Explore Our Website</h1>
                 <ul className='card-list clearfix'>
                     <li>
                         <button
@@ -69,7 +69,7 @@ export default function Home() {
                         >
                             <img
                                 className='card-img'
-                                src='/images/products/product-1607043195509.png'
+                                src='/images/category/bag.jpeg'
                             ></img>
                             <div className='overlay'>
                                 <p>Discover More Bags</p>
@@ -85,7 +85,7 @@ export default function Home() {
                         >
                             <img
                                 className='card-img'
-                                src='/images/products/product-1607043197891.jpeg'
+                                src='/images/category/eletronic.jpg'
                             ></img>
                             <div className='overlay'>
                                 <p>Discover More Electronics</p>
@@ -103,7 +103,7 @@ export default function Home() {
                         >
                             <img
                                 className='card-img'
-                                src='/images/products/product-1607043203344.jpeg'
+                                src='/images/category/health.jpeg'
                             ></img>
                             <div className='overlay'>
                                 <p>Discover More Health & Beauty</p>
@@ -121,7 +121,7 @@ export default function Home() {
                         >
                             <img
                                 className='card-img'
-                                src='/images/products/product-1607043205323.jpeg'
+                                src='/images/category/men.jpg'
                             ></img>
                             <div className='overlay'>
                                 <p>Discover More Clothes for Men</p>
@@ -137,7 +137,7 @@ export default function Home() {
                         >
                             <img
                                 className='card-img'
-                                src='/images/products/product-1607043211365.webp'
+                                src='/images/category/women.webp'
                             ></img>
                             <div className='overlay'>
                                 <p>Discover More Clothes for Women</p>
@@ -155,7 +155,7 @@ export default function Home() {
                         >
                             <img
                                 className='card-img'
-                                src='/images/products/product-1607043208800.png'
+                                src='/images/category/necklaces.jpg'
                             ></img>
                             <div className='overlay'>
                                 <p>Discover More Watch & Jewelry</p>
