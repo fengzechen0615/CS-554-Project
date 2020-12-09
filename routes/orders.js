@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const data = require('../data');
 const orderData = data.orders;
+const productData = data.products;
 const xss = require('xss');
 const { authenticated } = require('../utility/authMiddleware');
 
@@ -24,6 +25,8 @@ router.post('/', authenticated, async (req, res) => {
         let productName = xss(req.body.productName);
         let description = xss(req.body.description);
         let imgUrl = xss(req.body.imgUrl);
+
+        productData.updateStock(productId, dealNumber); //stock - dealNumber
 
         let newOrder = await orderData.createOrder(
             productId,
