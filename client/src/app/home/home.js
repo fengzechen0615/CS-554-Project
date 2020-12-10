@@ -1,12 +1,5 @@
 import React from 'react';
-import { Carousel, Container, Row, Button } from 'react-bootstrap';
-import {
-    Card,
-    CardActionArea,
-    CardContent,
-    CardMedia,
-    Typography,
-} from '@material-ui/core';
+import { Carousel, Container, Button } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import './home.css';
 
@@ -58,7 +51,7 @@ export default function Home() {
                 </Carousel.Item>
             </Carousel>
             <Container>
-                <h1 className="title">Explore Our Website</h1>
+                <h1 className='title'>Explore Our Website</h1>
                 <ul className='card-list clearfix'>
                     <li>
                         <button
@@ -70,6 +63,7 @@ export default function Home() {
                             <img
                                 className='card-img'
                                 src='/images/category/bag.jpeg'
+                                alt='/images/category/bag.jpeg'
                             ></img>
                             <div className='overlay'>
                                 <p>Discover More Bags</p>
@@ -86,6 +80,7 @@ export default function Home() {
                             <img
                                 className='card-img'
                                 src='/images/category/eletronic.jpg'
+                                alt='/images/category/eletronic.jpg'
                             ></img>
                             <div className='overlay'>
                                 <p>Discover More Electronics</p>
@@ -97,13 +92,16 @@ export default function Home() {
                             className='card-btn'
                             onClick={() =>
                                 history.push(
-                                    `/products?category=Health & Beauty`
+                                    `/products?category=${encodeURIComponent(
+                                        'Health & Beauty'
+                                    )}`
                                 )
                             }
                         >
                             <img
                                 className='card-img'
                                 src='/images/category/health.jpeg'
+                                alt='/images/category/health.jpeg'
                             ></img>
                             <div className='overlay'>
                                 <p>Discover More Health & Beauty</p>
@@ -122,6 +120,7 @@ export default function Home() {
                             <img
                                 className='card-img'
                                 src='/images/category/men.jpg'
+                                alt='/images/category/men.jpg'
                             ></img>
                             <div className='overlay'>
                                 <p>Discover More Clothes for Men</p>
@@ -138,6 +137,7 @@ export default function Home() {
                             <img
                                 className='card-img'
                                 src='/images/category/women.webp'
+                                alt='/images/category/women.webp'
                             ></img>
                             <div className='overlay'>
                                 <p>Discover More Clothes for Women</p>
@@ -149,13 +149,16 @@ export default function Home() {
                             className='card-btn'
                             onClick={() =>
                                 history.push(
-                                    '/products?category=Watch & Jewelry'
+                                    `/products?category=${encodeURIComponent(
+                                        'Watch & Jewelry'
+                                    )}`
                                 )
                             }
                         >
                             <img
                                 className='card-img'
                                 src='/images/category/necklaces.jpg'
+                                alt='/images/category/necklaces.jpg'
                             ></img>
                             <div className='overlay'>
                                 <p>Discover More Watch & Jewelry</p>

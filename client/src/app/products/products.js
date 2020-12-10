@@ -15,17 +15,17 @@ import { getProducts } from 'api/products';
 import { showError } from 'components/sweetAlert/sweetAlert';
 import Product from './product/product';
 import './products.css';
-import { useParams } from 'react-router-dom';
 
-export default function Main() {
+export default function Main(props) {
     const COUNT_PER_PAGE = 12;
-    const params = useParams();
+    const params = new URLSearchParams(window.location.search);
+    console.log(params.get('category'));
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);
     const [displayedProducts, setDisplayedProducts] = useState([]);
     const [sortOrder, setSortOrder] = useState('Default');
-    const [category, setCategory] = useState('All');
+    const [category, setCategory] = useState(params.get('category') || 'All');
     const [searchWord, setSearchWord] = useState('');
     const [page, setPage] = useState(1);
     const [count, setCount] = useState(null);
@@ -38,17 +38,20 @@ export default function Main() {
                     .map((product) => product.categoryArr)
                     .flat();
                 const categorySet = [...new Set(categories)];
-                console.log(categorySet);
                 setProducts(products);
-                setFilteredProducts(products);
-                setDisplayedProducts(products.slice(0, COUNT_PER_PAGE));
-                setCount(Math.ceil(products.length / COUNT_PER_PAGE));
+                const filteredProducts = category
+                    ? filterByCategory(products, category)
+                    : products;
+                setFilteredProducts(filteredProducts);
+                setDisplayedProducts(filteredProducts.slice(0, COUNT_PER_PAGE));
+                setCount(Math.ceil(filteredProducts.length / COUNT_PER_PAGE));
                 setCategories(categorySet);
             } catch (error) {
                 showError(error.message);
             }
         };
         initProducts();
+        // eslint-disable-next-line
     }, []);
 
     const handleCategoryChange = (category) => {
@@ -162,9 +165,9 @@ export default function Main() {
             </Row>
             <Row>
                 <Col md='2'>
-                    <div className="list-bar">
+                    <div className='list-bar'>
                         <Tab.Container
-                            defaultActiveKey='All'
+                            defaultActiveKey={params.get('category') || 'All'}
                             onSelect={handleCategoryChange}
                         >
                             <ListGroup>

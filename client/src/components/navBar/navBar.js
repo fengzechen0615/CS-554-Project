@@ -8,8 +8,8 @@ export default function NavBar(props) {
 
     return (
         <Navbar bg='dark' variant='dark'>
-            <Navbar.Brand as={Link} to='/products'>
-                Navbar
+            <Navbar.Brand as={Link} to='/'>
+                E Commerce
             </Navbar.Brand>
             <Nav className='mr-auto'>
                 <Nav.Link
