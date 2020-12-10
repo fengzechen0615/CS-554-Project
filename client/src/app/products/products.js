@@ -19,7 +19,6 @@ import './products.css';
 export default function Main(props) {
     const COUNT_PER_PAGE = 12;
     const params = new URLSearchParams(window.location.search);
-    console.log(params.get('category'));
     const [products, setProducts] = useState([]);
     const [categories, setCategories] = useState([]);
     const [filteredProducts, setFilteredProducts] = useState([]);

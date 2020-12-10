@@ -193,7 +193,9 @@ export default function AddProductModal(props) {
             </Modal.Body>
 
             <Modal.Footer>
-                <Button variant='secondary'>Close</Button>
+                <Button variant='secondary' onClick={props.handleClose}>
+                    Close
+                </Button>
                 <Button variant='primary' type='submit' form='addProductForm'>
                     Submit
                 </Button>

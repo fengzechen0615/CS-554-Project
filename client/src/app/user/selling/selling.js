@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import AddProductModal from './addProductModal';
-import Product from 'components/product/product';
+import EditProductModal from './editProductModal';
+import Product from 'components/product-selling/product';
 import { getUserProducts } from 'api/products';
 import { showError } from 'components/sweetAlert/sweetAlert';
 
@@ -9,7 +10,9 @@ import { showError } from 'components/sweetAlert/sweetAlert';
 
 export default function UserSellingProducts(props) {
     const [products, setProducts] = useState([]);
-    const [showModal, setShowModal] = useState(false);
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [productId, setProductId] = useState('');
 
     useEffect(() => {
         const initProducts = async () => {
@@ -34,7 +37,7 @@ export default function UserSellingProducts(props) {
             <Button
                 className='btn-block'
                 variant='outline-primary'
-                onClick={() => setShowModal(true)}
+                onClick={() => setShowAddModal(true)}
             >
                 Add Product
             </Button>
@@ -49,13 +52,21 @@ export default function UserSellingProducts(props) {
                         stock={product.stock}
                         categories={product.categoryArr}
                         productId={product._id}
+                        setProductId={setProductId}
+                        openModal={() => setShowEditModal(true)}
                     />
                 ))}
             </div>
             <AddProductModal
-                show={showModal}
-                handleClose={() => setShowModal(false)}
+                show={showAddModal}
+                handleClose={() => setShowAddModal(false)}
                 refresh={() => refreshProducts()}
+            />
+            <EditProductModal
+                show={showEditModal}
+                handleClose={() => setShowEditModal(false)}
+                refresh={() => refreshProducts()}
+                productId={productId}
             />
         </Container>
     );
