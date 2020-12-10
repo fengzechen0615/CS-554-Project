@@ -27,6 +27,7 @@ export default function Product(props) {
                     variant='outlined'
                     component={Link}
                     to={`/product/${props.productId}`}
+                    size='small'
                 >
                     Detail
                 </Button>
@@ -38,8 +39,21 @@ export default function Product(props) {
                         props.setProductId(props.productId);
                         props.openModal();
                     }}
+                    size='small'
                 >
                     Edit
+                </Button>
+                <Button
+                    color='primary'
+                    variant='outlined'
+                    className='ml-2'
+                    onClick={() => {
+                        props.setDeleteProductId(props.productId);
+                        props.openDeleteModal();
+                    }}
+                    size='small'
+                >
+                    Delete
                 </Button>
             </Card.Body>
         </Card>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import AddProductModal from './addProductModal';
 import EditProductModal from './editProductModal';
+import DeleteProductModal from './deleteProductModal';
 import Product from 'components/product-selling/product';
 import { getUserProducts } from 'api/products';
 import { showError } from 'components/sweetAlert/sweetAlert';
@@ -13,6 +14,8 @@ export default function UserSellingProducts(props) {
     const [showAddModal, setShowAddModal] = useState(false);
     const [showEditModal, setShowEditModal] = useState(false);
     const [productId, setProductId] = useState('');
+    const [deleteProductId, setDeleteProductId] = useState('');
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
         const initProducts = async () => {
@@ -54,6 +57,8 @@ export default function UserSellingProducts(props) {
                         productId={product._id}
                         setProductId={setProductId}
                         openModal={() => setShowEditModal(true)}
+                        openDeleteModal={() => setShowDeleteModal(true)}
+                        setDeleteProductId={setDeleteProductId}
                     />
                 ))}
             </div>
@@ -67,6 +72,12 @@ export default function UserSellingProducts(props) {
                 handleClose={() => setShowEditModal(false)}
                 refresh={() => refreshProducts()}
                 productId={productId}
+            />
+            <DeleteProductModal
+                show={showDeleteModal}
+                handleClose={() => setShowDeleteModal(false)}
+                refresh={() => refreshProducts()}
+                productId={deleteProductId}
             />
         </Container>
     );
