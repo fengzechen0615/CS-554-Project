@@ -28,3 +28,9 @@ export const buyProduct = async (
         description,
         imgUrl,
     });
+
+export const answerQuestion = async (questionId, answer) => {
+    return await axios.post(`/products/answer/${questionId}`, {
+        answer,
+    });
+};
