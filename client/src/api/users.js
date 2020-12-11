@@ -2,7 +2,7 @@ import axios from './axios';
 
 export const getUserInfo = async () => await axios.get('/users/userinfo');
 
-export const getAllUsers = async () => await axios.get('/users/users');
+export const getAllUsers = async () => (await axios.get('/users/users')).data;
 
 export const logout = async () => await axios.get('/users/logout');
 
@@ -39,3 +39,9 @@ export const updateUser = async (nickname, phoneNumber, address, zipCode) =>
         address,
         zipCode,
     });
+
+export const toggleUserState = async (userId) => {
+    await axios.put('users/userstate', {
+        userId,
+    });
+};

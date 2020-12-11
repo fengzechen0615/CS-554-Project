@@ -8,6 +8,7 @@ import {
 import { useSelector } from 'react-redux';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from 'components/navBar/navBar';
+import AdminNavBar from 'components/navBar/adminNavBar';
 import Main from 'app/products/products';
 import Login from 'auth/login/login';
 import SignUp from 'auth/signup/signup';
@@ -18,6 +19,7 @@ import UserSold from 'app/user/sold/sold';
 import Logout from 'auth/logout/logout';
 import Product from 'app/product/product';
 import Home from 'app/home/home';
+import AdminUsers from 'manage/users/users';
 import { signInWithIdToken } from 'api/users';
 import { setUser } from 'store/reducers/userSlice';
 import { useDispatch } from 'react-redux';
@@ -38,6 +40,7 @@ function App() {
         autoLogin();
     }, [dispatch]);
 
+    // tourist accunt
     if (!user.email) {
         return (
             <Router>
@@ -53,6 +56,24 @@ function App() {
                             <Home />
                         </Route>
                         <Redirect to='/login' />
+                    </Switch>
+                </div>
+            </Router>
+        );
+    }
+
+    // admin account
+    if (user.isAdmin) {
+        return (
+            <Router>
+                <div>
+                    <AdminNavBar />
+                    <Switch>
+                        <Route path='/admin/products'>products</Route>
+                        <Route path='/admin/users'>
+                            <AdminUsers />
+                        </Route>
+                        <Redirect to='/admin/users' />
                     </Switch>
                 </div>
             </Router>
