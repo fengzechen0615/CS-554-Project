@@ -20,6 +20,7 @@ import Logout from 'auth/logout/logout';
 import Product from 'app/product/product';
 import Home from 'app/home/home';
 import AdminUsers from 'manage/users/users';
+import AdminProducts from 'manage/products/products';
 import { signInWithIdToken } from 'api/users';
 import { setUser } from 'store/reducers/userSlice';
 import { useDispatch } from 'react-redux';
@@ -69,7 +70,9 @@ function App() {
                 <div>
                     <AdminNavBar />
                     <Switch>
-                        <Route path='/admin/products'>products</Route>
+                        <Route path='/admin/products'>
+                            <AdminProducts />
+                        </Route>
                         <Route path='/admin/users'>
                             <AdminUsers />
                         </Route>
