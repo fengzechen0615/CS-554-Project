@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { setUser } from '../../store/reducers/userSlice';
 import { signIn } from '../../api/users';
 import { useDispatch } from 'react-redux';
+import { showError } from 'components/sweetAlert/sweetAlert';
 
 export default function Login() {
     const [email, setEmail] = useState('htkzmo@gmail.com');
@@ -18,6 +19,10 @@ export default function Login() {
             localStorage.setItem('idToken', data.idToken);
             dispatch(setUser(data));
         } catch (error) {
+            if (error?.response.data.error) {
+                showError(error?.response?.data?.error);
+                return;
+            }
             setShowAlert(true);
             window.setTimeout(() => {
                 setShowAlert(false);

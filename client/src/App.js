@@ -73,6 +73,9 @@ function App() {
                         <Route path='/admin/users'>
                             <AdminUsers />
                         </Route>
+                        <Route path='/logout'>
+                            <Logout />
+                        </Route>
                         <Redirect to='/admin/users' />
                     </Switch>
                 </div>
