@@ -15,7 +15,7 @@ export default function Home() {
                         alt='First slide'
                     />
                     <div className='carousel-description'>
-                        <h2>Xian Yu</h2>
+                        <h1>Xian Yu</h1>
                         <p>A website to sell & buy products!</p>
                         <Button
                             variant='outline-danger'

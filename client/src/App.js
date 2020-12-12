@@ -25,6 +25,7 @@ import { signInWithIdToken } from 'api/users';
 import { setUser } from 'store/reducers/userSlice';
 import { useDispatch } from 'react-redux';
 import { showLoginSuccess } from 'components/sweetAlert/sweetAlert';
+import 'App.css';
 
 function App() {
     const user = useSelector((state) => state.user);

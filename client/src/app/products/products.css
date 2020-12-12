@@ -18,3 +18,7 @@
 .list-bar {
     height: 100%;
 }
+
+.list-group-item.active {
+    background-color: #0072ee;
+}

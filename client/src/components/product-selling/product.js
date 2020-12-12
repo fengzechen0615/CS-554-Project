@@ -7,7 +7,12 @@ import './product.css';
 export default function Product(props) {
     return (
         <Card className='m-3'>
-            <Card.Img variant='top' src={props.imageUrl} height={200} />
+            <Card.Img
+                variant='top'
+                src={props.imageUrl}
+                alt={props.imageUrl}
+                height={200}
+            />
             <Card.Body>
                 <Card.Title>{props.title}</Card.Title>
                 <p className='mb-0 description'>{props.description}</p>

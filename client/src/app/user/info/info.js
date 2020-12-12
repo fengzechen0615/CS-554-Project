@@ -27,24 +27,27 @@ export default function UserInfo(props) {
             <h1 className='text-center my-5'>User Information</h1>
             <Form onSubmit={submitHandler}>
                 <Form.Group>
-                    <Form.Label>Nick Name</Form.Label>
+                    <Form.Label for='nickname'>Nick Name</Form.Label>
                     <Form.Control
+                        id='nickname'
                         type='text'
                         value={nickname || ''}
                         onChange={(ev) => setNickname(ev.target.value)}
                     />
                 </Form.Group>
                 <Form.Group>
-                    <Form.Label>Zip Code</Form.Label>
+                    <Form.Label for='zipcode'>Zip Code</Form.Label>
                     <Form.Control
+                        id='zipcode'
                         type='text'
                         value={zipCode || ''}
                         onChange={(ev) => setZipCode(ev.target.value)}
                     />
                 </Form.Group>
                 <Form.Group>
-                    <Form.Label>Address</Form.Label>
+                    <Form.Label for='address'>Address</Form.Label>
                     <Form.Control
+                        id='address'
                         type='text'
                         value={address || ''}
                         onChange={(ev) => setAddress(ev.target.value)}
@@ -52,8 +55,9 @@ export default function UserInfo(props) {
                 </Form.Group>
 
                 <Form.Group>
-                    <Form.Label>Phone Number</Form.Label>
+                    <Form.Label for='phone'>Phone Number</Form.Label>
                     <Form.Control
+                        id='phone'
                         type='text'
                         value={phoneNumber || ''}
                         onChange={(ev) => setPhoneNumber(ev.target.value)}

@@ -1,0 +1,20 @@
+.btn-primary {
+    background-color: #0072ee !important;
+}
+
+.btn-outline-primary {
+    color: #006be0 !important;
+    border-color: #0072ee;
+}
+
+.badge-primary {
+    background-color: #0072ee !important;
+}
+
+.text-success {
+    color: #008100 !important;
+}
+
+.text-danger {
+    color: #d91c35 !important;
+}

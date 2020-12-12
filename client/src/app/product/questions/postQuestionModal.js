@@ -31,7 +31,9 @@ export default function PostQuestionModal(props) {
                 <Modal.Title>Post your question</Modal.Title>
             </Modal.Header>
             <Modal.Body>
+                <label for='question-input'></label>
                 <textarea
+                    id='question-input'
                     className={classes.textarea}
                     value={content}
                     onChange={(event) => setContent(event.target.value)}

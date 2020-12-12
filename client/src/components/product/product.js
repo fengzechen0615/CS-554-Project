@@ -1,13 +1,18 @@
 import React from 'react';
 import { Card, Badge } from 'react-bootstrap';
-import {Button} from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import './product.css';
 
 export default function Product(props) {
     return (
         <Card className='m-3'>
-            <Card.Img variant='top' src={props.imageUrl} height={200} />
+            <Card.Img
+                variant='top'
+                src={props.imageUrl}
+                alt={props.imageUrl}
+                height={200}
+            />
             <Card.Body>
                 <Card.Title>{props.title}</Card.Title>
                 <p className='mb-0 description'>{props.description}</p>
@@ -22,7 +27,12 @@ export default function Product(props) {
                             </Badge>
                         ))}
                 </div>
-                <Button color='primary' variant='outlined' component={Link} to={`/product/${props.productId}`}>
+                <Button
+                    color='primary'
+                    variant='outlined'
+                    component={Link}
+                    to={`/product/${props.productId}`}
+                >
                     Detail
                 </Button>
             </Card.Body>

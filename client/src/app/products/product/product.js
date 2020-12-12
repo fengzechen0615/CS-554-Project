@@ -19,7 +19,7 @@ const useStyles = makeStyles({
         height: 240,
     },
     price: {
-        color: '#f40',
+        color: '#dc3900',
         fontSize: '22px',
     },
     description: {
@@ -30,10 +30,10 @@ const useStyles = makeStyles({
         textOverflow: 'ellipsis',
     },
     seller: {
-        color: '#888',
+        color: '#767676',
     },
     stock: {
-        color: '#888',
+        color: '#767676',
         fontSize: '14px',
     },
 });
