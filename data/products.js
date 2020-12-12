@@ -236,7 +236,7 @@ async function updateProductInfo(id, productName, description, stock, price) {
             errorMessage: 'you should input a string as the content',
         };
     }
-    if (!price || typeof stock !== 'number') {
+    if (!stock || typeof stock !== 'number') {
         throw {
             status: 400,
             errorMessage: 'You must provide a number as stock',
