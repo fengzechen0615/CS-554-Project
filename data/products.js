@@ -180,14 +180,14 @@ async function updateStock(id, dealNumber) {
     if (currentStock - dealNumber < 0) {
         throw { status: 500, errorMessage: 'dealNumber > currentStock!' };
     }
-
+    let leftSock = currentStock - dealNumber;
     let productCollection = await products();
 
     let updateInfo = await productCollection.updateOne(
         { _id: id },
         {
             $set: {
-                stock: currentStock - dealNumber,
+                stock: leftSock,
             },
         }
     );
@@ -218,6 +218,54 @@ async function deleteProduct(id) {
     return { status: 200, result: productToDelete };
 }
 
+async function updateProductInfo(id, productName, description, stock, price) {
+    if (!id || typeof id !== 'string')
+        throw {
+            status: 400,
+            errorMessage: 'You must provide an id to update Product',
+        };
+    if (!productName || typeof productName !== 'string') {
+        throw {
+            status: 400,
+            errorMessage: 'you should input a string as productName',
+        };
+    }
+    if (!description || typeof description !== 'string') {
+        throw {
+            status: 400,
+            errorMessage: 'you should input a string as the content',
+        };
+    }
+    if (!price || typeof stock !== 'number') {
+        throw {
+            status: 400,
+            errorMessage: 'You must provide a number as stock',
+        };
+    }
+    if (!price || typeof price !== 'number') {
+        throw {
+            status: 400,
+            errorMessage: 'You must provide a number as price',
+        };
+    }
+    let productCollection = await products();
+    let updateInfo = await productCollection.updateOne(
+        { _id: id },
+        {
+            $set: {
+                productName: productName,
+                description: description,
+                stock: stock,
+                price: price,
+            },
+        }
+    );
+    if (!updateInfo.matchedCount && !updateInfo.modifiedCount) {
+        throw { error: 500, errorMessage: 'Could not update the price' };
+    }
+    return { status: 200, result: (await getProductById(id)).result };
+}
+
 module.exports = {
     createPoduct,
     getAllProduct,
@@ -226,4 +274,5 @@ module.exports = {
     updateStock,
     deleteProduct,
     getProductsBySellerId,
+    updateProductInfo,
 };
