@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Modal, Button, Form, Row, Col } from 'react-bootstrap';
 import { showError, showSuccess } from 'components/sweetAlert/sweetAlert';
 import { getProduct } from 'api/products';
+import { updateProduct } from 'api/product';
 
 export default function AddProductModal(props) {
     const [productName, setProductName] = useState('');
@@ -29,18 +30,17 @@ export default function AddProductModal(props) {
         initProduct();
     }, [props.productId]);
 
-    const clearForm = () => {
-        setProductName('');
-        setDescription('');
-        setStock('');
-        setPrice('');
-    };
-
     const submitHandler = async (event) => {
         event.preventDefault();
         try {
+            await updateProduct(
+                props.productId,
+                productName,
+                description,
+                stock,
+                price
+            );
             showSuccess('Successfully Updated Product!');
-            clearForm();
             props.refresh();
         } catch (error) {
             showError(error?.response?.data?.error || error.message);
@@ -61,7 +61,7 @@ export default function AddProductModal(props) {
             </Modal.Header>
 
             <Modal.Body>
-                <Form onSubmit={submitHandler}>
+                <Form onSubmit={submitHandler} id='editProductForm'>
                     <Form.Group as={Row}>
                         <Form.Label column sm={3}>
                             Product Name
@@ -125,7 +125,7 @@ export default function AddProductModal(props) {
                 <Button variant='secondary' onClick={props.handleClose}>
                     Close
                 </Button>
-                <Button variant='primary' type='submit' form='addProductForm'>
+                <Button variant='primary' type='submit' form='editProductForm'>
                     Submit
                 </Button>
             </Modal.Footer>

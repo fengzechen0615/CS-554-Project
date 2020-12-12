@@ -34,3 +34,18 @@ export const answerQuestion = async (questionId, answer) => {
         answer,
     });
 };
+
+export const updateProduct = async (
+    productId,
+    productName,
+    description,
+    stock,
+    price
+) => {
+    return await axios.patch(`/products/${productId}`, {
+        productName,
+        description,
+        stock,
+        price,
+    });
+};

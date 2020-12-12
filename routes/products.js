@@ -211,7 +211,7 @@ router.patch('/:productId', authenticated, seller, async (req, res) => {
             productToUpdate.productName = xss(req.body.productName);
         if (req.body.description)
             productToUpdate.description = xss(req.body.description);
-        if (req.body.stock) productToUpdate.stock = xss(req.body.stock);
+        if (req.body.stock) productToUpdate.stock = Number(xss(req.body.stock));
         if (req.body.price) productToUpdate.price = Number(xss(req.body.price));
 
         let updatedProduct = await productData.updateProductInfo(
