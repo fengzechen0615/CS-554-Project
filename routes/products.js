@@ -194,7 +194,7 @@ router.post('/answer/:questionId', authenticated, seller, async (req, res) => {
     }
 });
 
-// 修改价格，返回修改后的product
+// 修改productName,description,stock,price，返回修改后的product
 // only seller
 router.patch('/:productId', authenticated, seller, async (req, res) => {
     try {
@@ -206,9 +206,21 @@ router.patch('/:productId', authenticated, seller, async (req, res) => {
         }
 
         let productId = xss(req.params.productId);
-        let newPrice = Number(req.body.price);
+        let productToUpdate = await productData.getProductById(productId);
+        if (req.body.productName)
+            productToUpdate.productName = xss(req.body.productName);
+        if (req.body.description)
+            productToUpdate.description = xss(req.body.description);
+        if (req.body.stock) productToUpdate.stock = xss(req.body.stock);
+        if (req.body.price) productToUpdate.price = Number(xss(req.body.price));
 
-        let updatedProduct = await productData.updatePrice(productId, newPrice);
+        let updatedProduct = await productData.updateProductInfo(
+            productId,
+            productToUpdate.productName,
+            productToUpdate.description,
+            productToUpdate.stock,
+            productToUpdate.price
+        );
 
         // delete product cache
         client.del('product' + productId);
