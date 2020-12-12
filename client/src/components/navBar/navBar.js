@@ -44,7 +44,7 @@ export default function NavBar(props) {
                 <Nav.Link
                     as={Link}
                     to='/user/purchase'
-                    active={location.pathname === '/user/puchase'}
+                    active={location.pathname === '/user/purchase'}
                 >
                     Purchase
                 </Nav.Link>
