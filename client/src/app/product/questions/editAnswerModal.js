@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { makeStyles } from '@material-ui/core/styles';
 import { answerQuestion } from 'api/product';
@@ -13,11 +13,14 @@ const useStyles = makeStyles((theme) => ({
 export default function EditQuestionModal(props) {
     const classes = useStyles();
     const [answer, setAnswer] = useState('');
-    const question = props.question;
+
+    useEffect(() => {
+        setAnswer(props.question.answer || '');
+    }, [props.question.answer]);
 
     const submitHandler = async () => {
         try {
-            await answerQuestion(question._id, answer);
+            await answerQuestion(props.question._id, answer);
             await props.refresh();
             showSuccess('Successfully answered question for this product!');
             props.handleClose();
@@ -31,7 +34,7 @@ export default function EditQuestionModal(props) {
                 <Modal.Title>Answer the question</Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <p>{question.question}</p>
+                <p>{props.question.question}</p>
                 <textarea
                     className={classes.textarea}
                     value={answer}
