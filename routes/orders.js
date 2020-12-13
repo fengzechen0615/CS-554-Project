@@ -5,6 +5,11 @@ const orderData = data.orders;
 const productData = data.products;
 const xss = require('xss');
 const { authenticated } = require('../utility/authMiddleware');
+const bluebird = require('bluebird');
+const redis = require('redis');
+const client = redis.createClient();
+bluebird.promisifyAll(redis.RedisClient.prototype);
+bluebird.promisifyAll(redis.Multi.prototype);
 
 // Create a new Order (default isCompleted is false), return the order information
 router.post('/', authenticated, async (req, res) => {
@@ -39,6 +44,10 @@ router.post('/', authenticated, async (req, res) => {
             description,
             imgUrl
         );
+        // delete product cache
+        client.del('product' + productId);
+        // delete index Cache
+        client.del('indexPage');
         res.status(newOrder.status).json(newOrder.result);
     } catch (error) {
         res.status(error.status).json({ error: error.errorMessage });
