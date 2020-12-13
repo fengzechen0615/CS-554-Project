@@ -31,6 +31,7 @@
     -   [Other](#other)
         -   [Format](#format)
         -   [Http Status Code](#http-status-code)
+        -   [Environments](#Environments)
 
 ### Description
 
@@ -389,3 +390,9 @@ their products to sell and buy products from other users.
 | 401         | Unauthorized          | the user does not have valid authentication credentials for the target resource.                                      |
 | 404         | Not Found             | The requested resource could not be found but may be available in the future.                                         |
 | 500         | Internal Server Error | A generic error message, given when an unexpected condition was encountered and no more specific message is suitable. |
+
+#### Environments
+
+If you want to run the program, you should install GraphicsMagick locally.  
+You can download it at http://www.graphicsmagick.org/  
+Please note that the installation package should corresponds to your OS.
