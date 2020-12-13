@@ -19,7 +19,7 @@ export default function Login() {
             localStorage.setItem('idToken', data.idToken);
             dispatch(setUser(data));
         } catch (error) {
-            if (error?.response.data.error) {
+            if (error?.response?.data?.error) {
                 showError(error?.response?.data?.error);
                 return;
             }
