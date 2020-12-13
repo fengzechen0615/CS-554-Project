@@ -6,6 +6,7 @@
 
 -   [Undefined](#undefined)
     -   [Description](#description)
+    -   [Preview](#preview)
     -   [Get Started](#get-started)
     -   [Core Features](#core-features)
     -   [Technologies](#technologies)
@@ -38,6 +39,12 @@
 
 We will build an e-commerce web application like amazon. On this website, users can post
 their products to sell and buy products from other users.
+
+### Preview
+
+You can take a look at our oneline demo.
+
+https://cs554-undefined.site/
 
 ### Get Started
 
