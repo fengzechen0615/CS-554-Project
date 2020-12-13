@@ -6,6 +6,7 @@
 
 -   [Undefined](#undefined)
     -   [Description](#description)
+    -   [Get Started](#get-started)
     -   [Core Features](#core-features)
     -   [Technologies](#technologies)
     -   [Database](#database)
@@ -37,6 +38,53 @@
 
 We will build an e-commerce web application like amazon. On this website, users can post
 their products to sell and buy products from other users.
+
+### Get Started
+
+Execute the following commands to download the source code
+
+```
+git clone https://github.com/fengzechen0615/CS-554-Project.git
+```
+
+Install dependencies for backend application.
+
+```
+cd CS-554-Project
+npm install
+```
+
+Install dependencies for frontend application.
+
+```
+cd client
+npm install
+```
+
+Make sure you have opened redis-server.
+
+```
+redis-server
+```
+
+Also, please download the GraphicsMagick locally at the following link and make sure the version is right for your operation system.
+
+> http://www.graphicsmagick.org/
+
+Start the frontend application
+
+```
+npm start
+```
+
+Start the backend application
+
+```
+cd ../
+npm start
+```
+
+All finished, have fun!
 
 ### Core Features
 
