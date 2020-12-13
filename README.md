@@ -42,7 +42,7 @@ their products to sell and buy products from other users.
 
 ### Preview
 
-You can take a look at our oneline demo.
+You can take a look at our online demo.
 
 https://cs554-undefined.site/
 
