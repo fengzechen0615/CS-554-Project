@@ -15,16 +15,26 @@ export default function Home() {
                         alt='First slide'
                     />
                     <div className='carousel-description'>
-                        <h1>Xian Yu</h1>
-                        <p>A website to sell & buy products!</p>
-                        <Button
-                            variant='outline-danger'
-                            size='lg'
-                            as={Link}
-                            to='/products'
-                        >
-                            View More
-                        </Button>
+                        <div>
+                            <h1 className='carousel-title'>E Commerce</h1>
+                            <p className='carousel-para'>
+                                A website to sell & buy products
+                            </p>
+                            <p className='carousel-para'>
+                                Diverse categories
+                            </p>
+                            <p className='carousel-para'>
+                                Directly contact between seller & buyer
+                            </p>
+                            <Button
+                                variant='outline-danger'
+                                size='lg'
+                                as={Link}
+                                to='/products'
+                            >
+                                View More
+                            </Button>
+                        </div>
                     </div>
                 </Carousel.Item>
                 <Carousel.Item>
@@ -34,8 +44,26 @@ export default function Home() {
                         alt='Third slide'
                     />
                     <div className='carousel-description'>
-                        <h2>Top 10 products</h2>
-                        <p>top 10</p>
+                        <div>
+                            <h1 className='carousel-title'>Looking for something?</h1>
+                            <p className='carousel-para'>
+                                Thousands of products selling on this website
+                            </p>
+                            <p className='carousel-para'>
+                                Check your order any time
+                            </p>
+                            <p className='carousel-para'>
+                                Have questions? Ask seller directly
+                            </p>
+                            <Button
+                                variant='outline-danger'
+                                size='lg'
+                                as={Link}
+                                to='/login'
+                            >
+                                Become a buyer now! 
+                            </Button>
+                        </div>
                     </div>
                 </Carousel.Item>
                 <Carousel.Item>
@@ -45,8 +73,23 @@ export default function Home() {
                         alt='Third slide'
                     />
                     <div className='carousel-description'>
-                        <h2>Xian Yu</h2>
-                        <p>A website to sell & buy products!</p>
+                        <div>
+                            <h1 className='carousel-title'>Sell something?</h1>
+                            <p className='carousel-para'>
+                                Easy to put on sale
+                            </p>
+                            <p className='carousel-para'>
+                                Saftey first account to protect your money
+                            </p>
+                            <Button
+                                variant='outline-danger'
+                                size='lg'
+                                as={Link}
+                                to='/login'
+                            >
+                                Become a seller now!
+                            </Button>
+                        </div>
                     </div>
                 </Carousel.Item>
             </Carousel>

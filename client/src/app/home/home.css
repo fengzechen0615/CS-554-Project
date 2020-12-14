@@ -36,8 +36,7 @@
 }
 
 .carouselImg {
-    opacity: 0.3;
-    /*height: 90vh;*/
+    opacity: 0.2;
 }
 
 .carousel-description {
@@ -46,9 +45,27 @@
     left: 15%;
     top: 0;
     height: 100%;
-    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     z-index: 1;
     color: white;
+}
+
+.carousel-description a {
+    margin-top: 5vh;
+}
+
+.carousel-title {
+    margin-bottom: 10vh;
+    font-weight: 100;
+    font-size: 5rem;
+}
+
+.carousel-para {
+    font-weight: 400;
+    font-size: 1.2rem;
 }
 
 /*  Card    */
@@ -90,8 +107,8 @@
     transition: transform 0.5s, opacity 0.5s;
 }
 
-.card-btn:hover .card-img{
-    opacity: 0.3;
+.card-btn:hover .card-img {
+    opacity: 0.2;
     transform: scale(1.2);
 }
 
