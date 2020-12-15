@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
-import { SIGN_UP_API } from '../../constants';
+import { signUp } from 'api/users';
 import { showError, showSuccess } from 'components/sweetAlert/sweetAlert';
 
 export default function Login() {
@@ -13,11 +12,7 @@ export default function Login() {
     const submitHandler = async (event) => {
         event.preventDefault();
         try {
-            await axios.post(SIGN_UP_API, {
-                email,
-                password,
-                nickname,
-            });
+            await signUp(nickname, email, password);
             showSuccess('Successfully Registered!');
         } catch (error) {
             showError(error?.response?.data?.error || error.message);
