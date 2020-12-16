@@ -34,7 +34,6 @@
     -   [Other](#other)
         -   [Format](#format)
         -   [Http Status Code](#http-status-code)
-        -   [Environments](#Environments)
 
 ### Description
 
@@ -51,11 +50,11 @@ https://cs554-undefined.site/
 
 The project is developed for online version. We used the same online database for both local version and online version. So if you run it on local machine, it may cause database conflict with the online version including redis and image storage.
 
-- Redis
+-   Redis
 
     If you update product on local veresion, the page on the online version will not change. Because the cache on the online version is not updated.
 
-- Image Storage
+-   Image Storage
 
     If you create product and upload a new image for the product, the image will be saved on local version. So you cannot see the image on the online version.
 
@@ -68,6 +67,8 @@ Execute the following commands to download the source code
 ```
 git clone https://github.com/fengzechen0615/CS-554-Project.git
 ```
+
+P.S. **firebase.js** and **mongodb.js** not include in the github repository. You could see it in the zip file throught canvas.
 
 Install dependencies for backend application.
 
@@ -460,9 +461,3 @@ All finished, have fun!
 | 401         | Unauthorized          | the user does not have valid authentication credentials for the target resource.                                      |
 | 404         | Not Found             | The requested resource could not be found but may be available in the future.                                         |
 | 500         | Internal Server Error | A generic error message, given when an unexpected condition was encountered and no more specific message is suitable. |
-
-#### Environments
-
-If you want to run the program, you should install GraphicsMagick locally.  
-You can download it at http://www.graphicsmagick.org/  
-Please note that the installation package should corresponds to your OS.
