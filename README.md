@@ -7,6 +7,7 @@
 -   [Undefined](#undefined)
     -   [Description](#description)
     -   [Preview](#preview)
+    -   [Warning](#warning)
     -   [Get Started](#get-started)
     -   [Core Features](#core-features)
     -   [Technologies](#technologies)
@@ -45,6 +46,20 @@ their products to sell and buy products from other users.
 You can take a look at our online demo.
 
 https://cs554-undefined.site/
+
+### Warning
+
+The project is developed for online version. We used the same online database for both local version and online version. So if you run it on local machine, it may cause database conflict with the online version including redis and image storage.
+
+- Redis
+
+    If you update product on local veresion, the page on the online version will not change. Because the cache on the online version is not updated.
+
+- Image Storage
+
+    If you create product and upload a new image for the product, the image will be saved on local version. So you cannot see the image on the online version.
+
+**So we recommend you use the online version.**
 
 ### Get Started
 
