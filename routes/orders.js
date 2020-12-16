@@ -31,7 +31,7 @@ router.post('/', authenticated, async (req, res) => {
         let description = xss(req.body.description);
         let imgUrl = xss(req.body.imgUrl);
 
-        productToBuy = await productData.getProductById(productId);
+        const productToBuy = await productData.getProductById(productId);
         if (productToBuy.result.stock < dealNumber) {
             res.status(400).json({
                 error:

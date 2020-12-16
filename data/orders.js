@@ -1,5 +1,6 @@
 const mongoCollections = require('../config/mongoCollection');
 const orders = mongoCollections.orders;
+const users = require('./users');
 const uuid = require('uuid');
 
 async function createOrder(
@@ -68,6 +69,7 @@ async function createOrder(
         _id: uuid.v4(),
         productId: productId,
         sellerId: sellerId,
+        sellerName: (await users.getUserById(sellerId)).result.nickname,
         buyerId: buyerId,
         address: address,
         orderTime: new Date(),
