@@ -10,7 +10,7 @@ export default function Users() {
         const initUsers = async () => {
             try {
                 const users = await getAllUsers();
-                setUsers(users);
+                setUsers(users.filter((user) => !user.isAdmin));
             } catch (error) {
                 showError(error.message);
             }
@@ -21,7 +21,7 @@ export default function Users() {
     const refreshUser = async () => {
         try {
             const users = await getAllUsers();
-            setUsers(users);
+            setUsers(users.filter((user) => !user.isAdmin));
         } catch (error) {
             showError(error.message);
         }
