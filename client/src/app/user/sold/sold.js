@@ -36,6 +36,8 @@ export default function UserSellingProducts(props) {
                         productId={product.productId}
                         dealNumber={product.dealNumber}
                         orderTime={product.orderTime}
+                        buyerName={product.buyerName}
+                        sellerName={product.sellerName}
                     />
                 ))}
             </div>
