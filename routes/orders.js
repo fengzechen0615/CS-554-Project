@@ -34,7 +34,8 @@ router.post('/', authenticated, async (req, res) => {
         productToBuy = await productData.getProductById(productId);
         if (productToBuy.result.stock < dealNumber) {
             res.status(400).json({
-                error: 'dealNumber > stock!',
+                error:
+                    'Sorry, but the quantity of remaining products is not enough!',
             });
             return;
         }

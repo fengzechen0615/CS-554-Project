@@ -90,7 +90,7 @@ export default function Main() {
             showSuccess('Successfully bought product!');
             refreshProduct();
         } catch (error) {
-            showError(error.message);
+            showError(error?.response?.data?.error || error.message);
         }
     };
 
