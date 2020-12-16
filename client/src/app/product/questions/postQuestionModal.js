@@ -17,6 +17,10 @@ export default function PostQuestionModal(props) {
 
     const submitHandler = async () => {
         try {
+            if (!content || content.trim() === '') {
+                showError('Question can not be empty!');
+                return;
+            }
             await postQuestion(content, productId);
             await props.refresh();
             showSuccess('Successfully submitted question for this product!');
