@@ -70,6 +70,16 @@ git clone https://github.com/fengzechen0615/CS-554-Project.git
 
 P.S. **firebase.js** and **mongodb.js** not include in the github repository. You could see it in the zip file throught canvas.
 
+Install graphicsmagick for mac
+
+```
+sudo brew install graphicsmagick
+```
+
+Install graphicsmagick for windows
+
+> http://www.graphicsmagick.org/
+
 Install dependencies for backend application.
 
 ```
@@ -236,7 +246,9 @@ All finished, have fun!
 {
     "_id": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "productId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "sellerName": "undefined",
     "sellerId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
+    "buyerName": "undefined",
     "buyerId": "7b7997a2-c0d2-4f8c-b27a-6a1d4b5b6310",
     "address": "1 Castle Point Terrace, Hoboken",
     "orderTime": "2020-11-23T23:51:33.927Z",
@@ -254,7 +266,9 @@ All finished, have fun!
 | \_id        | string  | A globally unique identifier to represent the order. |
 | productId   | string  | product's id.                                        |
 | buyerId     | string  | buyer's id.                                          |
+| buyerName   | string  | buyer name.                                          |
 | sellerId    | string  | seller's id.                                         |
+| sellerName  | string  | seller name.                                         |
 | adress      | string  | buyer's adress                                       |
 | orderTime   | Date    | The time the product is buyed.                       |
 | isCompleted | boolean | if buyer recieved products,the true; else false.     |
