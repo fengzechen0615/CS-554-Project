@@ -11,6 +11,7 @@ export default function UserSellingProducts(props) {
         const initProducts = async () => {
             try {
                 const products = await getUserSoldProducts();
+                console.log(products);
                 setProducts(products);
             } catch (error) {
                 showError(error.message);
@@ -33,6 +34,8 @@ export default function UserSellingProducts(props) {
                         stock={product.stock}
                         categories={product.categoryArr}
                         productId={product.productId}
+                        dealNumber={product.dealNumber}
+                        orderTime={product.orderTime}
                     />
                 ))}
             </div>
