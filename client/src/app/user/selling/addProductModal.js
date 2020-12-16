@@ -67,6 +67,12 @@ export default function AddProductModal(props) {
         }
     };
 
+    const deleteCategoryHandler = (category) => {
+        setCategoryArr((prev) => {
+            return prev.filter((cat) => cat !== category);
+        });
+    };
+
     return (
         <Modal
             show={props.show}
@@ -123,7 +129,7 @@ export default function AddProductModal(props) {
                                     variant='outlined'
                                     color='primary'
                                     label={cat}
-                                    onDelete={() => {}}
+                                    onDelete={() => deleteCategoryHandler(cat)}
                                     className='mr-2 mt-2'
                                 />
                             ))}
