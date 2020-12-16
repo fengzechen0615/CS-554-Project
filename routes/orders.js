@@ -13,6 +13,7 @@ bluebird.promisifyAll(redis.Multi.prototype);
 
 // Create a new Order (default isCompleted is false), return the order information
 router.post('/', authenticated, async (req, res) => {
+    console.log(123);
     try {
         if (!req.body) {
             res.status(400).json({
@@ -31,7 +32,15 @@ router.post('/', authenticated, async (req, res) => {
         let description = xss(req.body.description);
         let imgUrl = xss(req.body.imgUrl);
 
-        productData.updateStock(productId, dealNumber); //stock - dealNumber
+        productToBuy = await productData.getProductById(productId);
+        if (productToBuy.result.stock < dealNumber) {
+            res.status(400).json({
+                error: 'dealNumber > stock!',
+            });
+            return;
+        }
+
+        await productData.updateStock(productId, dealNumber); //stock - dealNumber
 
         let newOrder = await orderData.createOrder(
             productId,
@@ -45,11 +54,12 @@ router.post('/', authenticated, async (req, res) => {
             imgUrl
         );
         // delete product cache
-        client.del('product' + productId);
+        client.delAsync('product' + productId);
         // delete index Cache
-        client.del('indexPage');
+        client.delAsync('indexPage');
         res.status(newOrder.status).json(newOrder.result);
     } catch (error) {
+        // console.log(error);
         res.status(error.status).json({ error: error.errorMessage });
     }
 });
