@@ -68,8 +68,9 @@ async function createOrder(
     let newOrder = {
         _id: uuid.v4(),
         productId: productId,
-        sellerId: sellerId,
         sellerName: (await users.getUserById(sellerId)).result.nickname,
+        sellerId: sellerId,
+        buyerName: (await users.getUserById(buyerId)).result.nickname,
         buyerId: buyerId,
         address: address,
         orderTime: new Date(),
