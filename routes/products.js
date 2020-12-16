@@ -53,6 +53,17 @@ router.post(
             let stock = Number(xss(req.body.stock));
             let price = Number(xss(req.body.price));
 
+            let newProduct = await productData.createPoduct(
+                sellerId,
+                sellerName,
+                productName,
+                description,
+                categoryArr,
+                imageUrl,
+                stock,
+                price
+            );
+
             //resize the image
             let path1 = path.join(
                 __dirname,
@@ -74,19 +85,10 @@ router.post(
             gm(path1)
                 .resize(250)
                 .write(path2, (err) => {
-                    console.log(err);
+                    if (err) {
+                        console.log(err);
+                    }
                 });
-
-            let newProduct = await productData.createPoduct(
-                sellerId,
-                sellerName,
-                productName,
-                description,
-                categoryArr,
-                imageUrl,
-                stock,
-                price
-            );
 
             // delete index cache
             client.del('indexPage');

@@ -13,7 +13,6 @@ bluebird.promisifyAll(redis.Multi.prototype);
 
 // Create a new Order (default isCompleted is false), return the order information
 router.post('/', authenticated, async (req, res) => {
-    console.log(123);
     try {
         if (!req.body) {
             res.status(400).json({
@@ -59,7 +58,6 @@ router.post('/', authenticated, async (req, res) => {
         client.delAsync('indexPage');
         res.status(newOrder.status).json(newOrder.result);
     } catch (error) {
-        // console.log(error);
         res.status(error.status).json({ error: error.errorMessage });
     }
 });

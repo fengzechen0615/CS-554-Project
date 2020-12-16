@@ -54,15 +54,20 @@ async function createPoduct(
             errorMessage: 'You must provide a number as stock',
         };
     }
-    if (!price || typeof price !== 'number') {
-        throw {
-            status: 400,
-            errorMessage: 'You must provide a number as price',
-        };
+    if (price !== 0) {
+        if (!price || typeof price !== 'number') {
+            throw {
+                status: 400,
+                errorMessage: 'You must provide a number as price',
+            };
+        }
     }
 
     if (stock <= 0) {
         throw { status: 400, errorMessage: 'stock should > 0' };
+    }
+    if (stock % 1 !== 0) {
+        throw { status: 400, errorMessage: 'stock should be an Integer' };
     }
     if (price <= 0) {
         throw { status: 400, errorMessage: 'price should > 0' };
