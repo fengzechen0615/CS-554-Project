@@ -170,7 +170,9 @@ export default function Main(props) {
                             onSelect={handleCategoryChange}
                         >
                             <ListGroup>
-                                <ListGroup.Item>Category</ListGroup.Item>
+                                <ListGroup.Item className='font-weight-bold'>
+                                    Category
+                                </ListGroup.Item>
                                 <ListGroup.Item action eventKey='All'>
                                     All
                                 </ListGroup.Item>
@@ -193,7 +195,9 @@ export default function Main(props) {
                                 className='mt-5'
                             >
                                 <ListGroup>
-                                    <ListGroup.Item>Sort</ListGroup.Item>
+                                    <ListGroup.Item className='font-weight-bold'>
+                                        Sort
+                                    </ListGroup.Item>
                                     <ListGroup.Item action eventKey='Default'>
                                         Default
                                     </ListGroup.Item>
