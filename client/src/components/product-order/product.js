@@ -17,6 +17,11 @@ export default function Product(props) {
                 <Card.Title>{props.title}</Card.Title>
                 <p className='mb-0 description'>{props.description}</p>
                 <p className='mb-0'>Price: {props.price}</p>
+                <p className='mb-0'>Number: {props.dealNumber}</p>
+                <p className='mb-0'>
+                    Order Time:{' '}
+                    {props.orderTime ? props.orderTime.split('T')[0] : 'N/A'}
+                </p>
                 <div className='mb-2'>
                     {props.categories &&
                         props.categories.length > 0 &&
